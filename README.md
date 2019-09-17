@@ -26,16 +26,15 @@ El alcance de *Neon Beat* es muy amplio ya que es un juego hecho para todas las 
 ## 2. Mecánicas de juego 
 
 ### 2.1 Jugabilidad
-La jugabilidad de *Neon Beat* consiste en seguir la melodía al ritmo de la música. Para ello se disponen de 2 botones con los que surfearás la canción, ya que el recorrido es la onda generada por la propia canción.
+La jugabilidad de *Neon Beat* consiste en seguir la melodía al ritmo de la música. Para ello se disponen de 2 botones con los que surfearás la canción, ya que el recorrido es la onda generada por la propia canción.  
 Para avanzar correctamente deberás seguir la onda de la canción pulsando los botones en el momento adecuado. Si aciertas sigues avanzando y aumenta tus puntos de combo que te darán una mayor puntuación al final de la partida. En cambio, si pierdes el ritmo (si pulsas demasiado pronto o demasiado tarde), perderás el combo y si fallas varias veces tendrás que repetir la canción.
 
 ### 2.2 Objetivo del juego
 El objetivo es superar las canciones con la mayor puntuación posible.
 
 ### 2.3 Controles y cámara 
-Dependiendo del dispositivo utilizado se usarán el ratón o la pantalla táctil para moverse entre los menús. 
+Dependiendo del dispositivo utilizado se usarán el ratón o la pantalla táctil para moverse entre los menús.     
 Durante la partida se pulsarán los botones para ascender o descender en la onda en todos los dispositivos.
-
 
 ## 3. Interfaz
 
@@ -51,7 +50,7 @@ VIENE CON EL PRIMER DLC
 ### 3.5 Opciones
 
 ## 4. Arte
-El arte de *Neon Beat* es minimalista para que el jugador pueda centrarse en seguir la música sin muchas distracciones.
+El arte de *Neon Beat* es minimalista para que el jugador pueda centrarse en seguir la música sin muchas distracciones.  
 El estilo visual se basa principalente en luces de neón que permiten transmitir el alma de la música.
 
 ### 4.1 Audio
@@ -59,9 +58,9 @@ Es una de los pilares de nuestro videojuego. Durante los menús sonará una band
 
 ## 5. Equipo desarrollador
 ### NyaGames
-Pablo Martínez Domingo Correo:p.martinezd.2016@alumnos.urjc.es
-Daniel Dávila Pérez Correo:d.davila.2016@alumnos.urjc.es
-Jaime Rodríguez Aguado Correo: j.rodriguezag.2016@alumnos.urjc.es
-Diego Sánchez Ramírez  FFFFFFFFFFFFFFFFFFFFFFFFFF
+Pablo Martínez Domingo Correo:p.martinezd.2016@alumnos.urjc.es  
+Daniel Dávila Pérez Correo:d.davila.2016@alumnos.urjc.es  
+Jaime Rodríguez Aguado Correo: j.rodriguezag.2016@alumnos.urjc.es  
+Diego Sánchez Ramírez  FFFFFFFFFFFFFFFFFFFFFFFFFF  
 Jaime Bárzano Enrique  FFFFFFFFFFFFFFFFFFFFFFFFFFFF
 
