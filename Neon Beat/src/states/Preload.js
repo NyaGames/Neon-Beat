@@ -9,7 +9,7 @@ NeonBeat.Preload.prototype = {
     },
 
     preload: function(){
-
+        this.load.image('furro', 'assets/furro.jpg');
     },
 
     create: function(){
