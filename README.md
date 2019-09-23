@@ -61,6 +61,6 @@ Es una de los pilares de nuestro videojuego. Durante los menús sonará una band
 Pablo Martínez Domingo Correo:p.martinezd.2016@alumnos.urjc.es  
 Daniel Dávila Pérez Correo:d.davila.2016@alumnos.urjc.es  
 Jaime Rodríguez Aguado Correo: j.rodriguezag.2016@alumnos.urjc.es  
-Diego Sánchez Ramírez  FFFFFFFFFFFFFFFFFFFFFFFFFF  
-Jaime Bárzano Enrique  FFFFFFFFFFFFFFFFFFFFFFFFFFFF
+Diego Sánchez Ramírez  Correo: d.sanchezr.2016@alumnos.urjc.es  
+Jaime Bárzano Enrique  Correo: j.barzano.2016@alumnos.urjc.es
 
