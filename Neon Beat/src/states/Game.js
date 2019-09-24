@@ -36,6 +36,9 @@ NeonBeat.GameState.prototype = {
         this.game.camera.follow(this.pelota);
         this.game.camera.deadzone = new Phaser.Rectangle(0, 0, NeonBeat.game.width* 1/5, NeonBeat.game.height);
         //this.state.start('EndGame');  
+
+        NeonBeat.game.amplitudOnda = 2;
+
     },
 
     update:function(){
@@ -54,7 +57,7 @@ NeonBeat.GameState.prototype = {
             this.pelota.particleEmitter.x = this.pelota.body.x + (this.pelota.body.width / 2);
             this.pelota.particleEmitter.y = this.pelota.body.y + (this.pelota.body.height / 2);
     
-            this.pos += 400;
+            this.pos += 200;
     
             if(this.pos >= this.path.length){
                 this.pos = 0;
@@ -67,7 +70,7 @@ NeonBeat.GameState.prototype = {
     //Recalcula las posiciones para que quepan en la pantalla
     drawWave:function(fftHistory){
         //NeonBeat.game.scale.setGameSize(fftHistory.length, NeonBeat.game.height);
-        NeonBeat.game.world.setBounds(0, 0, fftHistory.length, 600);
+        NeonBeat.game.world.setBounds(0, 0, fftHistory.length * NeonBeat.game.amplitudOnda, 600);
         
         this.waveY = fftHistory;
         this.maxValueOnY = Math.max.apply(Math,this.waveY) + 5000;
@@ -75,8 +78,8 @@ NeonBeat.GameState.prototype = {
 
         this.waveX = new Array(this.waveY.length);
         for(var i = 0;i < this.waveY.length;i++){
-            this.waveX[i] = i;
-            var x = ( NeonBeat.game.world.width * this.waveX[i])/this.waveX.length;
+            this.waveX[i] = i * NeonBeat.game.amplitudOnda;
+            var x = (NeonBeat.game.world.width * this.waveX[i])/this.waveX.length ;
             this.waveX[i] = x;
             var y = ( NeonBeat.game.world.height * this.waveY[i])/this.maxValueOnY;
             if(y == 0){
@@ -90,7 +93,7 @@ NeonBeat.GameState.prototype = {
         }
         //Draw wave
         NeonBeat.game.stage.backgroundColor = '#204090';
-        this.bmd = NeonBeat.game.add.bitmapData( NeonBeat.game.world.width,  NeonBeat.game.world.height);
+        this.bmd = NeonBeat.game.add.bitmapData(NeonBeat.game.world.width,  NeonBeat.game.world.height);
         this.bmd.addToWorld();
  
         this.plot();
@@ -103,11 +106,14 @@ NeonBeat.GameState.prototype = {
  
         this.bmd.clear();
          
-        var x = 0.004 /  NeonBeat.game.world.width;
+        var x = 0.1 /  NeonBeat.game.world.width;
 
         NeonBeat.GameState.prototype.path = [];
          
-        for (var i = 0; i <= 1; i += x)
+        /*var px0 = NeonBeat.game.math.catmullRomInterpolation(this.waveX, 0);
+        var py0 = NeonBeat.game.math.catmullRomInterpolation(this.waveY, 0);
+        var graphics = NeonBeat.game.add.graphics(px0,py0);*/
+        for (var i = x; i <= 1; i += x)
         {
             //var px = this.math.linearInterpolation(this.waveX, i);
             //var py = this.math.linearInterpolation(this.waveY, i);
@@ -117,22 +123,43 @@ NeonBeat.GameState.prototype = {
             
             var px = NeonBeat.game.math.catmullRomInterpolation(this.waveX, i);
             var py = NeonBeat.game.math.catmullRomInterpolation(this.waveY, i);
+            /*var line = new Phaser.Line(px0, py0, px, py);
             
             this.bmd.rect(px, py, 1, 1, 'rgba(255, 255, 255, 1)');
             
+            NeonBeat.GameState.prototype.pos = 0;
+            NeonBeat.GameState.prototype.path.push( { x: px, y: py });
+            //var graphics = NeonBeat.game.add.graphics(line.start.x,line.start.y);
+            graphics.lineStyle(1, 0xffd900, 1);
+            graphics.moveTo(line.start.x,line.start.y);﻿//moving position of graphic if you draw mulitple lines
+            graphics.lineTo(line.end.x,line.end.y);
+            graphics.endFill();*/
+
+            px0 = px;
+            py0 = py;
+            //this.bmd.rect(px, py, 1, 1, 'rgba(255, 255, 255, 1)');
+            var neonSprite = NeonBeat.game.add.sprite(px, py, 'neonLine');
+            neonSprite.scale.setTo(0.5,0.5);
+
             NeonBeat.GameState.prototype.pos = 0;
             NeonBeat.GameState.prototype.path.push( { x: px, y: py });
 
         }
          
         //for (var p = this.ratio; p < this.waveX.length; p += this.ratio)
-        for (var p = 0; p < this.waveX.length; p++)
+        for (var p = 1; p < this.path.length - 1; p++)
         {
-            this.bmd.rect(this.waveX[p]-3,this.waveY[p]-3, 3, 3, 'rgba(255, 0, 0, 1)');
-            //if((Math.abs(this.waveY[p]  - this.waveY[p - this.ratio]) <=  this.difference) || (Math.abs(this.waveY[p]  - this.waveY[p - this.ratio]) >=  this.difference)){
-                //this.bmd.rect(this.waveX[p]-3,this.waveY[p]-3, 3, 3, 'rgba(255, 0, 0, 1)');
-            //}
-        }        
+            //this.bmd.rect(this.waveX[p]-3,this.waveY[p]-3, 3, 3, 'rgba(255, 0, 0, 1)');
+            var resta1 = this.path[p].y - this.path[p-1].y;
+            var resta2 = this.path[p].y - this.path[p+1].y;
+            var diff = 0.0000001;
+            if((resta1 > 0) && (resta2 > 0)){
+                if((Math.abs(resta1) > diff  && Math.abs(resta2) > diff)){
+                    this.bmd.rect(this.path[p].x-3,this.path[p].y-3, 3, 3, 'rgba(255, 0, 0, 1)');
+                }
+            }
+        }
+         
     },
 
     songAdded(file){               
