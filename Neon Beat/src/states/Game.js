@@ -16,16 +16,29 @@ NeonBeat.Game.prototype = {
     },
 
     create: function(){
-        this.furro = this.add.sprite(0, 0, 'furro');
-        this.furro.scale.setTo(0.05,0.05);
+        this.pelota = this.add.sprite(0, 0, 'pelota');
+        this.pelota.scale.setTo(0.5,0.5);
+        NeonBeat.game.physics.enable(this.pelota, Phaser.Physics.ARCADE);
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
+            this.pelota.particleEmitter = this.add.emitter(this.pelota.body.x, this.pelota.body.y, 100);
+            this.pelota.particleEmitter.makeParticles('pelota');
+            this.pelota.particleEmitter.setAlpha(0.6, 0, 150);
+            this.pelota.particleEmitter.setSize(0.5, 0.5);
+            this.pelota.particleEmitter.setScale(0.5, 0.5, 0.5, 0.5);
+            this.pelota.particleEmitter.setXSpeed(0, 0);
+            this.pelota.particleEmitter.setYSpeed(0, 0);
+            this.pelota.particleEmitter.start(false, 100, 10);
         //this.state.start('EndGame');  
     },
 
     update:function(){
         
         if(this.path != undefined){
-            this.furro.x = this.path[this.pos].x;
-            this.furro.y = this.path[this.pos].y;
+            this.pelota.x = this.path[this.pos].x- (this.pelota.body.width / 2);
+            this.pelota.y = this.path[this.pos].y- (this.pelota.body.height / 2);
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            this.pelota.particleEmitter.x = this.pelota.body.x + (this.pelota.body.width / 2);
+            this.pelota.particleEmitter.y = this.pelota.body.y + (this.pelota.body.height / 2);
     
             this.pos += 400;
     
