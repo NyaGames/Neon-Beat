@@ -97,12 +97,17 @@ NeonBeat.Game.prototype = {
         }
          
         //for (var p = this.ratio; p < this.waveX.length; p += this.ratio)
-        for (var p = 0; p < this.waveX.length; p++)
+        for (var p = 1; p < this.path.length - 1; p++)
         {
-            this.bmd.rect(this.waveX[p]-3,this.waveY[p]-3, 3, 3, 'rgba(255, 0, 0, 1)');
-            //if((Math.abs(this.waveY[p]  - this.waveY[p - this.ratio]) <=  this.difference) || (Math.abs(this.waveY[p]  - this.waveY[p - this.ratio]) >=  this.difference)){
-                //this.bmd.rect(this.waveX[p]-3,this.waveY[p]-3, 3, 3, 'rgba(255, 0, 0, 1)');
-            //}
+            //this.bmd.rect(this.waveX[p]-3,this.waveY[p]-3, 3, 3, 'rgba(255, 0, 0, 1)');
+            var resta1 = this.path[p].y - this.path[p-1].y;
+            var resta2 = this.path[p].y - this.path[p+1].y;
+            var diff = 0.0001;
+            if((resta1 > 0) && (resta2 > 0)){
+                if((Math.abs(resta1) > diff  && Math.abs(resta2) > diff)){
+                    this.bmd.rect(this.path[p].x-3,this.path[p].y-3, 3, 3, 'rgba(255, 0, 0, 1)');
+                }
+            }
         }
          
     },
