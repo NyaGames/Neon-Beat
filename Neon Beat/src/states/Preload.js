@@ -10,6 +10,7 @@ NeonBeat.Preload.prototype = {
 
     preload: function(){
         this.load.image('furro', 'assets/furro.jpg');
+        this.load.image('pelota', 'assets/pelota.png');
     },
 
     create: function(){
