@@ -21,23 +21,26 @@ NeonBeat.GameState.prototype = {
     create: function(){
         this.pelota = this.add.sprite(0, 0, 'pelota');
         this.pelota.scale.setTo(0.5,0.5);
+
         NeonBeat.game.physics.enable(this.pelota, Phaser.Physics.ARCADE);
-            ////////////////////////////////////////////////////////////////////////////////////////////////////
-            this.pelota.particleEmitter = this.add.emitter(this.pelota.body.x, this.pelota.body.y, 100);
-            this.pelota.particleEmitter.makeParticles('pelota');
-            this.pelota.particleEmitter.setAlpha(0.6, 0, 150);
-            this.pelota.particleEmitter.setSize(0.5, 0.5);
-            this.pelota.particleEmitter.setScale(0.5, 0.5, 0.5, 0.5);
-            this.pelota.particleEmitter.setXSpeed(0, 0);
-            this.pelota.particleEmitter.setYSpeed(0, 0);
-            this.pelota.particleEmitter.start(false, 100, 10);
+           
+        this.pelota.particleEmitter = this.add.emitter(this.pelota.body.x, this.pelota.body.y, 100);
+        this.pelota.particleEmitter.makeParticles('pelota');
+        this.pelota.particleEmitter.setAlpha(0.6, 0, 150);
+        this.pelota.particleEmitter.setSize(0.5, 0.5);
+        this.pelota.particleEmitter.setScale(0.5, 0.5, 0.5, 0.5);
+        this.pelota.particleEmitter.setXSpeed(0, 0);
+        this.pelota.particleEmitter.setYSpeed(0, 0);
+        this.pelota.particleEmitter.start(false, 100, 10);
+
+        this.game.camera.follow(this.pelota);
+        this.game.camera.deadzone = new Phaser.Rectangle(0, 0, NeonBeat.game.width* 1/5, NeonBeat.game.height);
         //this.state.start('EndGame');  
     },
 
     update:function(){
         
-        if(this.path != undefined){
-
+        if(this.path != undefined){ 
             let audioCtx = NeonBeat.global.nbAudioCtx.getAudioContext();
 
             if(this.timeOffset === null) this.timeOffset = audioCtx.currentTime;
@@ -63,18 +66,19 @@ NeonBeat.GameState.prototype = {
 
     //Recalcula las posiciones para que quepan en la pantalla
     drawWave:function(fftHistory){
-        NeonBeat.game.scale.setGameSize(fftHistory.length, 600);
+        //NeonBeat.game.scale.setGameSize(fftHistory.length, NeonBeat.game.height);
+        NeonBeat.game.world.setBounds(0, 0, fftHistory.length, 600);
         
         this.waveY = fftHistory;
         this.maxValueOnY = Math.max.apply(Math,this.waveY) + 5000;
-        this.startValueOnY = 3*NeonBeat.game.height/4;
+        this.startValueOnY = 3* NeonBeat.game.height / 4;
 
         this.waveX = new Array(this.waveY.length);
         for(var i = 0;i < this.waveY.length;i++){
             this.waveX[i] = i;
-            var x = (NeonBeat.game.width * this.waveX[i])/this.waveX.length;
+            var x = ( NeonBeat.game.world.width * this.waveX[i])/this.waveX.length;
             this.waveX[i] = x;
-            var y = (NeonBeat.game.height * this.waveY[i])/this.maxValueOnY;
+            var y = ( NeonBeat.game.world.height * this.waveY[i])/this.maxValueOnY;
             if(y == 0){
                 y = this.startValueOnY
             }else if(y > 0){
@@ -86,7 +90,7 @@ NeonBeat.GameState.prototype = {
         }
         //Draw wave
         NeonBeat.game.stage.backgroundColor = '#204090';
-        this.bmd = NeonBeat.game.add.bitmapData(NeonBeat.game.width, NeonBeat.game.height);
+        this.bmd = NeonBeat.game.add.bitmapData( NeonBeat.game.world.width,  NeonBeat.game.world.height);
         this.bmd.addToWorld();
  
         this.plot();
@@ -99,7 +103,7 @@ NeonBeat.GameState.prototype = {
  
         this.bmd.clear();
          
-        var x = 0.004 / NeonBeat.game.width;
+        var x = 0.004 /  NeonBeat.game.world.width;
 
         NeonBeat.GameState.prototype.path = [];
          
