@@ -1,14 +1,17 @@
 var NeonBeat = NeonBeat || {};
-NeonBeat.Game = function(){};
+NeonBeat.GameState = function(){};
 
-NeonBeat.Game.prototype = {
+NeonBeat.GameState.prototype = {   
+
     init: function(){
         if (NeonBeat.global.DEBUG_MODE) {
-			console.log("[DEBUG] Entering **GAME** state");
+			console.log("[DEBUG] Entering **GAME STATE** state");
         }
         
         this.fftHistory;
-        this.songReady = false;
+        this.songReady = false;      
+        this.timeOffset = null;
+        this.graphAmplitude = 2;
     },
 
     preload: function(){
@@ -16,6 +19,7 @@ NeonBeat.Game.prototype = {
     },
 
     create: function(){
+        
         this.furro = this.add.sprite(0, 0, 'furro');
         this.furro.scale.setTo(0.05,0.05);
         //this.state.start('EndGame');  
@@ -24,16 +28,22 @@ NeonBeat.Game.prototype = {
     update:function(){
         
         if(this.path != undefined){
-            this.furro.x = this.path[this.pos].x;
-            this.furro.y = this.path[this.pos].y;
+
+            let audioCtx = NeonBeat.global.nbAudioCtx.getAudioContext();
+            if(this.timeOffset === null) this.timeOffset = audioCtx.currentTime;
+            let index = Math.floor(this.path.length * (audioCtx.currentTime - this.timeOffset) / NeonBeat.global.nbAudioCtx.getTrackDuration());
+            
+            //console.log(index);
+
+            this.furro.x = this.path[index].x;    
+            this.furro.y = this.path[index].y;
     
             this.pos += 400;
     
             if(this.pos >= this.path.length){
                 this.pos = 0;
             }
-        }
-       
+        }    
 
 
     },
@@ -49,7 +59,7 @@ NeonBeat.Game.prototype = {
         this.waveX = new Array(this.waveY.length);
         for(var i = 0;i < this.waveY.length;i++){
             this.waveX[i] = i;
-            var x = (NeonBeat.game.width * this.waveX[i])/this.waveX.length
+            var x = (NeonBeat.game.width * this.waveX[i])/this.waveX.length;
             this.waveX[i] = x;
             var y = (NeonBeat.game.height * this.waveY[i])/this.maxValueOnY;
             if(y == 0){
@@ -67,6 +77,8 @@ NeonBeat.Game.prototype = {
         this.bmd.addToWorld();
  
         this.plot();
+        NeonBeat.global.nbAudioCtx.playTrack();       
+        NeonBeat.global.nbAudioCtx.getAudioContext().currentTime = 0;        
     },
 
     //Dibuja la curva y los puntos
@@ -76,7 +88,7 @@ NeonBeat.Game.prototype = {
          
         var x = 0.004 / NeonBeat.game.width;
 
-        NeonBeat.Game.prototype.path = [];
+        NeonBeat.GameState.prototype.path = [];
          
         for (var i = 0; i <= 1; i += x)
         {
@@ -91,8 +103,8 @@ NeonBeat.Game.prototype = {
             
             this.bmd.rect(px, py, 1, 1, 'rgba(255, 255, 255, 1)');
             
-            NeonBeat.Game.prototype.pos = 0;
-            NeonBeat.Game.prototype.path.push( { x: px, y: py });
+            NeonBeat.GameState.prototype.pos = 0;
+            NeonBeat.GameState.prototype.path.push( { x: px, y: py });
 
         }
          
@@ -103,19 +115,17 @@ NeonBeat.Game.prototype = {
             //if((Math.abs(this.waveY[p]  - this.waveY[p - this.ratio]) <=  this.difference) || (Math.abs(this.waveY[p]  - this.waveY[p - this.ratio]) >=  this.difference)){
                 //this.bmd.rect(this.waveX[p]-3,this.waveY[p]-3, 3, 3, 'rgba(255, 0, 0, 1)');
             //}
-        }
-         
+        }        
     },
 
-    songAdded(file){
-        let graphGenerator = new GraphGenerator(1024, 48000, NeonBeat.Game.prototype.songLoaded);
-        graphGenerator.decodeAudio(file);
+    songAdded(file){               
+        NeonBeat.global.nbAudioCtx.decodeAudio(file);
     },
 
     songLoaded(fftHistory){
-        this.fftHistory = fftHistory;
-        console.log(fftHistory.length);
-        NeonBeat.Game.prototype.drawWave(this.fftHistory);
+        this.fftHistory = fftHistory;       
+       
+        NeonBeat.GameState.prototype.drawWave(this.fftHistory);
     },
 
 

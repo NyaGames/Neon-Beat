@@ -2,6 +2,7 @@ var audioCtx;
 var offlineCtx;
 var analyser;
 var processAudio;
+var offlineSource;
 var source;
 var processor;
 var fftHistory = [];   
@@ -9,8 +10,9 @@ var fftHistory = [];
 var fftSize;
 var samplerate;
 var onGraphCompleted;
+var duration;
 
-class GraphGenerator{
+class NeonBeatAudioContext{
 
     constructor(fft, sampleRate, callback){
         fftSize = fft;
@@ -26,6 +28,7 @@ class GraphGenerator{
     }
 
     processBuffer(buffer){
+        duration = buffer.duration;
         length = buffer.length;
         offlineCtx = new OfflineAudioContext(1, length, samplerate);
 
@@ -37,27 +40,31 @@ class GraphGenerator{
         analyser.connect(processor);
         analyser.smoothingTimeConstant = 0.5;
 
-        source = offlineCtx.createBufferSource();    
-        source.buffer = buffer;
-        source.connect(analyser);
+        offlineSource = offlineCtx.createBufferSource();    
+        offlineSource.buffer = buffer;
+        offlineSource.connect(analyser);
 
-        processor.onaudioprocess = GraphGenerator.prototype.processAudio;     
+        source = audioCtx.createBufferSource();
+        source.buffer = buffer;
+        source.connect(audioCtx.destination);
+
+        processor.onaudioprocess = NeonBeatAudioContext.prototype.processAudio;     
 
         console.log("[GRAPH GENERATOR]Starting...");
 
-        source.start(0);    
+        offlineSource.start(0);    
         offlineCtx.startRendering();
     }
 
     processAudio(e){
         var data = new Uint8Array(analyser.frequencyBinCount);
         analyser.getByteFrequencyData(data);
-        GraphGenerator.prototype.freqToInt(data);
-        let centroid = GraphGenerator.prototype.getCentroid(data);       
+        NeonBeatAudioContext.prototype.freqToInt(data);
+        let centroid = NeonBeatAudioContext.prototype.getCentroid(data);       
         fftHistory.push(centroid);
 
         if(fftHistory.length == Math.floor(length / fftSize))
-            GraphGenerator.prototype.onEnd();
+            NeonBeatAudioContext.prototype.onEnd();
     }
 
     getCentroid(data){
@@ -86,4 +93,8 @@ class GraphGenerator{
             data = new Uint8Array(analyser.frequencyBinCount);
           }
     }
+
+    getAudioContext(){return audioCtx;}
+    playTrack(){source.start(0);}
+    getTrackDuration(){return duration;}    
 }
