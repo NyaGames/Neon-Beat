@@ -2,6 +2,7 @@ function GameState() {
 
     var drawBool = false;
     var pathY = [];  
+    var localMinimas = [];
     var timeOffSet = null;
     var pointer = new Pointer(0, 0, 20, img);
 
@@ -9,7 +10,7 @@ function GameState() {
     var cameraOffset = 100;  
 
     this.enter = function () {
-        nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, 0.8);
+        nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, 0.9);
 
         console.log("[DEBUG] ***ENTERING GAME STATE***");
         createCanvas(600, 600);
@@ -22,12 +23,36 @@ function GameState() {
             pathY.push(y);
         }
 
+        let diff = 25;
+        for (let i = 1; i < fft.length - 1; i++) {
+            //Buscamos mínimos locales
+            let resta1 = fft[i] - fft[i - 1];
+            let resta2 = fft[i] - fft[i + 1];
+            
+            let localMaxima;
+            let localMinima;
+            if(resta1 <= 0 && resta2 < 0){             
+                //Mínimo local encontrado, ahora buscamos el máximo local más cercano
+                localMinima = fft[i];
+                for (let j = i; j < fft.length; j++) {
+                    resta1 = fft[j] - fft[j - 1];
+                    resta2 = fft[j] - fft[j + 1];
+
+                    if(resta1 > 0 && resta2 > 0){
+                        localMaxima = fft[j];
+                        break;
+                    }
+                    
+                }
+
+                if(Math.abs(localMinima - localMaxima) >= diff){
+                    localMinimas.push([i, pathY[i]]);
+                }
+            }
+        }
+
         nbAudioContext.playTrack();
-        drawBool = true;
-
-        pixelsPerSecond = fft.length / nbAudioContext.getTrackDuration()
-
-        frameRate(Math.round(pixelsPerSecond));
+        drawBool = true;    
     }
 
 
@@ -50,13 +75,19 @@ function GameState() {
 
         stroke(255);
         noFill();
-        beginShape();
+        beginShape();    
 
         for (let i = 0; i < pathY.length; i++) {            
             vertex(i * graphAmplitude, pathY[i]);
         }
 
         endShape();    
+
+        stroke(255, 0, 0);
+        fill(255, 0, 0);
+        for (let i = 0; i < localMinimas.length; i++) {           
+            ellipse(localMinimas[i][0] * graphAmplitude, localMinimas[i][1], 10, 10);
+        }
      
  
     }
