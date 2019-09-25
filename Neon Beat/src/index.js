@@ -3,7 +3,7 @@ var nbAudioContext;
 var img;
 
 function preload(){    
-  img = loadImage('assets/pelota.png');  
+  img = loadImage('assets/images/pelota.png');  
 }
 
 function setup(){
