@@ -2,20 +2,28 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>NeonBeat</title>
-
-        <!--States-->
-        <script type="text/javascript" src="src/states/Boot.js"></script>
-		<script type="text/javascript" src="src/states/Preload.js"></script>
-        <script type="text/javascript" src="src/states/MainMenu.js"></script>
-        <script type="text/javascript" src="src/states/Game.js"></script>
-        <script type="text/javascript" src="src/states/EndGame.js"></script>        
+        <title>NeonBeat</title>       
         
+        <!--States-->
+        <script type="text/javascript" src="src/states/BootState.js"></script>  
+        <script type="text/javascript" src="src/states/PreloadState.js"></script>  
+        <script type="text/javascript" src="src/states/MainMenuState.js"></script>  
+        <script type="text/javascript" src="src/states/GameState.js"></script>  
+        <script type="text/javascript" src="src/states/EndGameState.js"></script>        
+
         <!--Classes-->
         <script type="text/javascript" src="src/classes/NeonBeatAudioContext.js"></script>    
+        <script type="text/javascript" src="src/classes/Pointer.js"></script>    
 
         <!-- External libraries -->
-        <script type="text/javascript" src="scripts/phaser.js"></script>        
+        <script type="text/javascript" src="scripts/scenemanager.js"></script>        
+        <script type="text/javascript" src="scripts/p5.js"></script>     
+        <script type="text/javascript" src="scripts/p5.dom.js"></script>     
+        <script type="text/javascript" src="scripts/p5.sound.js"></script>     
+        <script type="text/javascript" src="scripts/scenemanager.js"></script>  
+        
+        
+
     </head>
     <body>     
         <input type="file" id="files" name="files[]" multiple />

@@ -11,14 +11,17 @@ var fftSize;
 var samplerate;
 var onGraphCompleted;
 var duration;
+var smoothValue;
 
 class NeonBeatAudioContext{
 
-    constructor(fft, sampleRate, callback){
+    constructor(fft, sampleRate, callback, smoothing){
         fftSize = fft;
         samplerate = sampleRate;   
         
         onGraphCompleted = callback;
+        smoothValue = smoothing;
+
     }
 
     decodeAudio(file){
@@ -38,7 +41,7 @@ class NeonBeatAudioContext{
         analyser = offlineCtx.createAnalyser();
         analyser.fftSize = fftSize;    
         analyser.connect(processor);
-        analyser.smoothingTimeConstant = 0.5;
+        analyser.smoothingTimeConstant = smoothValue;
 
         offlineSource = offlineCtx.createBufferSource();    
         offlineSource.buffer = buffer;
@@ -97,4 +100,5 @@ class NeonBeatAudioContext{
     getAudioContext(){return audioCtx;}
     playTrack(){source.start(0);}
     getTrackDuration(){return duration;}    
+    currentTime(){return audioCtx.currentTime;}   
 }
