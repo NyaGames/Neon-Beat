@@ -4,26 +4,34 @@ function GameState() {
     var pathY = [];  
     var localMinimas = [];
     var timeOffSet = null;
-    var pointer = new Pointer(0, 0, 20, img);
+    var pointer = new Pointer(0, 0, 75, sphereAnimation);
 
     var graphAmplitude = 4;
+    var input;
     var cameraOffset = 100;  
 
+    var backgroundIndex = 0;
+
     this.enter = function () {
-        nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, 0.9);
+        nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, 0.95);
+
+     
 
         console.log("[DEBUG] ***ENTERING GAME STATE***");
-        createCanvas(600, 600);
+        createCanvas(1120, 630);
+        input = createFileInput(handleFileSelect)
+        input.position(8, height + 20);
         background(0)
     }
 
     this.songLoaded = function (fft) {
+        let maxY = Math.max.apply(null, fft);
         for (let i = 0; i < fft.length; i++) {
-            let y = map(fft[i], 0, Math.max.apply(null, fft), height * 4/5, height * 1/5);
+            let y = map(fft[i], 0, maxY, height * 4/5, height * 1/5);
             pathY.push(y);
         }
 
-        let diff = 25;
+        let diff = 50;
         for (let i = 1; i < fft.length - 1; i++) {
             //Buscamos mínimos locales
             let resta1 = fft[i] - fft[i - 1];
@@ -56,9 +64,13 @@ function GameState() {
     }
 
 
-    this.draw = function () {
+    this.draw = function () {      
+        let bgIndex = Math.floor(backgroundIndex % backgroundAnimation.length);  
         background(0);
- 
+
+        imageMode(CORNER); 
+        image(backgroundAnimation[bgIndex], 0, 0, width, height);
+       
 
         if (!drawBool) return;
 
@@ -73,7 +85,8 @@ function GameState() {
         pointer.setPosition(index * graphAmplitude, pathY[index] - 10);      
         pointer.display();
 
-        stroke(255);
+        stroke(115, 178, 199);
+        strokeWeight(4)
         noFill();
         beginShape();    
 
@@ -89,6 +102,22 @@ function GameState() {
             ellipse(localMinimas[i][0] * graphAmplitude, localMinimas[i][1], 10, 10);
         }
      
- 
+        backgroundIndex++;
     }
 }
+
+function handleFileSelect(evt) {
+    var f = evt.file;
+  
+    //Cargar el archivo    
+    if (f.type === "audio/aiff" || true) {
+        var reader = new FileReader();
+        reader.onload = function(file){
+            nbAudioContext.decodeAudio(file);
+        }
+        reader.readAsArrayBuffer(f);
+    } else {
+        trow("No good file");
+    }
+    
+  }
