@@ -1,11 +1,10 @@
 class Minimum{
 
-    constructor(x,y,visited,limit){
+    constructor(x,y,visited,s){
         this.x = x;
         this.y = y;
         this.visited = visited;
-        this.limitDown = this.x - limit;
-        this.limitUp = this.x + limit;
+        this.second = s;
     }
 
 }

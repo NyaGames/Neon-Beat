@@ -18,7 +18,13 @@ function GameState() {
     var points = 0;
 
     var nextMinimum = 1;
-    var distanceFromMinimun = 4;
+    var secondsFromMinimun = 0.1;
+
+    var songDuration;
+    var playerSecond;
+    var playerMinimum = 0;
+    minimumSecondsRange = new Range(0,0);
+    lastRange = new Range(0,0);
 
     this.enter = function () {
         nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, 0.95);
@@ -30,7 +36,12 @@ function GameState() {
         background(0);
     }
 
-    this.songLoaded = function (fft) {
+    this.processBuffer = function(){
+
+    }
+
+    this.songLoaded = function (fft,d) {
+        songDuration = d;
         let maxY = Math.max.apply(null, fft);
         for (let i = 0; i < fft.length; i++) {
             let y = map(fft[i], 0, maxY, height * 4/5, height * 1/5);
@@ -60,12 +71,22 @@ function GameState() {
                 }
 
                 if(Math.abs(localMinima - localMaxima) >= diff){
+                    
                     var minimum = new Minimum(i,pathY[i],false);
                     //localMinimas.push([i, pathY[i]]);
                     localMinimas.push(minimum);
                 }
             }
         }
+
+        for(var i = 0;i < localMinimas.length;i++){
+            localMinimas[i].second = (songDuration * localMinimas[i].x)/localMinimas[localMinimas.length - 1].x;
+            localMinimas[i].second = Math.round(localMinimas[i].second * 10)/10;
+        }
+        console.log(localMinimas.length);
+
+        minimumSecondsRange.min = localMinimas[nextMinimum].second - secondsFromMinimun;
+        minimumSecondsRange.max = localMinimas[nextMinimum].second + secondsFromMinimun;
 
         nbAudioContext.playTrack();
         drawBool = true;    
@@ -98,16 +119,23 @@ function GameState() {
         pointer.display();
 
         //////////////////////////////DANI//////////////////////
-        console.log(pointer.x);
-        //Si no se ha visitado el siguiente mínimo y el jugador está en ese rango
         
-            var timeForNextDraw = 1/getFrameRate();
-            var nextIndex = Math.floor((pathY.length) * ((currentTime + timeForNextDraw)  - timeOffSet) / nbAudioContext.getTrackDuration());
-            var pointerNextPosition = nextIndex * graphAmplitude;
+        //Calculamos en qué segundo está el jugador y luego lo comparamos con el segundo en el que está el siguiente mínimo
+        playerSecond = songDuration * pointer.x / ((pathY.length - 1) * graphAmplitude);
+        playerSecond = Math.round(playerSecond * 10) / 10 //Redondeamos un decimal
+
         
-        if(!localMinimas[nextMinimum].visited && pointer.x <= localMinimas[nextMinimum].x && localMinimas[nextMinimum].x <= pointerNextPosition){
+        if(playerSecond >= minimumSecondsRange.min && playerSecond <= minimumSecondsRange.max){
+            playerMinimum = nextMinimum;
+        }
+
+        if(!localMinimas[nextMinimum].visited && playerMinimum == nextMinimum){
+            lastRange.min = minimumSecondsRange.min;
+            lastRange.max = minimumSecondsRange.max;
             localMinimas[nextMinimum].visited = true;
             nextMinimum++;
+            minimumSecondsRange.min = localMinimas[nextMinimum].second - secondsFromMinimun;
+            minimumSecondsRange.max = localMinimas[nextMinimum].second + secondsFromMinimun;
         }
         //////////////////////////////7DANI//////////////////////
 
@@ -131,9 +159,6 @@ function GameState() {
         backgroundIndex++;
 
         this.updateText();
-
-        
-
     }
 
     //Text
@@ -152,11 +177,13 @@ function GameState() {
         fill(255, 255, 255);  
         textSize(30);
         stroke('rgba(100%,0%,100%,0.0)');
-        text(pointer.x + "/" + localMinimas[nextMinimum].x,textPosX+600,textPosY);  
+        text(playerSecond + "/" + localMinimas[nextMinimum].second,textPosX+600,textPosY);  
     }
 
     this.keyPressed = function(){
-        if (keyCode === 32) { // 32 = Barra espaciadora
+        console.log(playerMinimum);
+        console.log(localMinimas[playerMinimum]);
+        if (keyCode === 32 && playerSecond >= lastRange.min && playerSecond <= lastRange.max) { // 32 = Barra espaciadora
             points += 1;
         }
     }
@@ -178,4 +205,13 @@ function handleFileSelect(evt) {
         trow("No good file");
     }
     
+  }
+
+  class Range{
+
+    constructor(min,max){
+        this.min = min;
+        this.max = max;
+    }
+
   }
