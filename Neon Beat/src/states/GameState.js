@@ -12,16 +12,22 @@ function GameState() {
 
     var backgroundIndex = 0;
 
+    var textPosX = 0;
+    var textPosY = 30;
+    var textPosIncrement = 10;
+    var points = 0;
+
+    var nextMinimum = 1;
+    var distanceFromMinimun = 4;
+
     this.enter = function () {
         nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, 0.95);
-
-     
 
         console.log("[DEBUG] ***ENTERING GAME STATE***");
         createCanvas(1120, 630);
         input = createFileInput(handleFileSelect)
         input.position(8, height + 20);
-        background(0)
+        background(0);
     }
 
     this.songLoaded = function (fft) {
@@ -54,7 +60,9 @@ function GameState() {
                 }
 
                 if(Math.abs(localMinima - localMaxima) >= diff){
-                    localMinimas.push([i, pathY[i]]);
+                    var minimum = new Minimum(i,pathY[i],false);
+                    //localMinimas.push([i, pathY[i]]);
+                    localMinimas.push(minimum);
                 }
             }
         }
@@ -78,12 +86,30 @@ function GameState() {
             timeOffSet = nbAudioContext.currentTime();
         }
 
-        let index = Math.floor((pathY.length) * (nbAudioContext.currentTime() - timeOffSet) / nbAudioContext.getTrackDuration());
+        var currentTime = nbAudioContext.currentTime();
+        let index = Math.floor((pathY.length) * (currentTime - timeOffSet) / nbAudioContext.getTrackDuration());
         
         translate(-index * graphAmplitude + cameraOffset, 0); 
 
+        //Move text position(a la vez que la cámara o empieza a rebotar D:)
+        textPosX = index * graphAmplitude + cameraOffset;
+
         pointer.setPosition(index * graphAmplitude, pathY[index] - 10);      
         pointer.display();
+
+        //////////////////////////////DANI//////////////////////
+        console.log(pointer.x);
+        //Si no se ha visitado el siguiente mínimo y el jugador está en ese rango
+        
+            var timeForNextDraw = 1/getFrameRate();
+            var nextIndex = Math.floor((pathY.length) * ((currentTime + timeForNextDraw)  - timeOffSet) / nbAudioContext.getTrackDuration());
+            var pointerNextPosition = nextIndex * graphAmplitude;
+        
+        if(!localMinimas[nextMinimum].visited && pointer.x <= localMinimas[nextMinimum].x && localMinimas[nextMinimum].x <= pointerNextPosition){
+            localMinimas[nextMinimum].visited = true;
+            nextMinimum++;
+        }
+        //////////////////////////////7DANI//////////////////////
 
         stroke(115, 178, 199);
         strokeWeight(4)
@@ -99,12 +125,44 @@ function GameState() {
         stroke(255, 0, 0);
         fill(255, 0, 0);
         for (let i = 0; i < localMinimas.length; i++) {           
-            ellipse(localMinimas[i][0] * graphAmplitude, localMinimas[i][1], 10, 10);
+            ellipse(localMinimas[i].x * graphAmplitude, localMinimas[i].y, 10, 10);
         }
      
         backgroundIndex++;
+
+        this.updateText();
+
+        
+
     }
+
+    //Text
+    this.updateText = function(){
+        fill(255, 255, 255);  
+        textSize(30);
+        stroke('rgba(100%,0%,100%,0.0)');
+        text('Points:' + points,textPosX,textPosY);  
+
+        //Next minimun
+        fill(255, 255, 255);  
+        textSize(30);
+        stroke('rgba(100%,0%,100%,0.0)');
+        text('Next minimun:' + nextMinimum,textPosX+200,textPosY);  
+
+        fill(255, 255, 255);  
+        textSize(30);
+        stroke('rgba(100%,0%,100%,0.0)');
+        text(pointer.x + "/" + localMinimas[nextMinimum].x,textPosX+600,textPosY);  
+    }
+
+    this.keyPressed = function(){
+        if (keyCode === 32) { // 32 = Barra espaciadora
+            points += 1;
+        }
+    }
+
 }
+
 
 function handleFileSelect(evt) {
     var f = evt.file;
