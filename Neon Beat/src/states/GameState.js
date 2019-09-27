@@ -17,14 +17,13 @@ function GameState() {
     var textPosIncrement = 10;
     var points = 0;
 
-    var nextMinimum = 1;
+    var nextMinimum = 0;
     var secondsFromMinimun = 0.1;
 
     var songDuration;
     var playerSecond;
-    var playerMinimum = 0;
+    var playerAtMinimum = false;
     minimumSecondsRange = new Range(0,0);
-    lastRange = new Range(0,0);
 
     this.enter = function () {
         nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, 0.95);
@@ -41,7 +40,7 @@ function GameState() {
     }
 
     this.songLoaded = function (fft,d) {
-        songDuration = d;
+        songDuration = Math.round(d);
         let maxY = Math.max.apply(null, fft);
         for (let i = 0; i < fft.length; i++) {
             let y = map(fft[i], 0, maxY, height * 4/5, height * 1/5);
@@ -71,7 +70,6 @@ function GameState() {
                 }
 
                 if(Math.abs(localMinima - localMaxima) >= diff){
-                    
                     var minimum = new Minimum(i,pathY[i],false);
                     //localMinimas.push([i, pathY[i]]);
                     localMinimas.push(minimum);
@@ -80,13 +78,9 @@ function GameState() {
         }
 
         for(var i = 0;i < localMinimas.length;i++){
-            localMinimas[i].second = (songDuration * localMinimas[i].x)/localMinimas[localMinimas.length - 1].x;
+            localMinimas[i].second = (songDuration * localMinimas[i].x)/((pathY.length - 1)); //localMinimas[localMinimas.length - 1].x;
             localMinimas[i].second = Math.round(localMinimas[i].second * 10)/10;
         }
-        console.log(localMinimas.length);
-
-        minimumSecondsRange.min = localMinimas[nextMinimum].second - secondsFromMinimun;
-        minimumSecondsRange.max = localMinimas[nextMinimum].second + secondsFromMinimun;
 
         nbAudioContext.playTrack();
         drawBool = true;    
@@ -124,18 +118,16 @@ function GameState() {
         playerSecond = songDuration * pointer.x / ((pathY.length - 1) * graphAmplitude);
         playerSecond = Math.round(playerSecond * 10) / 10 //Redondeamos un decimal
 
-        
-        if(playerSecond >= minimumSecondsRange.min && playerSecond <= minimumSecondsRange.max){
-            playerMinimum = nextMinimum;
-        }
+        //Calculamos el rango para el mínimo, en el que el jugador puede puntuar
+        minimumSecondsRange.min = localMinimas[nextMinimum].second - secondsFromMinimun;
+        minimumSecondsRange.max = localMinimas[nextMinimum].second + secondsFromMinimun;
 
-        if(!localMinimas[nextMinimum].visited && playerMinimum == nextMinimum){
-            lastRange.min = minimumSecondsRange.min;
-            lastRange.max = minimumSecondsRange.max;
-            localMinimas[nextMinimum].visited = true;
+        //Si el jugador está en el rango del mínimo, puede pulsar la tecla y puntuar
+        if(playerSecond >= minimumSecondsRange.min && playerSecond <= minimumSecondsRange.max){
+            playerAtMinimum = true;
+        }else if(playerSecond > minimumSecondsRange.max){
+            playerAtMinimum = false;
             nextMinimum++;
-            minimumSecondsRange.min = localMinimas[nextMinimum].second - secondsFromMinimun;
-            minimumSecondsRange.max = localMinimas[nextMinimum].second + secondsFromMinimun;
         }
         //////////////////////////////7DANI//////////////////////
 
@@ -151,9 +143,19 @@ function GameState() {
         endShape();    
 
         stroke(255, 0, 0);
-        fill(255, 0, 0);
-        for (let i = 0; i < localMinimas.length; i++) {           
-            ellipse(localMinimas[i].x * graphAmplitude, localMinimas[i].y, 10, 10);
+        for (let i = 0; i < localMinimas.length; i++) {   
+            fill(255, 255, 255);  
+            textSize(15);
+            stroke('rgba(100%,0%,100%,0.0)');
+            text(i,localMinimas[i].x * graphAmplitude,localMinimas[i].y - 15);  
+            if(!localMinimas[i].visited){
+                fill(255, 0, 0);
+                ellipse(localMinimas[i].x * graphAmplitude, localMinimas[i].y, 10, 10);
+            }else{
+                fill(0, 255, 0);
+                ellipse(localMinimas[i].x * graphAmplitude, localMinimas[i].y, 10, 10);
+            }
+           
         }
      
         backgroundIndex++;
@@ -173,17 +175,12 @@ function GameState() {
         textSize(30);
         stroke('rgba(100%,0%,100%,0.0)');
         text('Next minimun:' + nextMinimum,textPosX+200,textPosY);  
-
-        fill(255, 255, 255);  
-        textSize(30);
-        stroke('rgba(100%,0%,100%,0.0)');
-        text(playerSecond + "/" + localMinimas[nextMinimum].second,textPosX+600,textPosY);  
+ 
     }
 
     this.keyPressed = function(){
-        console.log(playerMinimum);
-        console.log(localMinimas[playerMinimum]);
-        if (keyCode === 32 && playerSecond >= lastRange.min && playerSecond <= lastRange.max) { // 32 = Barra espaciadora
+        if (keyCode === 32 && playerAtMinimum && !localMinimas[nextMinimum].visited) { // 32 = Barra espaciadora
+            localMinimas[nextMinimum].visited = true;
             points += 1;
         }
     }
