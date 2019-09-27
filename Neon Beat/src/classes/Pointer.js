@@ -14,13 +14,15 @@ class Pointer{
 
     display(){
         let index = Math.floor(this.index) % this.len;
-        imageMode(CENTER);
-        image(this.animation[index], this.x, this.y, this.r*2, this.r);
+        tint(0, 239, 255, 255);
+        imageMode(CENTER);       
+        image(this.animation[index], this.x, this.y, this.r, this.r);      
+        noTint();
         this.index += this.speed;      
     }
 
     setPosition(x, y){
         this.x = x;
-        this.y = y;
+        this.y = y + 7;
     }
 }
