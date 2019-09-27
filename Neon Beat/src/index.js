@@ -12,11 +12,11 @@ function preload(){
   img = loadImage('assets/images/pelota.png');  
   for (let i = 0; i < sphereAnimNumber; i++) {
     if(i < 10){
-        sphereAnimation.push(loadImage('assets/images/EsferaPequeñisima/0000' + i + '.png'));
+        sphereAnimation.push(loadImage('assets/images/EsferaPrueba/0000' + i + '.png'));
     }else if(i < 100){
-        sphereAnimation.push(loadImage('assets/images/EsferaPequeñisima/000' + i + '.png'));
+        sphereAnimation.push(loadImage('assets/images/EsferaPrueba/000' + i + '.png'));
     }else if(i < 1000){
-        sphereAnimation.push(loadImage('assets/images/EsferaPequeñisima/00' + i + '.png'));
+        sphereAnimation.push(loadImage('assets/images/EsferaPrueba/00' + i + '.png'));
     } 
       
   }
