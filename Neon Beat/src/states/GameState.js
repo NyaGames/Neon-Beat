@@ -17,13 +17,26 @@ function GameState() {
     var textPosIncrement = 10;
     var points = 0;
 
+    //Gameplay variables
     var nextMinimum = 0;
     var secondsFromMinimun = 0.1;
-
     var songDuration;
     var playerSecond;
     var playerAtMinimum = false;
     minimumSecondsRange = new Range(0,0);
+
+    //Minimum circles
+    var startDiameter = 50;
+    var actualtDiameter = startDiameter;
+    var radius = startDiameter/2;
+    var recorridoEnSegundos; 
+    var numLlamadasALaFuncion;
+    var restaAlDiametro = 5;
+    var timer;
+
+    this.setup = function(){
+        //frameRate(20);
+    }
 
     this.enter = function () {
         nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, 0.95);
@@ -82,12 +95,23 @@ function GameState() {
             localMinimas[i].second = Math.round(localMinimas[i].second * 10)/10;
         }
 
+        playerSecond = songDuration * pointer.x / ((pathY.length - 1) * graphAmplitude);
+        playerSecond = Math.round(playerSecond * 10) / 10 //Redondeamos un decimal
+
+        recorridoEnSegundos = localMinimas[nextMinimum].second - playerSecond;
+
         nbAudioContext.playTrack();
         drawBool = true;    
+        
     }
 
+    this.getPlayerSecond = function(){
+        //Calculamos en qué segundo está el jugador 
+        playerSecond = songDuration * pointer.x / ((pathY.length - 1) * graphAmplitude);
+        playerSecond = Math.round(playerSecond * 10) / 10 //Redondeamos un decimal
+    }
 
-    this.draw = function () {      
+    this.draw = function () {  
         let bgIndex = Math.floor(backgroundIndex % backgroundAnimation.length);  
         background(0);
 
@@ -113,11 +137,8 @@ function GameState() {
         pointer.display();
 
         //////////////////////////////DANI//////////////////////
-        
-        //Calculamos en qué segundo está el jugador y luego lo comparamos con el segundo en el que está el siguiente mínimo
-        playerSecond = songDuration * pointer.x / ((pathY.length - 1) * graphAmplitude);
-        playerSecond = Math.round(playerSecond * 10) / 10 //Redondeamos un decimal
 
+        this.getPlayerSecond();
         //Calculamos el rango para el mínimo, en el que el jugador puede puntuar
         minimumSecondsRange.min = localMinimas[nextMinimum].second - secondsFromMinimun;
         minimumSecondsRange.max = localMinimas[nextMinimum].second + secondsFromMinimun;
@@ -125,10 +146,12 @@ function GameState() {
         //Si el jugador está en el rango del mínimo, puede pulsar la tecla y puntuar
         if(playerSecond >= minimumSecondsRange.min && playerSecond <= minimumSecondsRange.max){
             playerAtMinimum = true;
+            actualtDiameter = startDiameter;
         }else if(playerSecond > minimumSecondsRange.max){
             playerAtMinimum = false;
             nextMinimum++;
-        }
+            console.log("Nuevo mínimo:" + nextMinimum);
+        }        
         //////////////////////////////7DANI//////////////////////
 
         stroke(115, 178, 199);
@@ -142,6 +165,9 @@ function GameState() {
 
         endShape();    
 
+        stroke(0, 0, 255);
+        ellipse(localMinimas[nextMinimum].x * graphAmplitude, localMinimas[nextMinimum].y, actualtDiameter, actualtDiameter);  
+        
         stroke(255, 0, 0);
         for (let i = 0; i < localMinimas.length; i++) {   
             fill(255, 255, 255);  
