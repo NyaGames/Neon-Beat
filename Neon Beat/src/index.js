@@ -1,33 +1,59 @@
-var NeonBeat = NeonBeat || {};
-NeonBeat.game = new Phaser.Game(600, 600, Phaser.AUTO, ' ');
+var mgr;
+var nbAudioContext;
+var img;
 
-NeonBeat.global = {
-    DEBUG_MODE: true,
-    nbAudioCtx: new NeonBeatAudioContext(1024, 48000, NeonBeat.GameState.prototype.songLoaded)
+var sphereAnimNumber = 60;
+var backgroundNumber = 180;
+
+var sphereAnimation = [];
+var backgroundAnimation = [];
+
+function preload(){    
+  img = loadImage('assets/images/pelota.png');  
+  for (let i = 0; i < sphereAnimNumber; i++) {
+    if(i < 10){
+        sphereAnimation.push(loadImage('assets/images/EsferaPrueba/0000' + i + '.png'));
+    }else if(i < 100){
+        sphereAnimation.push(loadImage('assets/images/EsferaPrueba/000' + i + '.png'));
+    }else if(i < 1000){
+        sphereAnimation.push(loadImage('assets/images/EsferaPrueba/00' + i + '.png'));
+    } 
+      
+  }
+
+  for (let i = 0; i < backgroundNumber; i++) {
+    if(i < 10){
+        backgroundAnimation.push(loadImage('assets/images/Particulillas/Twirst_0000' + i + '.png'));
+    }else if(i < 100){
+        backgroundAnimation.push(loadImage('assets/images/Particulillas/Twirst_000' + i + '.png'));
+    }else if(i < 1000){
+        backgroundAnimation.push(loadImage('assets/images/Particulillas/Twirst_00' + i + '.png'));
+    } 
+  }
 }
 
-NeonBeat.game.state.add('Boot', NeonBeat.Boot);
-NeonBeat.game.state.add('Preload', NeonBeat.Preload);
-NeonBeat.game.state.add('MainMenu', NeonBeat.MainMenu);
-NeonBeat.game.state.add('GameState', NeonBeat.GameState);
-NeonBeat.game.state.add('EndGame', NeonBeat.EndGame);
+function setup(){
+    createCanvas(600, 500);
 
-NeonBeat.game.state.start('Boot');
+    mgr = new SceneManager();
 
-document.getElementById('files').addEventListener('change', handleFileSelect, false);
+    mgr.addScene(BootState);
+    mgr.addScene(PreloadState); 
+    mgr.addScene(MainMenuState); 
+    mgr.addScene(GameState); 
+    mgr.addScene(EndGameState); 
 
-//To Do: integrar esto en phaser y solo en el estado game
-function handleFileSelect(evt){
-    var files = evt.target.files;
+    mgr.showNextScene();    
+}
 
-    //Cargar el archivo
-    for (var i = 0, f; f = files[i]; i++) {    
-      if (f.type === "audio/aiff" || true) {
-        var reader = new FileReader();
-        reader.onload = NeonBeat.GameState.prototype.songAdded; //On load end callback
-        reader.readAsArrayBuffer(f);
-      } else {
-        trow("No good file");
-      }
-    }
+function draw(){
+    mgr.draw();
+}
+
+function mousePressed(){
+    mgr.handleEvent("mousePressed");
+}
+
+function keyPressed(){
+    mgr.handleEvent("keyPressed");
 }

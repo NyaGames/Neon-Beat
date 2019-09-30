@@ -5,29 +5,32 @@ var processAudio;
 var offlineSource;
 var source;
 var processor;
-var fftHistory = [];   
+var fftHistory = [];
 
 var fftSize;
 var samplerate;
 var onGraphCompleted;
 var duration;
+var smoothValue;
 
-class NeonBeatAudioContext{
+class NeonBeatAudioContext {
 
-    constructor(fft, sampleRate, callback){
+    constructor(fft, sampleRate, callback, smoothing) {
         fftSize = fft;
-        samplerate = sampleRate;   
-        
+        samplerate = sampleRate;
+
         onGraphCompleted = callback;
+        smoothValue = smoothing;
+
     }
 
-    decodeAudio(file){
-        audioCtx = new AudioContext();                                   
-        console.log("[GRAPH GENERATOR]Creating buffer..."); 
-        audioCtx.decodeAudioData(file.target.result, this.processBuffer, function(err) { console.log(err);});
+    decodeAudio(file) {
+        audioCtx = new AudioContext();
+        console.log("[GRAPH GENERATOR]Creating buffer...");
+        audioCtx.decodeAudioData(file.target.result, this.processBuffer, function (err) { console.log(err); });
     }
 
-    processBuffer(buffer){
+    processBuffer(buffer) {
         duration = buffer.duration;
         length = buffer.length;
         offlineCtx = new OfflineAudioContext(1, length, samplerate);
@@ -36,11 +39,11 @@ class NeonBeatAudioContext{
         processor.connect(offlineCtx.destination);
 
         analyser = offlineCtx.createAnalyser();
-        analyser.fftSize = fftSize;    
+        analyser.fftSize = fftSize;
         analyser.connect(processor);
-        analyser.smoothingTimeConstant = 0.5;
+        analyser.smoothingTimeConstant = smoothValue;
 
-        offlineSource = offlineCtx.createBufferSource();    
+        offlineSource = offlineCtx.createBufferSource();
         offlineSource.buffer = buffer;
         offlineSource.connect(analyser);
 
@@ -48,26 +51,26 @@ class NeonBeatAudioContext{
         source.buffer = buffer;
         source.connect(audioCtx.destination);
 
-        processor.onaudioprocess = NeonBeatAudioContext.prototype.processAudio;     
+        processor.onaudioprocess = NeonBeatAudioContext.prototype.processAudio;
 
         console.log("[GRAPH GENERATOR]Starting...");
 
-        offlineSource.start(0);    
+        offlineSource.start(0);
         offlineCtx.startRendering();
     }
 
-    processAudio(e){
+    processAudio(e) {
         var data = new Uint8Array(analyser.frequencyBinCount);
         analyser.getByteFrequencyData(data);
         NeonBeatAudioContext.prototype.freqToInt(data);
-        let centroid = NeonBeatAudioContext.prototype.getCentroid(data);       
+        let centroid = NeonBeatAudioContext.prototype.getCentroid(data);
         fftHistory.push(centroid);
 
-        if(fftHistory.length == Math.floor(length / fftSize))
+        if (fftHistory.length == Math.floor(length / fftSize))
             NeonBeatAudioContext.prototype.onEnd();
     }
 
-    getCentroid(data){
+    getCentroid(data) {
         var nyquist = offlineCtx.sampleRate / 2;
         var cumulative_sum = 0;
         var centroid_normalization = 0;
@@ -81,20 +84,22 @@ class NeonBeatAudioContext{
         }
         var spec_centroid_freq = mean_freq_index * (nyquist / data.length);
         return spec_centroid_freq;
-    }
 
-    onEnd(){
+    } 
+
+    onEnd() {
         console.log('[GRAPH GENERATOR]Analysis Ended');
         onGraphCompleted(fftHistory);
     }
 
-    freqToInt(data){
+    freqToInt(data) {
         if (data instanceof Uint8Array === false) {
             data = new Uint8Array(analyser.frequencyBinCount);
-          }
+        }
     }
 
-    getAudioContext(){return audioCtx;}
-    playTrack(){source.start(0);}
-    getTrackDuration(){return duration;}    
+    getAudioContext() { return audioCtx; }
+    playTrack() { source.start(0); }
+    getTrackDuration() { return duration; }
+    currentTime() { return audioCtx.currentTime; }
 }
