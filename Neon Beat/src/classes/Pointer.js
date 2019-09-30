@@ -8,7 +8,7 @@ class Pointer{
 
         this.len = this.animation.length;
 
-        this.speed = 1;
+        this.speed = 0.4;
         this.index = 0;        
     }
 

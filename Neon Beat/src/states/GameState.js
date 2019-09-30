@@ -14,12 +14,11 @@ function GameState() {
     var backgroundIndex = 0;
 
     this.enter = function () {
-        nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, 0.9);
-
+        nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, 0.9);       
         console.log("[DEBUG] ***ENTERING GAME STATE***");
-        canvas = createCanvas(1120, 630);
-        input = createFileInput(handleFileSelect)
-        input.position(8, height + 20);
+        canvas = createCanvas(912, 513);
+        canvas.position(window.outerWidth * 0.20, window.outerHeight * 0.16);
+        input = createFileInput(handleFileSelect)     
         canvas.background(0);
         cameraOffset = width * 1 / 3;
     }
@@ -28,22 +27,29 @@ function GameState() {
         let maxY = Math.max.apply(null, fft);
         console.log(maxY);
         for (let i = 0; i < fft.length; i++) {
-            let y = map(fft[i], 0, maxY, height * 4 / 5, height * 1 / 5);           
+            let y = map(fft[i], 0, maxY, height * 4 / 5, height * 1 / 5);
             pathY.push(y);
         }
 
         //Buscamos mínimos locales
         let diff;
-        let diffs = [5, 15, 20, 25, 30, 350, 600];    
+        let diffs = [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40];
         let intervals = [
-            [0, 30], 
-            [30, 60],
-            [60, 240],
-            [240, 630],
-            [630, 2800], 
-            [2800, 4300], 
-            [4300, maxY]            
+            [0, 60],
+            [60, 130],
+            [130, 260],
+            [260, 520],
+            [520, 1040],
+            [1040, 1480],
+            [1480, 2080],
+            [2080, 3000],
+            [3000, 4160],
+            [4160, 6000],
+            [6000, maxY]
         ]
+        let minDistance = 10;
+        let previousMin = -1;
+
         for (let i = 1; i < fft.length - 1; i++) {
 
             let resta1 = fft[i] - fft[i - 1];
@@ -51,37 +57,46 @@ function GameState() {
 
             let localMaxima;
             let localMinima;
+
             if (resta1 <= 0 && resta2 < 0) {
-                //Mínimo local encontrado, ahora buscamos el máximo local más cercano
+                //Mínimo local encontrado
                 localMinima = fft[i];
 
-                //Buscamos el intervalo en el que se encunetra
-
+                //Buscamos el intervalo en el que se encuentra y asignamos la diferencia que tiene que haber entre el mínimo y el máximo
+                //inmediato
                 let interval;
                 for (let i = 0; i < intervals.length; i++) {
-                    if(localMinima >= intervals[i][0] && localMinima < intervals[i][1]){
+                    if (localMinima >= intervals[i][0] && localMinima < intervals[i][1]) {
                         interval = intervals[i]
                         diff = diffs[i];
-                    }                    
+                    }
                 }
 
+                //Buscamos máximo local
                 for (let j = i; j < fft.length; j++) {
                     resta1 = fft[j] - fft[j - 1];
                     resta2 = fft[j] - fft[j + 1];
 
                     if (resta1 > 0 && resta2 > 0) {
+                        //Máximo local encontrado;
                         localMaxima = fft[j];
                         break;
                     }
-
                 }
 
-                //localMinima = map(localMinima, 0, maxY, 0, diffs.length);
+                //Vemos si la diferencia de frecuencias entre el mínimo y el máximo es suficiente
                 if (Math.abs(localMinima - localMaxima) >= diff) {
-                    localMinimas.push([i, pathY[i]]);
+                    //Miramos si está lo suficientemente lejos del mínimo local anterior
+                    if (Math.abs(i - previousMin) >= minDistance || previousMin == -1) {
+                        localMinimas.push([i, pathY[i]]);
+
+                        previousMin = i;
+                    }
                 }
+
             }
         }
+
 
         nbAudioContext.playTrack();
         drawBool = true;
@@ -140,20 +155,18 @@ function GameState() {
             stroke(colors[j]);
             strokeWeight(1)
             noFill();
-            beginShape();         
-          
-            for (var i = limite1; i < limite2; i++) {                
-                if(i < 0)
-                {
+            beginShape();
+
+            for (var i = limite1; i < limite2; i++) {
+                if (i < 0) {
                     //Línea recta para la parte del canvas en la que la canción no ha empezado todavía
-                    vertex(i, height * 4/5 + offset);                
+                    vertex(i, height * 4 / 5 + offset);
                 }
-                else
-                {
+                else {
                     //Onda
-                    vertex(i * graphAmplitude, pathY[i] + offset);         
+                    vertex(i * graphAmplitude, pathY[i] + offset);
                 }
-            }         
+            }
 
 
             endShape();
@@ -170,7 +183,7 @@ function GameState() {
         //Mueve el puntero del jugador     
         pointer.setPosition(playerIndex * graphAmplitude, pathY[playerIndex] - 10);
         pointer.display();
-  
+
 
         backgroundIndex++;
     }
