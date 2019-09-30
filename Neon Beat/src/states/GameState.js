@@ -14,7 +14,6 @@ function GameState() {
 
     var textPosX = 0;
     var textPosY = 30;
-    var textPosIncrement = 10;
     var points = 0;
 
     //Gameplay variables
@@ -28,11 +27,6 @@ function GameState() {
     //Minimum circles
     var startDiameter = 50;
     var actualtDiameter = startDiameter;
-    var radius = startDiameter/2;
-    var recorridoEnSegundos; 
-    var numLlamadasALaFuncion;
-    var restaAlDiametro = 5;
-    var timer;
 
     this.setup = function(){
         //frameRate(20);
@@ -168,16 +162,14 @@ function GameState() {
         stroke(0, 0, 255);
         ellipse(localMinimas[nextMinimum].x * graphAmplitude, localMinimas[nextMinimum].y, actualtDiameter, actualtDiameter);  
         
-        stroke(255, 0, 0);
+        
         for (let i = 0; i < localMinimas.length; i++) {   
-            fill(255, 255, 255);  
-            textSize(15);
-            stroke('rgba(100%,0%,100%,0.0)');
-            text(i,localMinimas[i].x * graphAmplitude,localMinimas[i].y - 15);  
             if(!localMinimas[i].visited){
+                stroke(255, 0, 0);
                 fill(255, 0, 0);
                 ellipse(localMinimas[i].x * graphAmplitude, localMinimas[i].y, 10, 10);
             }else{
+                stroke(0, 255, 0);
                 fill(0, 255, 0);
                 ellipse(localMinimas[i].x * graphAmplitude, localMinimas[i].y, 10, 10);
             }
@@ -194,13 +186,7 @@ function GameState() {
         fill(255, 255, 255);  
         textSize(30);
         stroke('rgba(100%,0%,100%,0.0)');
-        text('Points:' + points,textPosX,textPosY);  
-
-        //Next minimun
-        fill(255, 255, 255);  
-        textSize(30);
-        stroke('rgba(100%,0%,100%,0.0)');
-        text('Next minimun:' + nextMinimum,textPosX+200,textPosY);  
+        text('Points:' + points,textPosX,textPosY);   
  
     }
 
