@@ -51,8 +51,7 @@ class NeonBeatAudioContext {
         source.buffer = buffer;
         source.connect(audioCtx.destination);
 
-        processor.onaudioprocess = NeonBeatAudioContext.prototype.processAudio;
-
+        processor.onaudioprocess = NeonBeatAudioContext.prototype.processAudio;  
         console.log("[GRAPH GENERATOR]Starting...");
 
         offlineSource.start(0);
@@ -89,7 +88,7 @@ class NeonBeatAudioContext {
 
     onEnd() {
         console.log('[GRAPH GENERATOR]Analysis Ended');
-        onGraphCompleted(fftHistory);
+        onGraphCompleted(fftHistory,duration);
     }
 
     freqToInt(data) {
