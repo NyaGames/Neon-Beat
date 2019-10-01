@@ -4,9 +4,15 @@ var img;
 
 var sphereAnimNumber = 60;
 var backgroundNumber = 180;
+var circleNumber = 30;
+var successNumber = 16;
+var failNumber = 16;
 
 var sphereAnimation = [];
 var backgroundAnimation = [];
+var circleAnimation = [];
+var successAnimation = [];
+var failAnimation = [];
 
 function preload(){    
   img = loadImage('assets/images/pelota.png');  
@@ -29,6 +35,38 @@ function preload(){
         backgroundAnimation.push(loadImage('assets/AfterEffect/NuevasParticulillas/00' + i + '.png'));
     } 
   }
+
+  for (let i = 0; i < circleNumber; i++) {
+    if(i < 10){
+        circleAnimation.push(loadImage('assets/AfterEffect/Circunferencia/0000' + i + '.png'));
+    }else if(i < 100){
+        circleAnimation.push(loadImage('assets/AfterEffect/Circunferencia/000' + i + '.png'));
+    }else if(i < 1000){
+        circleAnimation.push(loadImage('assets/AfterEffect/Circunferencia/00' + i + '.png'));
+    } 
+  }
+
+  for (let i = 0; i < successNumber; i++) {
+    if(i < 10){
+        successAnimation.push(loadImage('assets/AfterEffect/Acierto/0000' + i + '.png'));
+    }else if(i < 100){
+        successAnimation.push(loadImage('assets/AfterEffect/Acierto/000' + i + '.png'));
+    }else if(i < 1000){
+        successAnimation.push(loadImage('assets/AfterEffect/Acierto/00' + i + '.png'));
+    } 
+  }
+
+  for (let i = 0; i < failNumber; i++) {
+    if(i < 10){
+        failAnimation.push(loadImage('assets/AfterEffect/fallo/0000' + i + '.png'));
+    }else if(i < 100){
+        failAnimation.push(loadImage('assets/AfterEffect/fallo/000' + i + '.png'));
+    }else if(i < 1000){
+        failAnimation.push(loadImage('assets/AfterEffect/fallo/00' + i + '.png'));
+    } 
+  }
+
+
 }
 
 function setup(){

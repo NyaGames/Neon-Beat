@@ -149,7 +149,7 @@ function GameState() {
                 if (Math.abs(localMinima - localMaxima) >= diff) {
                     //Miramos si está lo suficientemente lejos del mínimo local anterior
                     if (Math.abs(i - previousMin) >= minDistance || previousMin == -1) {
-                        var minimum = new Minimum(i, pathY[i], false);
+                        var minimum = new Minimum(i, pathY[i], false,circleAnimation,successAnimation,failAnimation);
                         //localMinimas.push([i, pathY[i]]);
                         localMinimas.push(minimum);
                         localMinimas[localMinimas.length-1].index = localMinimas.length-1;
@@ -242,28 +242,30 @@ function GameState() {
 
         //Si el jugador está en el rango del mínimo, puede pulsar la tecla y puntuar
         if (playerSecond >= minimumSecondsRange.min && playerSecond <= minimumSecondsRange.max) {
+            localMinimas[nextMinimum].visited = true;
             playerAtMinimum = true;
         } else if (playerSecond > minimumSecondsRange.max) {
             playerAtMinimum = false;
+            localMinimas[nextMinimum].fail = true;
             nextMinimum++;
-            console.log("Nuevo mínimo:" + nextMinimum);
         }  
 
-        //var newDiameter = (startDiameter * playerSecond)/circleSeconds;
-        //stroke(0, 0, 255);
-        //ellipse(localMinimas[nextMinimum].x * graphAmplitude, localMinimas[nextMinimum].y, newDiameter, newDiameter);
         for (let i = 0; i < localMinimas.length; i++) {
-            localMinimas[i].drawCircle(pointer.x,startDiameter,graphAmplitude);
-           if (!localMinimas[i].visited) {
-                stroke(255, 0, 0);
-                fill(255, 0, 0);
-                ellipse(localMinimas[i].x * graphAmplitude, localMinimas[i].y, 10, 10);
-            } else {
+            localMinimas[i].drawCircle(pointer.x,startDiameter,graphAmplitude); 
+            localMinimas[i].successOrFail(graphAmplitude);
+            if(localMinimas[i].success){
                 stroke(0, 255, 0);
                 fill(0, 255, 0);
                 ellipse(localMinimas[i].x * graphAmplitude, localMinimas[i].y, 10, 10);
+            }else if(localMinimas[i].fail){
+                stroke(255, 0, 0);
+                fill(255, 0, 0);
+                ellipse(localMinimas[i].x * graphAmplitude, localMinimas[i].y, 10, 10);
+            } else{
+                stroke(0, 0, 255);
+                fill(0, 0, 255);
+                ellipse(localMinimas[i].x * graphAmplitude, localMinimas[i].y, 10, 10);
             }
-
         }
 
         //Mueve el puntero del jugador     
@@ -279,9 +281,17 @@ function GameState() {
 
     //#region[rgba(155, 28, 99, 0.1)]Eventos
     this.keyPressed = function () {
-        if (keyCode === 32 && playerAtMinimum && !localMinimas[nextMinimum].visited) { // 32 = Barra espaciadora
-            localMinimas[nextMinimum].visited = true;
+        animationIndex = 0;
+        //Si pulsamos la tecla y todavía no hemos acertado ni fallado, se considera acierto
+        if (keyCode === 32 && playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail) { // 32 = Barra espaciadora
+            localMinimas[nextMinimum].success = true;
+            localMinimas[nextMinimum].fail = false;
             points += 1;
+        }else if(keyCode === 32 && !playerAtMinimum){ //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos y se pasa al siguiente mínimo
+            localMinimas[nextMinimum].success = false;
+            localMinimas[nextMinimum].fail = true;
+            nextMinimum++;
+            console.log("fallaste");        
         }
     }
 
