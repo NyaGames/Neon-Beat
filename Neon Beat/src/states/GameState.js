@@ -54,8 +54,9 @@ function GameState() {
     minimumSecondsRange = new Range(0, 0);
 
     //Minimum circles
-    var startDiameter = 50;
+    var startDiameter = 100;
     var actualtDiameter = startDiameter;
+    var circleSeconds = 3;
     //#endregion
 
     //#region[rgba(28, 155, 99, 0.1)]Setup
@@ -147,7 +148,7 @@ function GameState() {
                         var minimum = new Minimum(i, pathY[i], false);
                         //localMinimas.push([i, pathY[i]]);
                         localMinimas.push(minimum);
-
+                        localMinimas[localMinimas.length-1].index = localMinimas.length-1;
                         previousMin = i;
                     }
                 }
@@ -230,8 +231,6 @@ function GameState() {
         //Move text position(a la vez que la cámara o empieza a rebotar D:)
         textPosX = playerIndex * graphAmplitude + cameraOffset;
 
-        //////////////////////////////DANI//////////////////////
-
         this.getPlayerSecond();
         //Calculamos el rango para el mínimo, en el que el jugador puede puntuar
         minimumSecondsRange.min = localMinimas[nextMinimum].second - secondsFromMinimun;
@@ -240,20 +239,18 @@ function GameState() {
         //Si el jugador está en el rango del mínimo, puede pulsar la tecla y puntuar
         if (playerSecond >= minimumSecondsRange.min && playerSecond <= minimumSecondsRange.max) {
             playerAtMinimum = true;
-            actualtDiameter = startDiameter;
         } else if (playerSecond > minimumSecondsRange.max) {
             playerAtMinimum = false;
             nextMinimum++;
             console.log("Nuevo mínimo:" + nextMinimum);
-        }
-        //////////////////////////////DANI//////////////////////    
+        }  
 
-
-        stroke(0, 0, 255);
-        ellipse(localMinimas[nextMinimum].x * graphAmplitude, localMinimas[nextMinimum].y, actualtDiameter, actualtDiameter);
-
+        //var newDiameter = (startDiameter * playerSecond)/circleSeconds;
+        //stroke(0, 0, 255);
+        //ellipse(localMinimas[nextMinimum].x * graphAmplitude, localMinimas[nextMinimum].y, newDiameter, newDiameter);
         for (let i = 0; i < localMinimas.length; i++) {
-            if (!localMinimas[i].visited) {
+            localMinimas[i].drawCircle(pointer.x,startDiameter,graphAmplitude);
+           if (!localMinimas[i].visited) {
                 stroke(255, 0, 0);
                 fill(255, 0, 0);
                 ellipse(localMinimas[i].x * graphAmplitude, localMinimas[i].y, 10, 10);
