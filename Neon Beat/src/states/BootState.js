@@ -4,4 +4,8 @@ function BootState(){
        console.log("[DEBUG] ***ENTERING BOOT STATE***")
        mgr.showScene(PreloadState);
     }  
+
+    this.draw = function(){
+        
+    }
 }

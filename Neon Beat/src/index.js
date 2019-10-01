@@ -17,8 +17,7 @@ function preload(){
         sphereAnimation.push(loadImage('assets/images/EsferaPrueba/000' + i + '.png'));
     }else if(i < 1000){
         sphereAnimation.push(loadImage('assets/images/EsferaPrueba/00' + i + '.png'));
-    } 
-      
+    }       
   }
 
   for (let i = 0; i < backgroundNumber; i++) {

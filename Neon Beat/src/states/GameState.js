@@ -64,6 +64,10 @@ function GameState() {
         canvas = createCanvas(912, 513);
         canvas.position(window.outerWidth * 0.20, window.outerHeight * 0.16);
         input = createFileInput(this.handleFileSelect)
+        var pruebaBoton = createDiv()     
+        pruebaBoton.position(window.outerWidth * 0.20, window.outerHeight * 0.16)
+        pruebaBoton.elt.style.zindex = 1
+        //pruebaBoton.elt.style.background-image = url('assets/images/gameplay/fondo_gameplay.png');
         sel = createSelect();
         sel.option('Normal');
         sel.option('Easy');
@@ -312,8 +316,7 @@ function GameState() {
             reader.readAsArrayBuffer(f);
         } else {
             trow("No good file");
-        }
-    
+        }    
     }
     //#endregion
 
