@@ -1,14 +1,43 @@
 function GameState() {
 
-    var canvas;
-    var drawBool = false;
+    //#region [rgba(255, 0, 0, 0.1)]Variables
+    var difficulties = {
+        easy:{
+            graphAmplitude: 4,
+            secondsFromMinimun: 0.1,
+            waveSmoothing: 0.95,
+            diffs: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40],
+            minDistance: 10,
+        },
+        normal: {
+            graphAmplitude: 6,
+            secondsFromMinimun: 0.1,
+            waveSmoothing: 0.9,
+            diffs: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40],
+            minDistance: 10,
+        },
+        difficult: {
+            graphAmplitude: 8,
+            secondsFromMinimun: 0.1,
+            waveSmoothing: 0.6,
+            diffs: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40],
+            minDistance: 10,
+        }
+    }
+
     var pathY = [];
     var localMinimas = [];
+    var chosenDifficulty;
+    var graphAmplitude;
+    var secondsFromMinimun;
+    var canvas;
+
+    var drawBool = false;   
     var timeOffSet = null;
     var pointer = new Pointer(0, 0, 75, sphereAnimation);
 
-    var graphAmplitude = 6;
     var input;
+    var sel;
     var cameraOffset;
 
     var backgroundIndex = 0;
@@ -19,7 +48,6 @@ function GameState() {
 
     //Gameplay variables
     var nextMinimum = 0;
-    var secondsFromMinimun = 0.1;
     var songDuration;
     var playerSecond;
     var playerAtMinimum = false;
@@ -28,26 +56,29 @@ function GameState() {
     //Minimum circles
     var startDiameter = 50;
     var actualtDiameter = startDiameter;
+    //#endregion
 
-    this.setup = function () {
-        //frameRate(20);
-    }
-
+    //#region[rgba(28, 155, 99, 0.1)]Setup
     this.enter = function () {
-        nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, 0.9);
         console.log("[DEBUG] ***ENTERING GAME STATE***");
         canvas = createCanvas(912, 513);
         canvas.position(window.outerWidth * 0.20, window.outerHeight * 0.16);
-        input = createFileInput(handleFileSelect)
+        input = createFileInput(this.handleFileSelect)
+        sel = createSelect();
+        sel.option('Normal');
+        sel.option('Easy');
+        sel.option('Difficult');
+        sel.changed(this.selectEvent);
         canvas.background(0);
         cameraOffset = width * 1 / 3;
-    }
 
-    this.processBuffer = function () {
+        chosenDifficulty = difficulties.normal;
+        nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, chosenDifficulty.waveSmoothing);
+    }    
+    //#endregion
 
-    }
-
-    this.songLoaded = function (fft, d) {
+    //#region [rgba(0, 255, 0, 0.1)]Procesamiento de la onda y mínimos
+    this.songLoaded = function (fft, d) {    
         songDuration = Math.round(d);
         let maxY = Math.max.apply(null, fft);
         console.log(maxY);
@@ -58,7 +89,7 @@ function GameState() {
 
         //Buscamos mínimos locales
         let diff;
-        let diffs = [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40];
+        let diffs = chosenDifficulty.diffs;
         let intervals = [
             [0, 60],
             [60, 130],
@@ -72,7 +103,7 @@ function GameState() {
             [4160, 6000],
             [6000, maxY]
         ]
-        let minDistance = 10;
+        let minDistance = chosenDifficulty.minDistance;
         let previousMin = -1;
 
         for (let i = 1; i < fft.length - 1; i++) {
@@ -137,24 +168,21 @@ function GameState() {
         drawBool = true;
 
     }
-
-    this.getPlayerSecond = function () {
-        //Calculamos en qué segundo está el jugador 
-        playerSecond = songDuration * pointer.x / ((pathY.length - 1) * graphAmplitude);
-        playerSecond = Math.round(playerSecond * 10) / 10 //Redondeamos un decimal
-    }
-
+    //#endregion
+   
+    //#region[rgba(0, 0, 255, 0.1)]Draw
     this.draw = function () {
-        let bgIndex = Math.floor(backgroundIndex % backgroundAnimation.length);
+        
         background(0);
 
         //Animación del fondo
+        let bgIndex = Math.floor(backgroundIndex % backgroundAnimation.length);
         imageMode(CORNER);
         image(backgroundAnimation[bgIndex], 0, 0, width, height);
 
-
         if (!drawBool) return;
 
+        //Offset para sincronizar los tiempos a la hora de empezar la canción
         if (timeOffSet === null) {
             timeOffSet = nbAudioContext.currentTime();
         }
@@ -164,22 +192,8 @@ function GameState() {
         translate(-playerIndex * graphAmplitude + cameraOffset, 0);
 
 
-        //Dibuja varias lineas para crear un efecto de neón.            
-        let colors = [
-            /*[0, 0, 82, 50],
-            [0, 2, 108, 100],
-            [0, 0, 143, 100],
-            [1, 15, 195, 150],
-            [1, 15, 195, 150],
-            [0, 239, 250, 200],
-            [0, 239, 250, 255],
-            [0, 239, 250, 200],
-            [1, 15, 195, 150],
-            [1, 15, 195, 150],
-            [0, 0, 143, 100],
-            [0, 2, 108, 100],
-            [0, 0, 82, 50]*/
-
+        //Colores de las lineas para crear un efecto de neón.            
+        let colors = [        
             [1, 15, 195, 200],
             [0, 239, 250, 255],
             [1, 15, 195, 200]
@@ -187,9 +201,10 @@ function GameState() {
 
         //Límites del canvas en los que se va a dibujar la onda. Se dibuja solo la parte que se está enseñando
         let limite1 = Math.floor(playerIndex - cameraOffset);
-        let tmp = 620 * width / 1120;
+        let tmp = 103.333 * graphAmplitude * width / 1120;
         let limite2 = Math.floor(limite1 + width) - tmp;
 
+        //Se dibujan varias lineas de distinto color para crear el efecto neón
         for (let offset = (-colors.length - 1) * 0.5, j = 0; j < colors.length; offset++ , j++) {
 
             stroke(colors[j]);
@@ -197,6 +212,7 @@ function GameState() {
             noFill();
             beginShape();
 
+            //Solo se dibuja la linea dentro de la parte visible del canvas
             for (var i = limite1; i < limite2; i++) {
                 if (i < 0) {
                     //Línea recta para la parte del canvas en la que la canción no ha empezado todavía
@@ -230,7 +246,7 @@ function GameState() {
             nextMinimum++;
             console.log("Nuevo mínimo:" + nextMinimum);
         }
-        //////////////////////////////7DANI//////////////////////    
+        //////////////////////////////DANI//////////////////////    
 
 
         stroke(0, 0, 255);
@@ -253,10 +269,59 @@ function GameState() {
         pointer.setPosition(playerIndex * graphAmplitude, pathY[playerIndex] - 10);
         pointer.display();
 
-
         backgroundIndex++;
 
         this.updateText();
+    }
+
+    //#endregion
+
+    //#region[rgba(155, 28, 99, 0.1)]Eventos
+    this.keyPressed = function () {
+        if (keyCode === 32 && playerAtMinimum && !localMinimas[nextMinimum].visited) { // 32 = Barra espaciadora
+            localMinimas[nextMinimum].visited = true;
+            points += 1;
+        }
+    }
+
+    this.selectEvent = function () {
+        switch(sel.value()){
+            case 'Normal':
+                chosenDifficulty = difficulties.normal;
+                break;
+            case 'Easy':
+                chosenDifficulty = difficulties.easy;
+                break;
+            case 'Difficult':
+                chosenDifficulty = difficulties.difficult;
+                break;
+        }
+    }
+
+    this.handleFileSelect = function(evt) {
+        var f = evt.file;   
+        secondsFromMinimun = chosenDifficulty.secondsFromMinimun;
+        graphAmplitude = chosenDifficulty.graphAmplitude;    
+        nbAudioContext.changeSmoothing(chosenDifficulty.waveSmoothing)
+        //Cargar el archivo    
+        if (f.type === "audio/aiff" || true) {
+            var reader = new FileReader();
+            reader.onload = function (file) {
+                nbAudioContext.decodeAudio(file);
+            }
+            reader.readAsArrayBuffer(f);
+        } else {
+            trow("No good file");
+        }
+    
+    }
+    //#endregion
+
+    //#region [rgba(28, 99, 155, 0.1)]Cosas de Dani
+    this.getPlayerSecond = function () {
+        //Calculamos en qué segundo está el jugador 
+        playerSecond = songDuration * pointer.x / ((pathY.length - 1) * graphAmplitude);
+        playerSecond = Math.round(playerSecond * 10) / 10 //Redondeamos un decimal
     }
 
     //Text
@@ -267,30 +332,7 @@ function GameState() {
         text('Points:' + points, textPosX, textPosY);
 
     }
-
-    this.keyPressed = function () {
-        if (keyCode === 32 && playerAtMinimum && !localMinimas[nextMinimum].visited) { // 32 = Barra espaciadora
-            localMinimas[nextMinimum].visited = true;
-            points += 1;
-        }
-    }
-
-}
-
-
-function handleFileSelect(evt) {
-    var f = evt.file;
-
-    //Cargar el archivo    
-    if (f.type === "audio/aiff" || true) {
-        var reader = new FileReader();
-        reader.onload = function (file) {
-            nbAudioContext.decodeAudio(file);
-        }
-        reader.readAsArrayBuffer(f);
-    } else {
-        trow("No good file");
-    }
+    //#endregion
 
 }
 

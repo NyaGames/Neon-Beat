@@ -23,11 +23,11 @@ function preload(){
 
   for (let i = 0; i < backgroundNumber; i++) {
     if(i < 10){
-        backgroundAnimation.push(loadImage('assets/images/Particulillas/Twirst_0000' + i + '.png'));
+        backgroundAnimation.push(loadImage('assets/AfterEffect/NuevasParticulillas/0000' + i + '.png'));
     }else if(i < 100){
-        backgroundAnimation.push(loadImage('assets/images/Particulillas/Twirst_000' + i + '.png'));
+        backgroundAnimation.push(loadImage('assets/AfterEffect/NuevasParticulillas/000' + i + '.png'));
     }else if(i < 1000){
-        backgroundAnimation.push(loadImage('assets/images/Particulillas/Twirst_00' + i + '.png'));
+        backgroundAnimation.push(loadImage('assets/AfterEffect/NuevasParticulillas/00' + i + '.png'));
     } 
   }
 }
