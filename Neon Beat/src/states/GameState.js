@@ -13,7 +13,7 @@ function GameState() {
             graphAmplitude: 6,
             secondsFromMinimun: 0.1,
             waveSmoothing: 0.9,
-            diffs: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40],
+            diffs: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             minDistance: 10,
         },
         difficult: {
@@ -77,7 +77,7 @@ function GameState() {
         cameraOffset = width * 1 / 3;
 
         chosenDifficulty = difficulties.normal;
-        nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, chosenDifficulty.waveSmoothing);
+        nbAudioContext = new NeonBeatAudioContext(16384, 48000, this.songLoaded, chosenDifficulty.waveSmoothing);
     }    
     //#endregion
 
@@ -205,8 +205,7 @@ function GameState() {
 
         //Límites del canvas en los que se va a dibujar la onda. Se dibuja solo la parte que se está enseñando
         let limite1 = Math.floor(playerIndex - cameraOffset);
-        let tmp = 103.333 * graphAmplitude * width / 1120;
-        let limite2 = Math.floor(limite1 + width) - tmp;
+        let limite2 = Math.floor(limite1 + width);
 
         //Se dibujan varias lineas de distinto color para crear el efecto neón
         for (let offset = (-colors.length - 1) * 0.5, j = 0; j < colors.length; offset++ , j++) {
@@ -282,7 +281,7 @@ function GameState() {
 
     //#region[rgba(155, 28, 99, 0.1)]Eventos
     this.keyPressed = function () {
-        if (keyCode === 32 && playerAtMinimum && !localMinimas[nextMinimum].visited) { // 32 = Barra espaciadora
+        if ((keyCode === 88 || keyCode === 90) && playerAtMinimum && !localMinimas[nextMinimum].visited) { // 32 = Barra espaciadora
             localMinimas[nextMinimum].visited = true;
             points += 1;
         }

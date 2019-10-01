@@ -69,8 +69,8 @@ class NeonBeatAudioContext {
 
     processAudio(e) {
         //Sacamos el espectro de frecuencias de un instante de la canción
-        var data = new Uint8Array(analyser.frequencyBinCount);
-        analyser.getByteFrequencyData(data);
+        var data = new Float32Array(analyser.frequencyBinCount);
+        analyser.getFloatFrequencyData(data);
         NeonBeatAudioContext.prototype.freqToInt(data);
 
         //Sacamos el centroide del espectro y lo metemos en el array
@@ -82,21 +82,53 @@ class NeonBeatAudioContext {
             NeonBeatAudioContext.prototype.onEnd();
     }
 
+    gcd(data, freq){
+        var x = Math.abs(data);
+        var y = Math.abs(freq);
+        while(y) {
+            var t = y;
+            y = x % y;
+            x = t;
+        }
+        return x;
+    }
     getCentroid(data) {
+        var fundamental_freq = 0
+        for (var i = 1; i < data.length; i++) {
+            if(data[i] > -50){
+                fundamental_freq = i
+                break
+            }
+        }
+        for (var i = 2; i < data.length; i++) {
+            if(data[i] > -50){
+                fundamental_freq = this.gcd(i, fundamental_freq)
+            }
+        }
+        if(fundamental_freq === -Infinity){
+            return 0
+        }
+        return fundamental_freq
+        /* centroide para bytes
         //Sacamos en centroide de un array. Es más o menos una media ponderada.
         var nyquist = offlineCtx.sampleRate / 2;
         var cumulative_sum = 0;
         var centroid_normalization = 0;
         for (var i = 0; i < data.length; i++) {
-            cumulative_sum += i * data[i];
-            centroid_normalization += data[i];
+            if(data[i] === -Infinity){                
+                cumulative_sum += 0;
+                centroid_normalization += 0;
+            }else{
+                cumulative_sum += i * data[i];
+                centroid_normalization += data[i];
+            }
         }
         var mean_freq_index = 0;
         if (centroid_normalization !== 0) {
             mean_freq_index = cumulative_sum / centroid_normalization;
         }
-        var spec_centroid_freq = mean_freq_index * (nyquist / data.length);
-        return spec_centroid_freq;
+        //var spec_centroid_freq = mean_freq_index * (nyquist / data.length);
+        return mean_freq_index;*/
 
     } 
 
@@ -106,8 +138,8 @@ class NeonBeatAudioContext {
     }
 
     freqToInt(data) {
-        if (data instanceof Uint8Array === false) {
-            data = new Uint8Array(analyser.frequencyBinCount);
+        if (data instanceof Float32Array === false) {
+            data = new Float32Array(analyser.frequencyBinCount);
         }
     }
 
