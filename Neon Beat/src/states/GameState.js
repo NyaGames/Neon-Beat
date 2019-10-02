@@ -244,7 +244,7 @@ function GameState() {
         if (playerSecond >= minimumSecondsRange.min && playerSecond <= minimumSecondsRange.max) {
             localMinimas[nextMinimum].visited = true;
             playerAtMinimum = true;
-        } else if (playerSecond > minimumSecondsRange.max) {
+        } else if (playerSecond > minimumSecondsRange.max && nextMinimum + 1 < localMinimas.length) {
             playerAtMinimum = false;
             localMinimas[nextMinimum].fail = true;
             nextMinimum++;

@@ -72,6 +72,8 @@ function preload(){
 function setup(){
     createCanvas(600, 500);
 
+    angleMode(DEGREES);
+
     mgr = new SceneManager();
 
     mgr.addScene(BootState);
@@ -81,6 +83,8 @@ function setup(){
     mgr.addScene(EndGameState); 
 
     mgr.showNextScene();    
+
+    
 }
 
 function draw(){
