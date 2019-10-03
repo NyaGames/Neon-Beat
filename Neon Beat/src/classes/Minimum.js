@@ -9,6 +9,8 @@ class Minimum{
         this.animation = animation;
         this.animationIndex = 0;
         this.animationLength = this.animation.length;
+        this.sizeForPerfectSuccsess = 30;
+        this.size;
         //Partículas de acierto y error
         this.success = false;
         this.fail = false;
@@ -20,16 +22,21 @@ class Minimum{
         this.failAnimationLength = this.failAnimation.length;
         this.endAnimation = false;
         this.increment = 0;
+        //Texto de puntuación
+        this.scoreText = "";
+        this.alpha = 255;
+        this.textColor = color(255,255,255);
+        this.textOffset = 30;
         
     }
 
     drawCircle(playerX,startDiameter,graphAmplitude){
         var x = 500;
         if(((this.x * graphAmplitude) - playerX) <= x && ((this.x * graphAmplitude)- playerX) >= 0){
-            var tamaño = lerp(30,startDiameter,((this.x * graphAmplitude) - playerX)/300);
+            this.size = lerp(this.sizeForPerfectSuccsess,startDiameter,((this.x * graphAmplitude) - playerX)/300);
             let index = Math.floor(this.animationIndex) % this.animationLength;
             imageMode(CENTER);       
-            image(this.animation[index], this.x * graphAmplitude, this.y, tamaño, tamaño);      
+            image(this.animation[index], this.x * graphAmplitude, this.y, this.size, this.size);      
             this.animationIndex += 0.5;       
         }
     }
@@ -55,6 +62,18 @@ class Minimum{
                     this.endAnimation = true;
                 }
             }
+        }
+    }
+
+    drawText(graphAmplitude){
+        if(this.scoreText != "" && this.alpha > 0){
+            textSize(20);
+            this.textColor.setAlpha(this.alpha);
+            stroke(this.textColor);
+            fill(this.textColor);
+            text(this.scoreText, this.x * graphAmplitude, this.y + this.textOffset);
+            this.alpha -= 10; 
+            this.textOffset += 2;
         }
     }
 
