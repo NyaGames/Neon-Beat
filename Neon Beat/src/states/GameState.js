@@ -4,7 +4,7 @@ function GameState() {
     var difficulties = {
         easy:{
             graphAmplitude: 4,
-            secondsFromMinimun: 0.1,
+            secondsFromMinimun: 0.5,
             waveSmoothing: 0.95,
             diffs: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40],
             minDistance: 10,
@@ -45,23 +45,24 @@ function GameState() {
     var textPosX = 0;
     var textPosY = 30;
     var points = 0;
-    var lastPuntuation = "";
 
     //Gameplay variables
-    var nextMinimum = 0;
     var songDuration;
-    var playerSecond;
-    var playerAtMinimum = false;
-    minimumSecondsRange = new Range(0, 0);
+    var playerSecond;  
     var lowestPuntuation = 100;
     var midPuntuation = 200;
     var highestPuntuation = 300;
     var combo = 1;
+    var damageOverTime = 0.1;
+    var hpForSuccess = 5;
+    var hpForFail = -7.5;
 
     //Minimum circles
+    var nextMinimum = 0;
+    var playerAtMinimum = false;
     var startDiameter = 100;
-    var actualtDiameter = startDiameter;
-    var circleSeconds = 3;
+    minimumSecondsRange = new Range(0, 0);
+
     //#endregion
 
     //#region[rgba(28, 155, 99, 0.1)]Setup
@@ -252,6 +253,8 @@ function GameState() {
         } else if (playerSecond > minimumSecondsRange.max && nextMinimum + 1 < localMinimas.length) { //Si me he pasado el mínimo,ya no estoy en ese mínimo
             playerAtMinimum = false;
             localMinimas[nextMinimum].fail = true;
+            //pointer.actualHp += hpForFail;
+            this.playerLoseHp();
             combo = 1;
             nextMinimum++;
         }
@@ -283,7 +286,7 @@ function GameState() {
 
         //Mueve el puntero del jugador     
         pointer.setPosition(playerIndex * graphAmplitude, pathY[playerIndex] - 10);
-        pointer.display();
+        pointer.display(damageOverTime);
 
         backgroundIndex++;
 
@@ -297,9 +300,8 @@ function GameState() {
         //Si pulsamos la tecla y todavía no hemos acertado ni fallado, se considera acierto
         if (keyCode === 32 && playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail) { // 32 = Barra espaciadora
             var rangeSize = startDiameter - localMinimas[nextMinimum].sizeForPerfectSuccsess;
-            var firstRange = startDiameter - ((rangeSize/5)*3);
-            var secondRange = firstRange - (rangeSize/5);
-            //var thirdRange = secondRange - (rangeSize/5);
+            var firstRange = startDiameter - ((rangeSize/5)*3); //En los primeros 3 tercios del rango se puntúa 100
+            var secondRange = localMinimas[nextMinimum].sizeForPerfectSuccsess + 3; //Hasta 3 pixeles antes de que se cierre el círculo se puntúa 200
 
             if(localMinimas[nextMinimum].size <= startDiameter && localMinimas[nextMinimum].size > firstRange){
                 points += lowestPuntuation * combo;
@@ -312,20 +314,18 @@ function GameState() {
                 localMinimas[nextMinimum].scoreText = "+300";
             }
             localMinimas[nextMinimum].success = true;
+            //pointer.actualHp += hpForSuccess;
+            this.playerGetHp();
             localMinimas[nextMinimum].fail = false;
-
-            if(localMinimas[nextMinimum].scoreText == "NADA" && localMinimas[nextMinimum].success){
-                console.log("Fallos con mínimo");
-            }
-
             combo++;
 
         }else if(keyCode === 32 && !playerAtMinimum){ //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos y se pasa al siguiente mínimo
             localMinimas[nextMinimum].success = false;
+            //pointer.actualHp += hpForFail;
+            this.playerLoseHp();
             localMinimas[nextMinimum].fail = true;
             combo = 1;
-            nextMinimum++;
-            console.log("fallaste");        
+            nextMinimum++;      
         }
     }
 
@@ -362,6 +362,20 @@ function GameState() {
     //#endregion
 
     //#region [rgba(28, 99, 155, 0.1)]Cosas de Dani
+    this.playerGetHp = function(){
+        pointer.actualHp += hpForSuccess;
+        if(pointer.actualHp > pointer.maxHp){
+            pointer.actualHp = pointer.maxHp;
+        }
+    }
+
+    this.playerLoseHp = function(){
+        pointer.actualHp += hpForFail;
+        if(pointer.actualHp < 0){
+            pointer.actualHp = 0;
+        }
+    }
+
     this.getPlayerSecond = function () {
         //Calculamos en qué segundo está el jugador 
         playerSecond = songDuration * pointer.x / ((pathY.length - 1) * graphAmplitude);
