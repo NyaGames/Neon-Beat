@@ -1,6 +1,6 @@
 class Minimum{
 
-    constructor(x,y,visited,animation,successAnimation,failAnimation){
+    constructor(x,y,visited,animation,successAnimation,successAnimation2,successAnimation3,failAnimation,failAnimation2,failAnimation3,lowestScoreAnimation){
         this.x = x;
         this.y = y;
         this.visited = visited;
@@ -17,17 +17,38 @@ class Minimum{
         this.successAnimation = successAnimation;
         this.successAnimationIndex = 0;
         this.successAnimationLength = this.successAnimation.length;
+        this.successAnimation2 = successAnimation2;
+        this.successAnimation2Index = 0;
+        this.successAnimation2Length = this.successAnimation2.length;
+        this.successAnimation3 = successAnimation3;
+        this.successAnimation3Index = 0;
+        this.successAnimation3Length = this.successAnimation3.length;
+        this.randomSuccess = Math.floor(Math.random() * 3);   
+
         this.failAnimation = failAnimation;
         this.failAnimationIndex = 0;
         this.failAnimationLength = this.failAnimation.length;
+        this.failAnimation2 = failAnimation2;
+        this.failAnimation2Index = 0;
+        this.failAnimation2Length = this.failAnimation2.length;
+        this.failAnimation3 = failAnimation3;
+        this.failAnimation3Index = 0;
+        this.failAnimation3Length = this.failAnimation3.length;
+        this.randomFail = Math.floor(Math.random() * 3);   
+
         this.endAnimation = false;
         this.increment = 0;
         //Texto de puntuación
-        this.scoreText = "";
+        /*this.scoreText = "";
         this.alpha = 255;
         this.textColor = color(255,255,255);
-        this.textOffset = 30;
-        
+        this.textOffset = 30;*/
+        this.endScoreAnimation = false;
+        this.score = 0;
+        this.scoreIncrement = 30;
+        this.lowestScoreAnimation = lowestScoreAnimation;
+        this.lowestScoreAnimationIndex = 0;
+        this.lowestScoreAnimationLength = this.lowestScoreAnimation.length;
     }
 
     drawCircle(playerX,startDiameter,graphAmplitude){
@@ -44,29 +65,81 @@ class Minimum{
     successOrFail(graphAmplitude){
         if(!this.endAnimation){
             if(this.success == true){
-                this.increment += 4;
-                let index = Math.floor(this.successAnimationIndex) % this.successAnimationLength;
-                imageMode(CENTER);       
-                image(this.successAnimation[index],this.x * graphAmplitude, this.y - this.increment, 200, 200);      
-                this.successAnimationIndex += 0.6;     
-                if (index == this.successAnimation.length - 1){
-                    this.endAnimation = true;
+                switch(this.randomSuccess){
+                    case 0:
+                        this.increment += 4;
+                        let index = Math.floor(this.successAnimationIndex) % this.successAnimationLength;
+                        imageMode(CENTER);       
+                        image(this.successAnimation[index],this.x * graphAmplitude, this.y - this.increment, 200, 200);      
+                        this.successAnimationIndex += 0.6;     
+                        if (index == this.successAnimation.length - 1){
+                            this.endAnimation = true;
+                        }
+                        break;
+
+                    case 1:
+                        this.increment += 4;
+                        let index2 = Math.floor(this.successAnimation2Index) % this.successAnimation2Length;
+                        imageMode(CENTER);       
+                        image(this.successAnimation2[index2],this.x * graphAmplitude, this.y - this.increment, 200, 200);      
+                        this.successAnimation2Index += 0.6;     
+                        if (index2 == this.successAnimation2.length - 1){
+                            this.endAnimation = true;
+                        }  
+                        break;
+
+                    case 2:
+                        this.increment += 4;
+                        let index3 = Math.floor(this.successAnimation3Index) % this.successAnimation3Length;
+                        imageMode(CENTER);       
+                        image(this.successAnimation3[index3],this.x * graphAmplitude, this.y - this.increment, 200, 200);      
+                        this.successAnimation3Index += 0.6;     
+                        if (index3 == this.successAnimation3.length - 1){
+                            this.endAnimation = true;
+                        }
+                        break;
                 }
+               
             }else if(this.fail == true){
-                this.increment += 4;
-                let index = Math.floor(this.failAnimationIndex) % this.failAnimationLength;
-                imageMode(CENTER);       
-                image(this.failAnimation[index],this.x * graphAmplitude, this.y - this.increment, 200, 200);      
-                this.failAnimationIndex += 0.6;   
-                if (index == this.failAnimation.length - 1){
-                    this.endAnimation = true;
+                switch(this.randomFail){
+                    case 0:
+                        this.increment += 4;
+                        let index = Math.floor(this.failAnimationIndex) % this.failAnimationLength;
+                        imageMode(CENTER);       
+                        image(this.failAnimation[index],this.x * graphAmplitude, this.y - this.increment, 200, 200);      
+                        this.failAnimationIndex += 0.6;   
+                        if (index == this.failAnimation.length - 1){
+                            this.endAnimation = true;
+                        }
+                        break;
+                    case 1:
+                        this.increment += 4;
+                        let index2 = Math.floor(this.failAnimation2Index) % this.failAnimation2Length;
+                        imageMode(CENTER);       
+                        image(this.failAnimation2[index2],this.x * graphAmplitude, this.y - this.increment, 200, 200);      
+                        this.failAnimation2Index += 0.6;   
+                        if (index2 == this.failAnimation2.length - 1){
+                            this.endAnimation = true;
+                        }
+                        break;
+                    case 2:
+                        this.increment += 4;
+                        let index3 = Math.floor(this.failAnimation3Index) % this.failAnimation3Length;
+                        imageMode(CENTER);       
+                        image(this.failAnimation3[index3],this.x * graphAmplitude, this.y - this.increment, 200, 200);      
+                        this.failAnimation3Index += 0.6;   
+                        if (index3 == this.failAnimation3.length - 1){
+                            this.endAnimation = true;
+                        }
+                        break;
                 }
+                
             }
         }
     }
 
     drawText(graphAmplitude){
-        if(this.scoreText != "" && this.alpha > 0){
+        /*if(this.scoreText != "" && this.alpha > 0){
             textSize(20);
             this.textColor.setAlpha(this.alpha);
             stroke(this.textColor);
@@ -74,7 +147,31 @@ class Minimum{
             text(this.scoreText, this.x * graphAmplitude, this.y + this.textOffset);
             this.alpha -= 10; 
             this.textOffset += 2;
+        }*/
+        if(!this.endScoreAnimation){
+            if(this.score != 0){
+                switch(this.score){
+                    case 100:
+                        this.scoreIncrement += 4;
+                        let index = Math.floor(this.lowestScoreAnimationIndex) % this.lowestScoreAnimationLength;
+                        imageMode(CENTER);       
+                        image(this.lowestScoreAnimation[index],this.x * graphAmplitude, this.y - this.scoreIncrement, 200, 200);      
+                        this.lowestScoreAnimationIndex += 0.6;   
+                        if (index == this.lowestScoreAnimation.length - 1){
+                            this.endScoreAnimation = true;
+                        }
+                        break;
+                    case 200:
+    
+                        break;
+    
+                    case 300:
+    
+                        break;
+                }
+            }
         }
+        
     }
 
 }

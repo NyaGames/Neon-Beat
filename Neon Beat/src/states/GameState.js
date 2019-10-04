@@ -11,7 +11,7 @@ function GameState() {
         },
         normal: {
             graphAmplitude: 6,
-            secondsFromMinimun: 0.3,
+            secondsFromMinimun: 1,
             waveSmoothing: 0.9,
             diffs: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40],
             minDistance: 10,
@@ -155,8 +155,7 @@ function GameState() {
                 if (Math.abs(localMinima - localMaxima) >= diff) {
                     //Miramos si está lo suficientemente lejos del mínimo local anterior
                     if (Math.abs(i - previousMin) >= minDistance || previousMin == -1) {
-                        var minimum = new Minimum(i, pathY[i], false,circleAnimation,successAnimation,failAnimation);
-                        //localMinimas.push([i, pathY[i]]);
+                        var minimum = new Minimum(i, pathY[i], false,circleAnimation,successAnimation,successAnimation2,successAnimation3,failAnimation,failAnimation2,failAnimation3,lowestScoreAnimation);
                         localMinimas.push(minimum);
                         localMinimas[localMinimas.length-1].index = localMinimas.length-1;
                         previousMin = i;
@@ -305,13 +304,13 @@ function GameState() {
 
             if(localMinimas[nextMinimum].size <= startDiameter && localMinimas[nextMinimum].size > firstRange){
                 points += lowestPuntuation * combo;
-                localMinimas[nextMinimum].scoreText = "+100";
+                localMinimas[nextMinimum].score = 100;
             }else if(localMinimas[nextMinimum].size <= firstRange && localMinimas[nextMinimum].size > secondRange){
                 points += midPuntuation * combo;
-                localMinimas[nextMinimum].scoreText = "+200";
+                localMinimas[nextMinimum].score = 200;
             }else if(localMinimas[nextMinimum].size <= secondRange && localMinimas[nextMinimum].size >= localMinimas[nextMinimum].sizeForPerfectSuccsess){
                 points += highestPuntuation * combo;
-                localMinimas[nextMinimum].scoreText = "+300";
+                localMinimas[nextMinimum].score = 300;
             }
             localMinimas[nextMinimum].success = true;
             //pointer.actualHp += hpForSuccess;
@@ -398,7 +397,7 @@ function GameState() {
         /*fill(255, 255, 255);
         textSize(20);
         stroke('rgba(100%,0%,100%,0.0)');
-        text('Last puntuation: ' + lastPuntuation, pointer.x , pointer.y - 30);*/
+        text('Random: ' + localMinimas[nextMinimum].randomSuccess, localMinimas[nextMinimum].x * graphAmplitude, localMinimas[nextMinimum].y - 30);*/
 
     }
     //#endregion
