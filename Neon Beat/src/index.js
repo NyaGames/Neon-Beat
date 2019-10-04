@@ -49,6 +49,10 @@ function draw(){
     mgr.draw();
 }
 
+function touchStarted(){
+    mgr.handleEvent("touchStarted");
+}
+
 function mousePressed(){
     mgr.handleEvent("mousePressed");
 }

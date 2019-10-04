@@ -61,24 +61,40 @@ function GameState() {
 
     //#region[rgba(28, 155, 99, 0.1)]Setup
     this.enter = function () {
-        console.log("[DEBUG] ***ENTERING GAME STATE***");
-        canvas = createCanvas(912, 513);
-        canvas.position(window.outerWidth * 0.20, window.outerHeight * 0.16);
+        
         input = createFileInput(this.handleFileSelect)
-        var pruebaBoton = createDiv()     
-        pruebaBoton.position(window.outerWidth * 0.20, window.outerHeight * 0.16)
-        pruebaBoton.elt.style.zindex = 1
-        //pruebaBoton.elt.style.background-image = url('assets/images/gameplay/fondo_gameplay.png');
         sel = createSelect();
         sel.option('Normal');
         sel.option('Easy');
         sel.option('Difficult');
         sel.changed(this.selectEvent);
-        canvas.background(0);
+
+        console.log("[DEBUG] ***ENTERING GAME STATE***");
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            console.log("[DEBUG] ***MOBILE DEVICE DETECTED***");
+            canvas = createCanvas(screen.width, screen.height - 30);         
+            canvas.position(0, 0);    
+         
+            input.position(0, window.outerHeight - 30)
+            sel.position(320, window.outerHeight - 30);
+
+        }else{
+            canvas = createCanvas(window.outerWidth * 0.7875 - window.outerWidth * 0.2085, window.outerHeight * 0.772 - window.outerHeight * 0.168);
+            canvas.position(window.outerWidth * 0.2085, window.outerHeight * 0.168);            
+        }                
+     
+        /*var pruebaBoton = createDiv()     
+        pruebaBoton.position(window.outerWidth * 0.20, window.outerHeight * 0.16)
+        pruebaBoton.elt.style.zindex = 1*/
+        //pruebaBoton.elt.style.background-image = url('assets/images/gameplay/fondo_gameplay.png');      
+    
         cameraOffset = width * 1 / 3;
 
         chosenDifficulty = difficulties.normal;
         nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, chosenDifficulty.waveSmoothing);
+
+         
+        canvas.background(0);
     }    
     //#endregion
 
@@ -246,7 +262,7 @@ function GameState() {
         } else if (playerSecond > minimumSecondsRange.max) {
             playerAtMinimum = false;
             nextMinimum++;
-            console.log("Nuevo mínimo:" + nextMinimum);
+            //console.log("Nuevo mínimo:" + nextMinimum);
         }  
 
         //var newDiameter = (startDiameter * playerSecond)/circleSeconds;
@@ -283,6 +299,15 @@ function GameState() {
             localMinimas[nextMinimum].visited = true;
             points += 1;
         }
+    }
+
+    this.touchStarted = function(){
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            if(playerAtMinimum && !localMinimas[nextMinimum].visited){
+                localMinimas[nextMinimum].visited = true;
+                points += 1;
+            }
+        }        
     }
 
     this.selectEvent = function () {

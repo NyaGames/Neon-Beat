@@ -13,7 +13,7 @@ class Minimum{
         //var newDiameter = (startDiameter * (this.second - circleSeconds))/playerSecond;
         if(((this.x * graphAmplitude) - playerX) <= x && ((this.x * graphAmplitude)- playerX) >= 0){
             var tamaño = lerp(30,startDiameter ,((this.x * graphAmplitude) - playerX)/300);
-            console.log("tamaño: " + tamaño + " índice:"+this.index);
+            //console.log("tamaño: " + tamaño + " índice:"+this.index);
             stroke(0, 255, 255);
             fill(0,0,0,1); 
             ellipse(this.x * graphAmplitude, this.y, tamaño, tamaño);     
