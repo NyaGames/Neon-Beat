@@ -78,7 +78,7 @@ function GameState() {
         console.log("[DEBUG] ***ENTERING GAME STATE***");
         if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
             console.log("[DEBUG] ***MOBILE DEVICE DETECTED***");
-            canvas = createCanvas(screen.width, screen.height - 30);         
+            canvas = createCanvas(screen.availWidth, screen.availHeight - 50);         
             canvas.position(0, 0);    
          
             input.position(0, window.outerHeight - 30)
@@ -107,8 +107,7 @@ function GameState() {
     //#region [rgba(0, 255, 0, 0.1)]Procesamiento de la onda y mínimos
     this.songLoaded = function (fft, d) {    
         songDuration = Math.round(d);
-        let maxY = Math.max.apply(null, fft);
-        console.log(maxY);
+        let maxY = Math.max.apply(null, fft);        
         for (let i = 0; i < fft.length; i++) {
             let y = map(fft[i], 0, maxY, height * 4 / 5, height * 1 / 5);
             pathY.push(y);
@@ -314,7 +313,13 @@ function GameState() {
     //#region[rgba(155, 28, 99, 0.1)]Eventos
     this.keyPressed = function () {
         //Si pulsamos la tecla y todavía no hemos acertado ni fallado, se considera acierto
-        if (keyCode === 32 && playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail) { // 32 = Barra espaciadora
+        if (keyCode === 32){
+            this.handleInput();
+        }
+    }
+
+    this.handleInput = function(){
+        if(playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail) { // 32 = Barra espaciadora
             var rangeSize = startDiameter - localMinimas[nextMinimum].sizeForPerfectSuccsess;
             var firstRange = startDiameter - ((rangeSize/5)*3); //En los primeros 3 tercios del rango se puntúa 100
             var secondRange = localMinimas[nextMinimum].sizeForPerfectSuccsess + 3; //Hasta 3 pixeles antes de que se cierre el círculo se puntúa 200
@@ -342,15 +347,12 @@ function GameState() {
             localMinimas[nextMinimum].fail = true;
             combo = 1;
             nextMinimum++;      
-        }
+        }    
     }
 
     this.touchStarted = function(){
         if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-            if(playerAtMinimum && !localMinimas[nextMinimum].visited){
-                localMinimas[nextMinimum].visited = true;
-                points += 1;
-            }
+            this.handleInput();
         }        
     }
 
