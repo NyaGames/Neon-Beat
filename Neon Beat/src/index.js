@@ -79,6 +79,7 @@ function setup(){
     mgr.addScene(BootState);
     mgr.addScene(PreloadState); 
     mgr.addScene(MainMenuState); 
+    mgr.addScene(CreditsState); 
     mgr.addScene(GameState); 
     mgr.addScene(EndGameState); 
 

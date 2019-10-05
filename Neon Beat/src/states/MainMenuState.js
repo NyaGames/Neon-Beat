@@ -81,7 +81,7 @@ function MainMenuState(){
                 mgr.showScene(GameState);
             }
             if(state === 1){
-
+                mgr.showScene(CreditsState);
             }
         }else{
             if(keyCode === 83 || keyCode === 87){
