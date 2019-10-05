@@ -62,13 +62,9 @@ function GameState() {
     //#region[rgba(28, 155, 99, 0.1)]Setup
     this.enter = function () {
         console.log("[DEBUG] ***ENTERING GAME STATE***");
-        canvas = createCanvas(912, 513);
-        canvas.position(window.outerWidth * 0.20, window.outerHeight * 0.16);
+        canvas = createCanvas(1120, 630);
+        canvas.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
         input = createFileInput(this.handleFileSelect)
-        var pruebaBoton = createDiv()     
-        pruebaBoton.position(window.outerWidth * 0.20, window.outerHeight * 0.16)
-        pruebaBoton.elt.style.zindex = 1
-        //pruebaBoton.elt.style.background-image = url('assets/images/gameplay/fondo_gameplay.png');
         sel = createSelect();
         sel.option('Normal');
         sel.option('Easy');
