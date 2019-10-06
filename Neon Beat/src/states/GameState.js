@@ -49,10 +49,11 @@ function GameState() {
     //Gameplay variables
     var songDuration;
     var playerSecond;  
-    var lowestPuntuation = 100;
-    var midPuntuation = 200;
-    var highestPuntuation = 300;
+    var lowestScore = 100;
+    var midScore = 200;
+    var highestScore = 300;
     var combo = 1;
+    var maximumCombo = 1;
     var damageOverTime = 0.1;
     var hpForSuccess = 5;
     var hpForFail = -7.5;
@@ -213,6 +214,11 @@ function GameState() {
         let limite1 = Math.floor(playerIndex - cameraOffset);
         let tmp = 103.333 * graphAmplitude * width / 1120;
         let limite2 = Math.floor(limite1 + width) - tmp;
+        console.log("Limite 1: " + limite1);
+        console.log("Limite 2: " + limite2);
+        console.log(pathY.length);
+        this.checkEndGame(limite1);
+
 
         //Se dibujan varias lineas de distinto color para crear el efecto neón
         for (let offset = (-colors.length - 1) * 0.5, j = 0; j < colors.length; offset++ , j++) {
@@ -252,13 +258,12 @@ function GameState() {
         } else if (playerSecond > minimumSecondsRange.max && nextMinimum + 1 < localMinimas.length) { //Si me he pasado el mínimo,ya no estoy en ese mínimo
             playerAtMinimum = false;
             localMinimas[nextMinimum].fail = true;
-            //pointer.actualHp += hpForFail;
             this.playerLoseHp();
             combo = 1;
             nextMinimum++;
         }
         //Si ese mínimo ya ha sido puntuado o fallado, dejo de estar en el mínimo
-        if(localMinimas[nextMinimum].success || localMinimas[nextMinimum].fail){ 
+        if((localMinimas[nextMinimum].success || localMinimas[nextMinimum].fail) && nextMinimum + 1 < localMinimas.length){ 
             playerAtMinimum = false;
             nextMinimum++;
         }
@@ -303,13 +308,13 @@ function GameState() {
             var secondRange = localMinimas[nextMinimum].sizeForPerfectSuccsess + 3; //Hasta 3 pixeles antes de que se cierre el círculo se puntúa 200
 
             if(localMinimas[nextMinimum].size <= startDiameter && localMinimas[nextMinimum].size > firstRange){
-                points += lowestPuntuation * combo;
+                points += lowestScore * combo;
                 localMinimas[nextMinimum].score = 100;
             }else if(localMinimas[nextMinimum].size <= firstRange && localMinimas[nextMinimum].size > secondRange){
-                points += midPuntuation * combo;
+                points += midScore * combo;
                 localMinimas[nextMinimum].score = 200;
             }else if(localMinimas[nextMinimum].size <= secondRange && localMinimas[nextMinimum].size >= localMinimas[nextMinimum].sizeForPerfectSuccsess){
-                points += highestPuntuation * combo;
+                points += highestScore * combo;
                 localMinimas[nextMinimum].score = 300;
             }
             localMinimas[nextMinimum].success = true;
@@ -317,8 +322,11 @@ function GameState() {
             this.playerGetHp();
             localMinimas[nextMinimum].fail = false;
             combo++;
+            if(combo > maximumCombo){
+                maximumCombo = combo;
+            }
 
-        }else if(keyCode === 32 && !playerAtMinimum){ //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos y se pasa al siguiente mínimo
+        }else if(keyCode === 32 && !playerAtMinimum && nextMinimum + 1 < localMinimas.length){ //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos y se pasa al siguiente mínimo
             localMinimas[nextMinimum].success = false;
             //pointer.actualHp += hpForFail;
             this.playerLoseHp();
@@ -399,6 +407,14 @@ function GameState() {
         stroke('rgba(100%,0%,100%,0.0)');
         text('Random: ' + localMinimas[nextMinimum].randomSuccess, localMinimas[nextMinimum].x * graphAmplitude, localMinimas[nextMinimum].y - 30);*/
 
+    }
+
+    this.checkEndGame = function(limite1){
+        if(limite1 > pathY.length/2){
+            mgr.showScene(EndGameState);
+            maxCombo = maximumCombo;
+            finalScore = points;
+        }
     }
     //#endregion
 

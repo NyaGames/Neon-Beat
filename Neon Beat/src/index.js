@@ -24,6 +24,9 @@ var failAnimation2 = [];
 var failAnimation3 = [];
 var lowestScoreAnimation = [];
 
+var finalScore = 0;
+var maxCombo = 0;
+
 function preload(){    
   img = loadImage('assets/images/pelota.png');  
   for (let i = 0; i < sphereAnimNumber; i++) {
