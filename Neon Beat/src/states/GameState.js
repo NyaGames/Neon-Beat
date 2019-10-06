@@ -90,12 +90,7 @@ function GameState() {
         }else{
             canvas = createCanvas(window.outerWidth * 0.7875 - window.outerWidth * 0.2085, window.outerHeight * 0.772 - window.outerHeight * 0.168);
             canvas.position(window.outerWidth * 0.2085, window.outerHeight * 0.168);            
-        }                
-     
-        /*var pruebaBoton = createDiv()     
-        pruebaBoton.position(window.outerWidth * 0.20, window.outerHeight * 0.16)
-        pruebaBoton.elt.style.zindex = 1*/
-        //pruebaBoton.elt.style.background-image = url('assets/images/gameplay/fondo_gameplay.png');      
+        }                     
     
         cameraOffset = width * 1 / 3;
 

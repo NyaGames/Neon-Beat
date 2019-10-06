@@ -19,7 +19,6 @@ function CreditsState(){
 
         creditos = createImg('assets/images/creditos.png');
         creditos.parent(container);
-        creditos.position(0,0);
     }  
 
     this.keyPressed = function(){

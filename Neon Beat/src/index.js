@@ -80,6 +80,7 @@ function setup(){
     mgr.addScene(PreloadState); 
     mgr.addScene(MainMenuState); 
     mgr.addScene(CreditsState); 
+    mgr.addScene(SongSelectionState);
     mgr.addScene(GameState); 
     mgr.addScene(EndGameState); 
 
