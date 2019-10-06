@@ -79,7 +79,7 @@ function MainMenuState(){
         if(keyCode === 32){
             if(state === 0){
                 container.remove();
-                mgr.showScene(GameState);
+                mgr.showScene(DefeatState);
             }
             if(state === 1){
                 container.remove();

@@ -396,9 +396,15 @@ function GameState() {
 
     this.playerLoseHp = function(){
         pointer.actualHp += hpForFail;
-        if(pointer.actualHp < 0){
+        if(pointer.actualHp < 0 || pointer.actualHp === 0){
             pointer.actualHp = 0;
+            this.defeat();
         }
+    }
+
+    this.defeat = function(){
+        canvas.remove();
+        mgr.showScene(DefeatState);
     }
 
     this.getPlayerSecond = function () {
