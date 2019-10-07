@@ -11,7 +11,7 @@ function GameState() {
         },
         normal: {
             graphAmplitude: 6,
-            secondsFromMinimun: 0.3,
+            secondsFromMinimun: 1,
             waveSmoothing: 0.9,
             diffs: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40],
             minDistance: 10,
@@ -36,6 +36,16 @@ function GameState() {
     var timeOffSet = null;
     var pointer = new Pointer(0, 0, 75, sphereAnimation);
 
+    var intervalos = [];
+    let numIntervalos = pointer.colors.length;
+    let tamañoIntervalo = pointer.maxHp/numIntervalos;
+    let num = pointer.maxHp;
+    for(var i = 0;i < numIntervalos;i++){
+        newIntervalo = new Range(num - tamañoIntervalo,num);
+        num -= tamañoIntervalo;
+        intervalos.push(newIntervalo);
+    }
+
     var input;
     var sel;
     var cameraOffset;
@@ -49,10 +59,11 @@ function GameState() {
     //Gameplay variables
     var songDuration;
     var playerSecond;  
-    var lowestPuntuation = 100;
-    var midPuntuation = 200;
-    var highestPuntuation = 300;
+    var lowestScore = 100;
+    var midScore = 200;
+    var highestScore = 300;
     var combo = 1;
+    var maximumCombo = 1;
     var damageOverTime = 0.1;
     var hpForSuccess = 5;
     var hpForFail = -7.5;
@@ -168,8 +179,7 @@ function GameState() {
                 if (Math.abs(localMinima - localMaxima) >= diff) {
                     //Miramos si está lo suficientemente lejos del mínimo local anterior
                     if (Math.abs(i - previousMin) >= minDistance || previousMin == -1) {
-                        var minimum = new Minimum(i, pathY[i], false,circleAnimation,successAnimation,failAnimation);
-                        //localMinimas.push([i, pathY[i]]);
+                        var minimum = new Minimum(i, pathY[i], false,circleAnimation,successAnimation,successAnimation2,successAnimation3,failAnimation,failAnimation2,failAnimation3,lowestScoreAnimation);
                         localMinimas.push(minimum);
                         localMinimas[localMinimas.length-1].index = localMinimas.length-1;
                         previousMin = i;
@@ -227,6 +237,8 @@ function GameState() {
         let limite1 = Math.floor(playerIndex - cameraOffset);
         let tmp = 103.333 * graphAmplitude * width / 1120;
         let limite2 = Math.floor(limite1 + width) - tmp;
+        this.checkEndGame(limite1);
+
 
         //Se dibujan varias lineas de distinto color para crear el efecto neón
         for (let offset = (-colors.length - 1) * 0.5, j = 0; j < colors.length; offset++ , j++) {
@@ -266,13 +278,12 @@ function GameState() {
         } else if (playerSecond > minimumSecondsRange.max && nextMinimum + 1 < localMinimas.length) { //Si me he pasado el mínimo,ya no estoy en ese mínimo
             playerAtMinimum = false;
             localMinimas[nextMinimum].fail = true;
-            //pointer.actualHp += hpForFail;
             this.playerLoseHp();
             combo = 1;
             nextMinimum++;
         }
         //Si ese mínimo ya ha sido puntuado o fallado, dejo de estar en el mínimo
-        if(localMinimas[nextMinimum].success || localMinimas[nextMinimum].fail){ 
+        if((localMinimas[nextMinimum].success || localMinimas[nextMinimum].fail) && nextMinimum + 1 < localMinimas.length){ 
             playerAtMinimum = false;
             nextMinimum++;
         }
@@ -301,6 +312,11 @@ function GameState() {
         pointer.setPosition(playerIndex * graphAmplitude, pathY[playerIndex] - 10);
         pointer.display(damageOverTime);
 
+        //Mira de qué color tiene que pintar al  jugador
+        pointer.actualIntervalo = this.getPlayerIntervalo();
+        //Mira si le jugador se muere
+        pointer.checkDead();
+
         backgroundIndex++;
 
         this.updateText();
@@ -323,22 +339,25 @@ function GameState() {
             var secondRange = localMinimas[nextMinimum].sizeForPerfectSuccsess + 3; //Hasta 3 pixeles antes de que se cierre el círculo se puntúa 200
 
             if(localMinimas[nextMinimum].size <= startDiameter && localMinimas[nextMinimum].size > firstRange){
-                points += lowestPuntuation * combo;
-                localMinimas[nextMinimum].scoreText = "+100";
+                points += lowestScore * combo;
+                localMinimas[nextMinimum].score = 100;
             }else if(localMinimas[nextMinimum].size <= firstRange && localMinimas[nextMinimum].size > secondRange){
-                points += midPuntuation * combo;
-                localMinimas[nextMinimum].scoreText = "+200";
+                points += midScore * combo;
+                localMinimas[nextMinimum].score = 200;
             }else if(localMinimas[nextMinimum].size <= secondRange && localMinimas[nextMinimum].size >= localMinimas[nextMinimum].sizeForPerfectSuccsess){
-                points += highestPuntuation * combo;
-                localMinimas[nextMinimum].scoreText = "+300";
+                points += highestScore * combo;
+                localMinimas[nextMinimum].score = 300;
             }
             localMinimas[nextMinimum].success = true;
             //pointer.actualHp += hpForSuccess;
             this.playerGetHp();
             localMinimas[nextMinimum].fail = false;
             combo++;
+            if(combo > maximumCombo){
+                maximumCombo = combo;
+            }
 
-        }else if(keyCode === 32 && !playerAtMinimum){ //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos y se pasa al siguiente mínimo
+        }else if(keyCode === 32 && !playerAtMinimum && nextMinimum + 1 < localMinimas.length){ //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos y se pasa al siguiente mínimo
             localMinimas[nextMinimum].success = false;
             //pointer.actualHp += hpForFail;
             this.playerLoseHp();
@@ -387,6 +406,17 @@ function GameState() {
     //#endregion
 
     //#region [rgba(28, 99, 155, 0.1)]Cosas de Dani
+    this.getPlayerIntervalo = function(){
+        var result = -1;
+        for(i = 0;i < intervalos.length;i++){
+            if(pointer.actualHp >= intervalos[i].min && pointer.actualHp <= intervalos[i].max){
+                result = i;
+            }
+        }
+
+        return result;
+    }
+
     this.playerGetHp = function(){
         pointer.actualHp += hpForSuccess;
         if(pointer.actualHp > pointer.maxHp){
@@ -429,8 +459,16 @@ function GameState() {
         /*fill(255, 255, 255);
         textSize(20);
         stroke('rgba(100%,0%,100%,0.0)');
-        text('Last puntuation: ' + lastPuntuation, pointer.x , pointer.y - 30);*/
+        text('Random: ' + localMinimas[nextMinimum].randomSuccess, localMinimas[nextMinimum].x * graphAmplitude, localMinimas[nextMinimum].y - 30);*/
 
+    }
+
+    this.checkEndGame = function(limite1){
+        if(limite1 > pathY.length/2){
+            mgr.showScene(EndGameState);
+            maxCombo = maximumCombo;
+            finalScore = points;
+        }
     }
     //#endregion
 
