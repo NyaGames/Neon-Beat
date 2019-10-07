@@ -68,8 +68,13 @@ function GameState() {
     //#region[rgba(28, 155, 99, 0.1)]Setup
     this.enter = function () {
         console.log("[DEBUG] ***ENTERING GAME STATE***");
+        container = createDiv();
+        container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
+
+        //crear imagenes
         canvas = createCanvas(1120, 630);
-        canvas.position(window.outerWidth * 0.205, window.outerHeight * 0.165);       
+        canvas.parent(container);
+        canvas.background(0);
 
         input = createFileInput(this.handleFileSelect)
         sel = createSelect();
@@ -403,7 +408,9 @@ function GameState() {
     }
 
     this.defeat = function(){
-        canvas.remove();
+        container.remove();
+        input.remove();
+        sel.remove();   
         mgr.showScene(DefeatState);
     }
 

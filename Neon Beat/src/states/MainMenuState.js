@@ -32,6 +32,7 @@ function MainMenuState(){
 
         container = createDiv();
         container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
+        container.id("container");
 
         //crear imagenes
         canvas = createCanvas(1120, 630);
@@ -50,6 +51,7 @@ function MainMenuState(){
         boton_jugar = createDiv();
         boton_jugar.parent(container);
         boton_jugar.position(375, 250);
+        //boton_jugar.mouseClicked(); 
         jugar_encendido_img = createImg('assets/images/menuPrincipal/jugar_encendido.png'); 
         jugar_encendido_img.parent(boton_jugar);
 
@@ -73,6 +75,30 @@ function MainMenuState(){
 
         backgroundIndex++;
         
+    }
+
+    this.mouseClicked = function(){
+        if(state === 0){
+            state = 1;
+            jugar_encendido_img.remove();
+            jugar_apagado_img = createImg('assets/images/menuPrincipal/jugar_apagado.png'); 
+            jugar_apagado_img.parent(boton_jugar);
+            boton_jugar.position(486.5, 350);
+            creditos_apagados_img.remove();
+            creditos_encendidos_img = createImg('assets/images/menuPrincipal/creditos_encendidos.png'); 
+            creditos_encendidos_img.parent(boton_creditos);
+            boton_creditos.position(317, 370);
+        }else if(state === 1){
+            state = 0;
+            jugar_apagado_img.remove();
+            jugar_encendido_img = createImg('assets/images/menuPrincipal/jugar_encendido.png'); 
+            jugar_encendido_img.parent(boton_jugar);
+            boton_jugar.position(375, 250);
+            creditos_encendidos_img.remove();
+            creditos_apagados_img = createImg('assets/images/menuPrincipal/creditos_apagado.png'); 
+            creditos_apagados_img.parent(boton_creditos);
+            boton_creditos.position(502.5, 500);
+        }
     }
     this.keyPressed = function(){
         console.log(state);
