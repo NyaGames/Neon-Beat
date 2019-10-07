@@ -11,7 +11,7 @@ function GameState() {
         },
         normal: {
             graphAmplitude: 6,
-            secondsFromMinimun: 1,
+            secondsFromMinimun: 0.3,
             waveSmoothing: 0.9,
             diffs: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40],
             minDistance: 10,
@@ -232,7 +232,7 @@ function GameState() {
         let limite1 = Math.floor(playerIndex - cameraOffset);
         let tmp = 103.333 * graphAmplitude * width / 1120;
         let limite2 = Math.floor(limite1 + width) - tmp;
-        this.checkEndGame(limite1);
+        this.checkEndGame();
 
 
         //Se dibujan varias lineas de distinto color para crear el efecto neón
@@ -270,18 +270,25 @@ function GameState() {
         if (playerSecond >= minimumSecondsRange.min && playerSecond <= minimumSecondsRange.max) {
             localMinimas[nextMinimum].visited = true;
             playerAtMinimum = true;
+            /*Si ese mínimo ya ha sido puntuado o fallado, dejo de estar en el mínimo
+            if((localMinimas[nextMinimum].success || localMinimas[nextMinimum].fail) && nextMinimum + 1 < localMinimas.length){ 
+                playerAtMinimum = false;
+                nextMinimum++;
+            }*/
         } else if (playerSecond > minimumSecondsRange.max && nextMinimum + 1 < localMinimas.length) { //Si me he pasado el mínimo,ya no estoy en ese mínimo
-            playerAtMinimum = false;
-            localMinimas[nextMinimum].fail = true;
-            this.playerLoseHp();
-            combo = 1;
-            nextMinimum++;
+            if(!localMinimas[nextMinimum].success){ //Si ese mínimo no se ha acertado
+                localMinimas[nextMinimum].fail = true;
+                this.playerLoseHp();
+                combo = 1;
+            }                   
+            if(playerSecond > minimumSecondsRange.max + secondsFromMinimun/4){
+                playerAtMinimum = false;
+                console.log("NO SE QUE PASA");
+                nextMinimum++;
+            }
+            
         }
-        //Si ese mínimo ya ha sido puntuado o fallado, dejo de estar en el mínimo
-        if((localMinimas[nextMinimum].success || localMinimas[nextMinimum].fail) && nextMinimum + 1 < localMinimas.length){ 
-            playerAtMinimum = false;
-            nextMinimum++;
-        }
+        
 
         //Update de los mínimos(pintarlos,sus círculos y sus textos)
         for (let i = 0; i < localMinimas.length; i++) {
@@ -341,7 +348,6 @@ function GameState() {
                 localMinimas[nextMinimum].score = 300;
             }
             localMinimas[nextMinimum].success = true;
-            //pointer.actualHp += hpForSuccess;
             this.playerGetHp();
             localMinimas[nextMinimum].fail = false;
             combo++;
@@ -349,13 +355,13 @@ function GameState() {
                 maximumCombo = combo;
             }
 
-        }else if(keyCode === 32 && !playerAtMinimum && nextMinimum + 1 < localMinimas.length){ //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos y se pasa al siguiente mínimo
+        }else if(keyCode === 32 && !playerAtMinimum && !localMinimas[nextMinimum].fail && nextMinimum + 1 < localMinimas.length){ //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos
             localMinimas[nextMinimum].success = false;
-            //pointer.actualHp += hpForFail;
             this.playerLoseHp();
+            console.log("LE DISTE PRONTO");
             localMinimas[nextMinimum].fail = true;
             combo = 1;
-            nextMinimum++;      
+            //nextMinimum++;      
         }    
     }
 
@@ -407,10 +413,10 @@ function GameState() {
 
     this.playerLoseHp = function(){
         pointer.actualHp += hpForFail;
-        if(pointer.actualHp <= 0){
+        /*if(pointer.actualHp <= 0){
             pointer.actualHp = 0;
             this.defeat();
-        }
+        }*/
     }
 
     this.defeat = function(){
@@ -439,15 +445,20 @@ function GameState() {
         text('Combo X' + combo, textPosX - 200, textPosY);
 
         
-        /*fill(255, 255, 255);
+        fill(255, 255, 255);
         textSize(20);
         stroke('rgba(100%,0%,100%,0.0)');
-        text('Random: ' + localMinimas[nextMinimum].randomSuccess, localMinimas[nextMinimum].x * graphAmplitude, localMinimas[nextMinimum].y - 30);*/
+        text(nextMinimum, localMinimas[nextMinimum].x * graphAmplitude, localMinimas[nextMinimum].y - 30);
+
+        fill(255, 255, 255);
+        textSize(30);
+        stroke('rgba(100%,0%,100%,0.0)');
+        text('Min ' + nextMinimum, textPosX - 500, textPosY);
 
     }
 
-    this.checkEndGame = function(limite1){
-        if(limite1 > pathY.length/2){
+    this.checkEndGame = function(){
+        if(playerSecond > songDuration + 1){
             mgr.showScene(EndGameState);
             maxCombo = maximumCombo;
             finalScore = points;
