@@ -2,7 +2,7 @@
 Juego desarrollado por *NyaGames*  
 Twitter: https://twitter.com/GamesNya  
 Instagram: https://www.instagram.com/nyagamesdev/?hl=es  
-Youtube: 
+Youtube: https://www.youtube.com/channel/UCSjtQnlCNNDqrUkD-CNgcqg?view_as=subscriber
 
 ## 1. Introducción
 Este documento tiene como objetivo principal plasmar el diseño y los elementos que debe incluir el videojuego *Neon Beat*. Este videojuego esta pensado para ser jugado en navegadores web, cualquier dispositivo móvil y redes sociales.
@@ -45,12 +45,20 @@ Durante la partida se pulsarán los botones para ascender o descender en la onda
 VIENE CON EL PRIMER DLC
 
 ### 3.2 Menú principal
+![7aca1365-9b52-4e78-b5ce-196299362c72](https://user-images.githubusercontent.com/43405226/66329251-81629600-e92e-11e9-9ff3-b706dee49a87.jpg)
 
-### 3.3 Dentro de la partida
+### 3.3 Selector de canción
+![5308398b-cd54-4973-8dd6-618689aa9f13](https://user-images.githubusercontent.com/43405226/66329601-11084480-e92f-11e9-8527-447839822cc7.jpg)
 
-### 3.4 Créditos
+### 3.4 Dentro de la partida
+![7bb904ec-40bd-43bb-bd8f-a50b46230074](https://user-images.githubusercontent.com/43405226/66329848-86741500-e92f-11e9-861b-ceab5ca167a1.jpg)
 
-### 3.5 Opciones
+### 3.5 Pantalla Victoria/Derrota
+![5ba3b5c5-4785-40c7-8b87-411f0d2ee0e4](https://user-images.githubusercontent.com/43405226/66330177-292c9380-e930-11e9-862f-b61d66d30213.jpg)
+
+![818ae49c-6739-4a00-8284-1b512581cae2](https://user-images.githubusercontent.com/43405226/66330272-57aa6e80-e930-11e9-944c-1174652d8314.jpg)
+### 3.5 Créditos
+![4d064d3a-37eb-4d2b-95ad-c5feaabec457](https://user-images.githubusercontent.com/43405226/66331215-4cf0d900-e932-11e9-95a6-66b0d01d7122.jpg)
 
 ## 4. Arte
 El arte de *Neon Beat* es minimalista para que el jugador pueda centrarse en seguir la música sin muchas distracciones.  
@@ -61,9 +69,9 @@ Es una de los pilares de nuestro videojuego. Durante los menús sonará una band
 
 ## 5. Equipo desarrollador
 ### NyaGames
-Pablo Martínez Domingo Correo:p.martinezd.2016@alumnos.urjc.es  
-Daniel Dávila Pérez Correo:d.davila.2016@alumnos.urjc.es  
-Jaime Rodríguez Aguado Correo: j.rodriguezag.2016@alumnos.urjc.es  
-Diego Sánchez Ramírez  Correo: d.sanchezr.2016@alumnos.urjc.es  
-Jaime Bárzano Enrique  Correo: j.barzano.2016@alumnos.urjc.es
+Pablo Martínez Domingo Correo:p.martinezd.2016@alumnos.urjc.es  Twitter: @zorroxanon  
+Daniel Dávila Pérez Correo:d.davila.2016@alumnos.urjc.es  Twitter: @danich3tok  
+Jaime Rodríguez Aguado Correo: j.rodriguezag.2016@alumnos.urjc.es  Twitter: @jaime_rod_ag  
+Diego Sánchez Ramírez  Correo: d.sanchezr.2016@alumnos.urjc.es  Twitter: @seriuosjusi  
+Jaime Bárzano Enrique  Correo: j.barzano.2016@alumnos.urjc.es  Twitter: @barzanojaime  
 

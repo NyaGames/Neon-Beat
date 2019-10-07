@@ -1,8 +1,6 @@
 function CreditsState(){    
         
     var container;
-    var canvas;
-
     var creditos;
 
     this.enter = function()
@@ -18,11 +16,13 @@ function CreditsState(){
         canvas.background(0);
 
         creditos = createImg('assets/images/creditos.png');
+        creditos.position(0, 0); 
         creditos.parent(container);
     }  
 
     this.keyPressed = function(){
         if(keyCode === 27){
+            container.remove();
             mgr.showScene(MainMenuState);
         }
     }
