@@ -58,6 +58,7 @@ VIENE CON EL PRIMER DLC
 
 ![818ae49c-6739-4a00-8284-1b512581cae2](https://user-images.githubusercontent.com/43405226/66330272-57aa6e80-e930-11e9-944c-1174652d8314.jpg)
 ### 3.5 Créditos
+![4d064d3a-37eb-4d2b-95ad-c5feaabec457](https://user-images.githubusercontent.com/43405226/66331215-4cf0d900-e932-11e9-95a6-66b0d01d7122.jpg)
 
 ## 4. Arte
 El arte de *Neon Beat* es minimalista para que el jugador pueda centrarse en seguir la música sin muchas distracciones.  
@@ -68,9 +69,9 @@ Es una de los pilares de nuestro videojuego. Durante los menús sonará una band
 
 ## 5. Equipo desarrollador
 ### NyaGames
-Pablo Martínez Domingo Correo:p.martinezd.2016@alumnos.urjc.es  
-Daniel Dávila Pérez Correo:d.davila.2016@alumnos.urjc.es  
-Jaime Rodríguez Aguado Correo: j.rodriguezag.2016@alumnos.urjc.es  
-Diego Sánchez Ramírez  Correo: d.sanchezr.2016@alumnos.urjc.es  
-Jaime Bárzano Enrique  Correo: j.barzano.2016@alumnos.urjc.es
+Pablo Martínez Domingo Correo:p.martinezd.2016@alumnos.urjc.es  Twitter: @zorroxanon
+Daniel Dávila Pérez Correo:d.davila.2016@alumnos.urjc.es  Twitter: @danich3tok
+Jaime Rodríguez Aguado Correo: j.rodriguezag.2016@alumnos.urjc.es  Twitter: @jaime_rod_ag
+Diego Sánchez Ramírez  Correo: d.sanchezr.2016@alumnos.urjc.es  Twitter: @seriuosjusi
+Jaime Bárzano Enrique  Correo: j.barzano.2016@alumnos.urjc.es  Twitter: @barzanojaime
 
