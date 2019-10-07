@@ -7,14 +7,19 @@ function EndGameState(){
     // Note: Animation1() doesn't have setup() or draw()
     this.enter = function()
     {
-        textX = 10;
-        textY = 0;
         background("teal");
+        /*textX = 10;
+        textY = 0;
         textAlign(CENTER);
         fill("black");
         text("[STATE] ***END GAME STATE*** \n" + 
             "... or mouse to advance animation.\n\n" +
-            "Press any other key to display it.", width / 2, height / 2);
+            "Press any other key to display it.", width / 2, height / 2);*/
+        fill(255, 255, 255);
+        textSize(30);
+        stroke('rgba(100%,0%,100%,0.0)');
+        text('Final Score: ' + finalScore + "\n" + 
+            "Max combo: " + maxCombo, 100, 100);
     }
     this.keyPressed = function()
     {

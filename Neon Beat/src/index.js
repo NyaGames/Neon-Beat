@@ -6,13 +6,26 @@ var sphereAnimNumber = 60;
 var backgroundNumber = 180;
 var circleNumber = 30;
 var successNumber = 16;
+var successNumber2 = 16;
+var successNumber3 = 16;
 var failNumber = 16;
+var failNumber2 = 16;
+var failNumber3 = 16;
+var lowestScoreNumber = 30;
 
 var sphereAnimation = [];
 var backgroundAnimation = [];
 var circleAnimation = [];
 var successAnimation = [];
+var successAnimation2 = [];
+var successAnimation3 = [];
 var failAnimation = [];
+var failAnimation2 = [];
+var failAnimation3 = [];
+var lowestScoreAnimation = [];
+
+var finalScore = 0;
+var maxCombo = 0;
 
 function preload(){    
   img = loadImage('assets/images/pelota.png');  
@@ -46,6 +59,7 @@ function preload(){
     } 
   }
 
+  //Animaciones de ACIERTO
   for (let i = 0; i < successNumber; i++) {
     if(i < 10){
         successAnimation.push(loadImage('assets/AfterEffect/Acierto/0000' + i + '.png'));
@@ -56,6 +70,28 @@ function preload(){
     } 
   }
 
+  for (let i = 0; i < successNumber2; i++) {
+    if(i < 10){
+        successAnimation2.push(loadImage('assets/AfterEffect/Acierto2/0000' + i + '.png'));
+    }else if(i < 100){
+        successAnimation2.push(loadImage('assets/AfterEffect/Acierto2/000' + i + '.png'));
+    }else if(i < 1000){
+        successAnimation2.push(loadImage('assets/AfterEffect/Acierto2/00' + i + '.png'));
+    } 
+  }
+
+  for (let i = 0; i < successNumber3; i++) {
+    if(i < 10){
+        successAnimation3.push(loadImage('assets/AfterEffect/Acierto3/0000' + i + '.png'));
+    }else if(i < 100){
+        successAnimation3.push(loadImage('assets/AfterEffect/Acierto3/000' + i + '.png'));
+    }else if(i < 1000){
+        successAnimation3.push(loadImage('assets/AfterEffect/Acierto3/00' + i + '.png'));
+    } 
+  }
+
+
+  // Animaciones de FALLO
   for (let i = 0; i < failNumber; i++) {
     if(i < 10){
         failAnimation.push(loadImage('assets/AfterEffect/fallo/0000' + i + '.png'));
@@ -66,6 +102,36 @@ function preload(){
     } 
   }
 
+  for (let i = 0; i < failNumber2; i++) {
+    if(i < 10){
+        failAnimation2.push(loadImage('assets/AfterEffect/fallo2/0000' + i + '.png'));
+    }else if(i < 100){
+        failAnimation2.push(loadImage('assets/AfterEffect/fallo2/000' + i + '.png'));
+    }else if(i < 1000){
+        failAnimation2.push(loadImage('assets/AfterEffect/fallo2/00' + i + '.png'));
+    } 
+   }
+
+  for (let i = 0; i < failNumber3; i++) {
+    if(i < 10){
+        failAnimation3.push(loadImage('assets/AfterEffect/fallo3/0000' + i + '.png'));
+    }else if(i < 100){
+        failAnimation3.push(loadImage('assets/AfterEffect/fallo3/000' + i + '.png'));
+    }else if(i < 1000){
+        failAnimation3.push(loadImage('assets/AfterEffect/fallo3/00' + i + '.png'));
+    } 
+    }
+
+    //Animaciones de puntuaciones
+    for (let i = 0; i < lowestScoreNumber; i++) {
+        if(i < 10){
+            lowestScoreAnimation.push(loadImage('assets/AfterEffect/100/0000' + i + '.png'));
+        }else if(i < 100){
+            lowestScoreAnimation.push(loadImage('assets/AfterEffect/100/000' + i + '.png'));
+        }else if(i < 1000){
+            lowestScoreAnimation.push(loadImage('assets/AfterEffect/100/00' + i + '.png'));
+        } 
+    }
 
 }
 
