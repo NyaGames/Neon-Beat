@@ -14,11 +14,13 @@ class Pointer{
         this.maxHp = 100;
         this.actualHp = this.maxHp;
         this.startWidth = 600;
+        this.colors = [[0,239,255,255],[0,180,180,255],[0,120,120,255],[0,60,60,255],[0,30,30,255]];
+        this.actualIntervalo = 0;
     }
 
     display(damageOverTime){
         let index = Math.floor(this.index) % this.len;
-        tint(0, 239, 255, 255);
+        tint(this.colors[this.actualIntervalo]);
         imageMode(CENTER);       
         image(this.animation[index], this.x, this.y, this.r, this.r);      
         noTint();
@@ -34,6 +36,12 @@ class Pointer{
         fill(255,0,0);
         let newWidth = (this.actualHp * this.startWidth) / this.maxHp;
         rect(this.x - 150,height - 20,newWidth,10); 
+    }
+
+    checkDead(){
+        if(this.actualHp <= 0){
+            mgr.showScene(EndGameState);
+        }
     }
 
     setPosition(x, y){

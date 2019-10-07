@@ -36,6 +36,16 @@ function GameState() {
     var timeOffSet = null;
     var pointer = new Pointer(0, 0, 75, sphereAnimation);
 
+    var intervalos = [];
+    let numIntervalos = pointer.colors.length;
+    let tamañoIntervalo = pointer.maxHp/numIntervalos;
+    let num = pointer.maxHp;
+    for(var i = 0;i < numIntervalos;i++){
+        newIntervalo = new Range(num - tamañoIntervalo,num);
+        num -= tamañoIntervalo;
+        intervalos.push(newIntervalo);
+    }
+
     var input;
     var sel;
     var cameraOffset;
@@ -214,9 +224,6 @@ function GameState() {
         let limite1 = Math.floor(playerIndex - cameraOffset);
         let tmp = 103.333 * graphAmplitude * width / 1120;
         let limite2 = Math.floor(limite1 + width) - tmp;
-        console.log("Limite 1: " + limite1);
-        console.log("Limite 2: " + limite2);
-        console.log(pathY.length);
         this.checkEndGame(limite1);
 
 
@@ -291,6 +298,11 @@ function GameState() {
         //Mueve el puntero del jugador     
         pointer.setPosition(playerIndex * graphAmplitude, pathY[playerIndex] - 10);
         pointer.display(damageOverTime);
+
+        //Mira de qué color tiene que pintar al  jugador
+        pointer.actualIntervalo = this.getPlayerIntervalo();
+        //Mira si le jugador se muere
+        pointer.checkDead();
 
         backgroundIndex++;
 
@@ -369,6 +381,17 @@ function GameState() {
     //#endregion
 
     //#region [rgba(28, 99, 155, 0.1)]Cosas de Dani
+    this.getPlayerIntervalo = function(){
+        var result = -1;
+        for(i = 0;i < intervalos.length;i++){
+            if(pointer.actualHp >= intervalos[i].min && pointer.actualHp <= intervalos[i].max){
+                result = i;
+            }
+        }
+
+        return result;
+    }
+
     this.playerGetHp = function(){
         pointer.actualHp += hpForSuccess;
         if(pointer.actualHp > pointer.maxHp){
