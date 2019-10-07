@@ -1,6 +1,6 @@
 class Minimum{
 
-    constructor(x,y,visited,animation,successAnimation,successAnimation2,successAnimation3,failAnimation,failAnimation2,failAnimation3,lowestScoreAnimation){
+    constructor(x,y,visited,animation,successAnimation,successAnimation2,successAnimation3,failAnimation,failAnimation2,failAnimation3,lowestScoreAnimation,midScoreAnimation,highestScoreAnimation){
         this.x = x;
         this.y = y;
         this.visited = visited;
@@ -38,17 +38,20 @@ class Minimum{
 
         this.endAnimation = false;
         this.increment = 0;
-        //Texto de puntuación
-        /*this.scoreText = "";
-        this.alpha = 255;
-        this.textColor = color(255,255,255);
-        this.textOffset = 30;*/
         this.endScoreAnimation = false;
         this.score = 0;
-        this.scoreIncrement = 30;
+        this.scoreIncrement = 0;
+
         this.lowestScoreAnimation = lowestScoreAnimation;
         this.lowestScoreAnimationIndex = 0;
         this.lowestScoreAnimationLength = this.lowestScoreAnimation.length;
+        this.midScoreAnimation = midScoreAnimation;
+        this.midScoreAnimationIndex = 0;
+        this.midScoreAnimationLength = this.midScoreAnimation.length;
+        this.highestScoreAnimation = highestScoreAnimation;
+        this.highestScoreAnimationIndex = 0;
+        this.highestScoreAnimationLength = this.highestScoreAnimation.length;
+        this.scoreSize = 100;
     }
 
     drawCircle(playerX,startDiameter,graphAmplitude){
@@ -139,34 +142,39 @@ class Minimum{
     }
 
     drawText(graphAmplitude){
-        /*if(this.scoreText != "" && this.alpha > 0){
-            textSize(20);
-            this.textColor.setAlpha(this.alpha);
-            stroke(this.textColor);
-            fill(this.textColor);
-            text(this.scoreText, this.x * graphAmplitude, this.y + this.textOffset);
-            this.alpha -= 10; 
-            this.textOffset += 2;
-        }*/
         if(!this.endScoreAnimation){
             if(this.score != 0){
                 switch(this.score){
                     case 100:
-                        this.scoreIncrement += 4;
+                        this.scoreIncrement += 2;
                         let index = Math.floor(this.lowestScoreAnimationIndex) % this.lowestScoreAnimationLength;
                         imageMode(CENTER);       
-                        image(this.lowestScoreAnimation[index],this.x * graphAmplitude, this.y - this.scoreIncrement, 200, 200);      
+                        image(this.lowestScoreAnimation[index],this.x * graphAmplitude, this.y + this.scoreIncrement, this.scoreSize, this.scoreSize);      
                         this.lowestScoreAnimationIndex += 0.6;   
                         if (index == this.lowestScoreAnimation.length - 1){
                             this.endScoreAnimation = true;
                         }
                         break;
                     case 200:
-    
+                        this.scoreIncrement += 2;
+                        let index2 = Math.floor(this.midScoreAnimationIndex) % this.midScoreAnimationLength;
+                        imageMode(CENTER);       
+                        image(this.midScoreAnimation[index2],this.x * graphAmplitude, this.y + this.scoreIncrement, this.scoreSize, this.scoreSize);      
+                        this.midScoreAnimationIndex += 0.6;   
+                        if (index2 == this.midScoreAnimation.length - 1){
+                            this.endScoreAnimation = true;
+                        }
                         break;
     
                     case 300:
-    
+                        this.scoreIncrement += 1;
+                        let index3 = Math.floor(this.highestScoreAnimationIndex) % this.highestScoreAnimationLength;
+                        imageMode(CENTER);       
+                        image(this.highestScoreAnimation[index3],this.x * graphAmplitude, this.y + this.scoreIncrement, this.scoreSize, this.scoreSize);      
+                        this.highestScoreAnimationIndex += 0.6;   
+                        if (index3 == this.highestScoreAnimation.length - 1){
+                            this.endScoreAnimation = true;
+                        }
                         break;
                 }
             }

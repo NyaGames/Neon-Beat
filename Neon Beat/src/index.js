@@ -12,6 +12,8 @@ var failNumber = 16;
 var failNumber2 = 16;
 var failNumber3 = 16;
 var lowestScoreNumber = 30;
+var midScoreNumber = 30;
+var highestScoreNumber = 30;
 
 var sphereAnimation = [];
 var backgroundAnimation = [];
@@ -23,6 +25,8 @@ var failAnimation = [];
 var failAnimation2 = [];
 var failAnimation3 = [];
 var lowestScoreAnimation = [];
+var midScoreAnimation = [];
+var highestScoreAnimation = [];
 
 var finalScore = 0;
 var maxCombo = 0;
@@ -130,6 +134,26 @@ function preload(){
             lowestScoreAnimation.push(loadImage('assets/AfterEffect/100/000' + i + '.png'));
         }else if(i < 1000){
             lowestScoreAnimation.push(loadImage('assets/AfterEffect/100/00' + i + '.png'));
+        } 
+    }
+
+    for (let i = 0; i < midScoreNumber; i++) {
+        if(i < 10){
+            midScoreAnimation.push(loadImage('assets/AfterEffect/200/0000' + i + '.png'));
+        }else if(i < 100){
+            midScoreAnimation.push(loadImage('assets/AfterEffect/200/000' + i + '.png'));
+        }else if(i < 1000){
+            midScoreAnimation.push(loadImage('assets/AfterEffect/200/00' + i + '.png'));
+        } 
+    }
+
+    for (let i = 0; i < highestScoreNumber; i++) {
+        if(i < 10){
+            highestScoreAnimation.push(loadImage('assets/AfterEffect/300/0000' + i + '.png'));
+        }else if(i < 100){
+            highestScoreAnimation.push(loadImage('assets/AfterEffect/300/000' + i + '.png'));
+        }else if(i < 1000){
+            highestScoreAnimation.push(loadImage('assets/AfterEffect/300/00' + i + '.png'));
         } 
     }
 
