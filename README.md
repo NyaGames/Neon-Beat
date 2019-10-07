@@ -69,9 +69,9 @@ Es una de los pilares de nuestro videojuego. Durante los menús sonará una band
 
 ## 5. Equipo desarrollador
 ### NyaGames
-Pablo Martínez Domingo Correo:p.martinezd.2016@alumnos.urjc.es  Twitter: @zorroxanon
-Daniel Dávila Pérez Correo:d.davila.2016@alumnos.urjc.es  Twitter: @danich3tok
-Jaime Rodríguez Aguado Correo: j.rodriguezag.2016@alumnos.urjc.es  Twitter: @jaime_rod_ag
-Diego Sánchez Ramírez  Correo: d.sanchezr.2016@alumnos.urjc.es  Twitter: @seriuosjusi
-Jaime Bárzano Enrique  Correo: j.barzano.2016@alumnos.urjc.es  Twitter: @barzanojaime
+Pablo Martínez Domingo Correo:p.martinezd.2016@alumnos.urjc.es  Twitter: @zorroxanon  
+Daniel Dávila Pérez Correo:d.davila.2016@alumnos.urjc.es  Twitter: @danich3tok  
+Jaime Rodríguez Aguado Correo: j.rodriguezag.2016@alumnos.urjc.es  Twitter: @jaime_rod_ag  
+Diego Sánchez Ramírez  Correo: d.sanchezr.2016@alumnos.urjc.es  Twitter: @seriuosjusi  
+Jaime Bárzano Enrique  Correo: j.barzano.2016@alumnos.urjc.es  Twitter: @barzanojaime  
 
