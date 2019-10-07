@@ -45,7 +45,7 @@ Durante la partida se pulsarán los botones para ascender o descender en la onda
 VIENE CON EL PRIMER DLC
 
 ### 3.2 Menú principal
-
+![7aca1365-9b52-4e78-b5ce-196299362c72](https://user-images.githubusercontent.com/43405226/66329251-81629600-e92e-11e9-9ff3-b706dee49a87.jpg)
 ### 3.3 Dentro de la partida
 
 ### 3.4 Créditos
