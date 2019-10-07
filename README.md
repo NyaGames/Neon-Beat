@@ -46,11 +46,18 @@ VIENE CON EL PRIMER DLC
 
 ### 3.2 Menú principal
 ![7aca1365-9b52-4e78-b5ce-196299362c72](https://user-images.githubusercontent.com/43405226/66329251-81629600-e92e-11e9-9ff3-b706dee49a87.jpg)
-### 3.3 Dentro de la partida
 
-### 3.4 Créditos
+### 3.3 Selector de canción
+![5308398b-cd54-4973-8dd6-618689aa9f13](https://user-images.githubusercontent.com/43405226/66329601-11084480-e92f-11e9-8527-447839822cc7.jpg)
 
-### 3.5 Opciones
+### 3.4 Dentro de la partida
+![7bb904ec-40bd-43bb-bd8f-a50b46230074](https://user-images.githubusercontent.com/43405226/66329848-86741500-e92f-11e9-861b-ceab5ca167a1.jpg)
+
+### 3.5 Pantalla Victoria/Derrota
+![5ba3b5c5-4785-40c7-8b87-411f0d2ee0e4](https://user-images.githubusercontent.com/43405226/66330177-292c9380-e930-11e9-862f-b61d66d30213.jpg)
+
+![818ae49c-6739-4a00-8284-1b512581cae2](https://user-images.githubusercontent.com/43405226/66330272-57aa6e80-e930-11e9-944c-1174652d8314.jpg)
+### 3.5 Créditos
 
 ## 4. Arte
 El arte de *Neon Beat* es minimalista para que el jugador pueda centrarse en seguir la música sin muchas distracciones.  
