@@ -15,6 +15,8 @@ function EndGameState(){
     var button_otravez_apagado;
 
     var state;
+
+    var texto;
     
     // enter() will be executed each time the SceneManager switches
     // to this animation
@@ -42,15 +44,15 @@ function EndGameState(){
 
         texto_victoria = createImg('assets/images/PantallaVictoria/cartelVictoria.png'); 
         texto_victoria.position(0, 0); 
-        texto_victoria.parent(container);
+        texto_victoria.parent(container);     
+
+        button_salir_apagado = createImg('assets/images/PantallaVictoria/boton_salir_apagado.png'); 
+        button_salir_apagado.position(767, 320); 
+        button_salir_apagado.parent(container);
 
         button_otravez_encendido = createImg('assets/images/PantallaVictoria/boton_otravez.png'); 
-        button_otravez_encendido.position(0, 0); 
-        button_otravez_encendido.parent(container);        
-
-        button_salir_apagado = createImg('assets/images/PantallaVictoria/boton_salir.png'); 
-        button_salir_apagado.position(0, 0); 
-        button_salir_apagado.parent(container);
+        button_otravez_encendido.position(771, 100); 
+        button_otravez_encendido.parent(container); 
 
         /*background("teal");
         textX = 10;
@@ -66,13 +68,40 @@ function EndGameState(){
         text('Final Score: ' + finalScore + "\n" + 
             "Max combo: " + maxCombo, 100, 100);*/
     }
-    this.keyPressed = function()
-    {
-        text(keyCode, textX, textY += 10);
-        if ( textY > height )
-        {
-            textX += 20;
-            textY = 0;
+    this.keyPressed = function(){
+        if(keyCode === 32){
+            if(state === 0){
+                canvas.remove();
+                mgr.showScene(GameState);
+            }
+            if(state === 1){
+                canvas.remove();
+                mgr.showScene(MainMenuState);
+            }
+        }else{
+            if(keyCode === 83 || keyCode === 87){
+                if(state === 0){
+                    state = 1;
+                    button_intentar_encendido.remove();
+                    button_intentar_apagado = createImg('assets/images/PantallaVictoria/boton_intentar_apagado.png'); 
+                    button_intentar_apagado.position(0, 0); 
+                    button_intentar_apagado.parent(container);  
+                    button_salir_apagado.remove();
+                    button_salir_encendido = createImg('assets/images/PantallaDerrota/boton_salir.png'); 
+                    button_salir_encendido.position(0, 0); 
+                    button_salir_encendido.parent(container);
+                }else if(state === 1){
+                    state = 0;
+                    button_intentar_apagado.remove();
+                    button_intentar_encendido = createImg('assets/images/PantallaDerrota/boton_intentar.png'); 
+                    button_intentar_encendido.position(0, 0); 
+                    button_intentar_encendido.parent(container);  
+                    button_salir_encendido.remove();
+                    button_salir_apagado = createImg('assets/images/PantallaDerrota/boton_salir_apagado.png'); 
+                    button_salir_apagado.position(0, 0); 
+                    button_salir_apagado.parent(container);
+                }
+            }
         }
     }
     this.mousePressed = function()

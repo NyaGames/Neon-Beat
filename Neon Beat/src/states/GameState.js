@@ -34,7 +34,8 @@ function GameState() {
     //#endregion
 
     //#region[rgba(28, 155, 99, 0.1)]Setup
-    this.enter = function () {      
+    this.enter = function () {    
+        mgr.showScene(EndGameState);  
         console.log("[DEBUG] ***ENTERING GAME STATE***");
         container = document.getElementById("container");
 
@@ -278,14 +279,14 @@ function GameState() {
 
     this.playerLoseHp = function () {
         pointer.actualHp += hpForFail;
-        /*if(pointer.actualHp <= 0){
+        if(pointer.actualHp <= 0){
             pointer.actualHp = 0;
             this.defeat();
-        }*/
+        }
     }
 
     this.defeat = function(){
-        container.remove();        
+        canvas.remove();        
         mgr.showScene(DefeatState);
     }
 

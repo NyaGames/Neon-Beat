@@ -51,11 +51,11 @@ function DefeatState(){
     this.keyPressed = function(){
         if(keyCode === 32){
             if(state === 0){
-                container.remove();
+                canvas.remove();
                 mgr.showScene(GameState);
             }
             if(state === 1){
-                container.remove();
+                canvas.remove();
                 mgr.showScene(MainMenuState);
             }
         }else{
