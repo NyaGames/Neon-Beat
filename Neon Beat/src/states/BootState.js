@@ -10,7 +10,7 @@ var menuBackground = [];
 var menuBackgroundNumber = 120;
 
 var mainMenuAssets = [];
-var totalMainMenuAssets = 7 + menuBackgroundNumber;
+var totalMainMenuAssets = menuBackgroundNumber;
 var mainMenuCounter = 0;
 
 var bootLoading = true;
@@ -55,7 +55,7 @@ function BootState(){
         }
     }
 
-    this.loadAsset = function (type, arr, index, url) {
+    this.loadAssetArray = function (type, arr, index, url) {
         switch (type) {
             case "IMAGE":
                 loadImage(url, this.assetLoaded, this.onLoadingError)
@@ -75,25 +75,34 @@ function BootState(){
         }
     }
 
+    this.loadAsset = function(type, varStore, url){
+        switch (type) {
+            case "IMAGE":
+                varStore = loadImage(url, this.assetLoaded, this.onLoadingError)
+                break;
+        }
+
+        this.assetLoaded = function (asset) {          
+            mainMenuAssets[mainMenuCounter] = asset; 
+            mainMenuCounter++;
+
+            if (mainMenuCounter == totalMainMenuAssets - 1) {
+                mgr.showScene(MainMenuState);
+            }
+        }
+    }
+
     this.loadAssets = function(){
 
         for (let i = 0; i < menuBackgroundNumber; i++) {        
             if (i < 10) {
                 //highestScoreAnimation.push(loadImage('assets/AfterEffect/300/0000' + i + '.png'));
-                this.loadAsset("IMAGE", menuBackground, i, 'assets/AfterEffect/Menu/0000' + i + '.png');
+                this.loadAssetArray("IMAGE", menuBackground, i, 'assets/AfterEffect/Menu/0000' + i + '.png');
             } else if (i < 100) {
-                this.loadAsset("IMAGE", menuBackground, i, 'assets/AfterEffect/Menu/000' + i + '.png');
+                this.loadAssetArray("IMAGE", menuBackground, i, 'assets/AfterEffect/Menu/000' + i + '.png');
             } else if (i < 1000) {
-                this.loadAsset("IMAGE", menuBackground, i, 'assets/AfterEffect/Menu/00' + i + '.png');
+                this.loadAssetArray("IMAGE", menuBackground, i, 'assets/AfterEffect/Menu/00' + i + '.png');
             }
         }
-
-        creditos_apagados_img = this.loadAsset("IMAGE", null, 0, 'assets/images/menuPrincipal/creditos_apagado.png');//loadImage('assets/images/menuPrincipal/creditos_apagado.png'); 
-        creditos_encendidos_img = this.loadAsset("IMAGE", null, 0, 'assets/images/menuPrincipal/creditos_encendidos.png');//loadImage('assets/images/menuPrincipal/creditos_encendidos.png'); 
-        fondo_menu_img = this.loadAsset("IMAGE", null, 0, 'assets/images/menuPrincipal/fondo_menu.png');//loadImage('assets/images/menuPrincipal/fondo_menu.png'); 
-        jugar_apagado_img = this.loadAsset("IMAGE", null, 0, 'assets/images/menuPrincipal/jugar_apagado.png');//loadImage('assets/images/menuPrincipal/jugar_apagado.png'); 
-        jugar_encendido_img = this.loadAsset("IMAGE", null, 0, 'assets/images/menuPrincipal/jugar_encendido.png');//loadImage('assets/images/menuPrincipal/jugar_encendido.png'); 
-        titulo_img = this.loadAsset("IMAGE", null, 0, 'assets/images/menuPrincipal/titulo.png');//loadImage('assets/images/menuPrincipal/titulo.png'); 
-        placeholder_fondotitulo_img = this.loadAsset("IMAGE", null, 0, 'assets/images/menuPrincipal/placeholder_animacion_titulo.png');//loadImage('assets/images/menuPrincipal/placeholder_animacion_titulo.png'); 
     }
 }

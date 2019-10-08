@@ -12,15 +12,6 @@ function MainMenuState(){
     {
         console.log("[DEBUG] ***ENTERING MAIN MENU STATE***")
        
-        //cargar imagenes
-        creditos_apagados_img = loadImage('assets/images/menuPrincipal/creditos_apagado.png'); 
-        creditos_encendidos_img = loadImage('assets/images/menuPrincipal/creditos_encendidos.png'); 
-        fondo_menu_img = loadImage('assets/images/menuPrincipal/fondo_menu.png'); 
-        jugar_apagado_img = loadImage('assets/images/menuPrincipal/jugar_apagado.png'); 
-        jugar_encendido_img = loadImage('assets/images/menuPrincipal/jugar_encendido.png'); 
-        titulo_img = loadImage('assets/images/menuPrincipal/titulo.png'); 
-        placeholder_fondotitulo_img = loadImage('assets/images/menuPrincipal/placeholder_animacion_titulo.png'); 
-
         container = createDiv();
         container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
         container.id("container");
