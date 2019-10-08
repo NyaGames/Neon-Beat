@@ -1,5 +1,10 @@
 function GameState() {
 
+    //Prueba -------------------------------------------------------------------------------------------------------------
+    var bgColor = 0;
+    var bgAlpha = 0;
+
+    var flashBool =false;
     //#region [rgba(255, 0, 0, 0.1)]Variables
     var difficulties = {
         easy:{
@@ -183,26 +188,32 @@ function GameState() {
    
     //#region[rgba(0, 0, 255, 0.1)]Draw
     this.draw = function () {
-        
         background(0);
 
         //Animación del fondo
         let bgIndex = Math.floor(backgroundIndex % backgroundAnimation.length);
         imageMode(CORNER);
         image(backgroundAnimation[bgIndex], 0, 0, width, height);
+        
+        //flash
+        if(flashBool){
+            imageMode(CORNER);
+            image(flash, 0, 0, width, height);
+            flashBool=false;
+        }
 
         if (!drawBool) return;
-
+        
         //Offset para sincronizar los tiempos a la hora de empezar la canción
         if (timeOffSet === null) {
             timeOffSet = nbAudioContext.currentTime();
         }
-
-        //Mueve el canavas para crear un efecto de 'cámara'
+        
+        //Mueve el canvas para crear un efecto de 'cámara'
         let playerIndex = Math.floor((pathY.length) * (nbAudioContext.currentTime() - timeOffSet) / nbAudioContext.getTrackDuration());
         translate(-playerIndex * graphAmplitude + cameraOffset, 0);
-
-
+        
+        
         //Colores de las lineas para crear un efecto de neón.            
         let colors = [        
             [1, 15, 195, 200],
@@ -253,6 +264,8 @@ function GameState() {
         } else if (playerSecond > minimumSecondsRange.max && nextMinimum + 1 < localMinimas.length) { //Si me he pasado el mínimo,ya no estoy en ese mínimo
             playerAtMinimum = false;
             localMinimas[nextMinimum].fail = true;
+            //en la siguiente pasada hay un flash
+            flashBool=true;
             //pointer.actualHp += hpForFail;
             this.playerLoseHp();
             combo = 1;
@@ -288,8 +301,8 @@ function GameState() {
         pointer.setPosition(playerIndex * graphAmplitude, pathY[playerIndex] - 10);
         pointer.display(damageOverTime);
 
-        backgroundIndex++;
-
+        
+        backgroundIndex++;      
         this.updateText();
     }
 
@@ -297,6 +310,7 @@ function GameState() {
 
     //#region[rgba(155, 28, 99, 0.1)]Eventos
     this.keyPressed = function () {
+        
         //Si pulsamos la tecla y todavía no hemos acertado ni fallado, se considera acierto
         if (keyCode === 32 && playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail) { // 32 = Barra espaciadora
             var rangeSize = startDiameter - localMinimas[nextMinimum].sizeForPerfectSuccsess;
@@ -325,7 +339,8 @@ function GameState() {
             this.playerLoseHp();
             localMinimas[nextMinimum].fail = true;
             combo = 1;
-            nextMinimum++;      
+            nextMinimum++;
+                
         }
     }
 

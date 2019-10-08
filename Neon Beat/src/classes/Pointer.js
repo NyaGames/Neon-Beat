@@ -14,10 +14,26 @@ class Pointer{
         this.maxHp = 100;
         this.actualHp = this.maxHp;
         this.startWidth = 600;
+
+        //Cola de la bola
+        this.history = [];
+        var v=createVector(this.x, this.y);
     }
 
     display(damageOverTime){
         let index = Math.floor(this.index) % this.len;
+
+        //Imagenes de la cola de la bola
+        for(var i=0; i < this.history.length-1; i++){
+            var alpha = lerp(0, 255, i/this.history.length);
+            var tamaño = lerp(0, this.r*0.3, i/this.history.length);
+            var pos = this.history[i];
+            tint(0, 239, 255, alpha);
+            imageMode(CENTER);    
+            image(img, pos.x, pos.y, tamaño, tamaño);  
+            noTint();
+        }
+        
         tint(0, 239, 255, 255);
         imageMode(CENTER);       
         image(this.animation[index], this.x, this.y, this.r, this.r);      
@@ -34,10 +50,18 @@ class Pointer{
         fill(255,0,0);
         let newWidth = (this.actualHp * this.startWidth) / this.maxHp;
         rect(this.x - 150,height - 20,newWidth,10); 
+        
+        
+        
     }
 
     setPosition(x, y){
         this.x = x;
         this.y = y + 7;
+        var v=createVector(this.x, this.y);
+        this.history.push(v)  
+        if(this.history.length > 10){
+            this.history.splice(0, 1);
+        }
     }
 }
