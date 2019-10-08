@@ -1,43 +1,10 @@
 function GameState() {
-
     //#region [rgba(255, 0, 0, 0.1)]Variables
-    var difficulties = {
-        easy:{
-            graphAmplitude: 4,
-            secondsFromMinimun: 0.5,
-            waveSmoothing: 0.95,
-            diffs: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40],
-            minDistance: 10,
-        },
-        normal: {
-            graphAmplitude: 6,
-            secondsFromMinimun: 1,
-            waveSmoothing: 0.9,
-            diffs: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40],
-            minDistance: 10,
-        },
-        difficult: {
-            graphAmplitude: 8,
-            secondsFromMinimun: 0.1,
-            waveSmoothing: 0.6,
-            diffs: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40],
-            minDistance: 10,
-        }
-    }
-
-    var pathY = [];
-    var localMinimas = [];
-    var chosenDifficulty;
-    var graphAmplitude;
-    var secondsFromMinimun;
     var canvas;
 
-    var drawBool = false;   
     var timeOffSet = null;
-    var pointer = new Pointer(0, 0, 75, sphereAnimation);
-
-    var input;
-    var sel;
+    var pointer;
+    
     var cameraOffset;
 
     var backgroundIndex = 0;
@@ -47,8 +14,6 @@ function GameState() {
     var points = 0;
 
     //Gameplay variables
-    var songDuration;
-    var playerSecond;  
     var lowestScore = 100;
     var midScore = 200;
     var highestScore = 300;
@@ -59,7 +24,7 @@ function GameState() {
     var hpForFail = -7.5;
 
     //Minimum circles
-    var nextMinimum = 0;
+   
     var playerAtMinimum = false;
     var startDiameter = 100;
     minimumSecondsRange = new Range(0, 0);
@@ -68,6 +33,7 @@ function GameState() {
 
     //#region[rgba(28, 155, 99, 0.1)]Setup
     this.enter = function () {
+      
         console.log("[DEBUG] ***ENTERING GAME STATE***");
         container = createDiv();
         container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
@@ -77,14 +43,13 @@ function GameState() {
         canvas.parent(container);
         canvas.background(0);
 
-        input = createFileInput(this.handleFileSelect)
+        /*input = createFileInput(this.handleFileSelect)
         sel = createSelect();
         sel.option('Normal');
         sel.option('Easy');
         sel.option('Difficult');
-        sel.changed(this.selectEvent);
-
-        console.log("[DEBUG] ***ENTERING GAME STATE***");
+        sel.changed(this.selectEvent);*/
+  
         if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
             console.log("[DEBUG] ***MOBILE DEVICE DETECTED***");
             canvas = createCanvas(screen.availWidth, screen.availHeight - 50);         
@@ -99,104 +64,11 @@ function GameState() {
         }                     
     
         cameraOffset = width * 1 / 3;
-
-        chosenDifficulty = difficulties.normal;
-        nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, chosenDifficulty.waveSmoothing);
-
-         
-        canvas.background(0);
-    }    
-    //#endregion
-
-    //#region [rgba(0, 255, 0, 0.1)]Procesamiento de la onda y mínimos
-    this.songLoaded = function (fft, d) {    
-        songDuration = Math.round(d);
-        let maxY = Math.max.apply(null, fft);        
-        for (let i = 0; i < fft.length; i++) {
-            let y = map(fft[i], 0, maxY, height * 4 / 5, height * 1 / 5);
-            pathY.push(y);
-        }
-
-        //Buscamos mínimos locales
-        let diff;
-        let diffs = chosenDifficulty.diffs;
-        let intervals = [
-            [0, 60],
-            [60, 130],
-            [130, 260],
-            [260, 520],
-            [520, 1040],
-            [1040, 1480],
-            [1480, 2080],
-            [2080, 3000],
-            [3000, 4160],
-            [4160, 6000],
-            [6000, maxY]
-        ]
-        let minDistance = chosenDifficulty.minDistance;
-        let previousMin = -1;
-
-        for (let i = 1; i < fft.length - 1; i++) {
-
-            let resta1 = fft[i] - fft[i - 1];
-            let resta2 = fft[i] - fft[i + 1];
-
-            let localMaxima;
-            let localMinima;
-
-            if (resta1 <= 0 && resta2 < 0) {
-                //Mínimo local encontrado
-                localMinima = fft[i];
-
-                //Buscamos el intervalo en el que se encuentra y asignamos la diferencia que tiene que haber entre el mínimo y el máximo
-                //inmediato
-                let interval;
-                for (let i = 0; i < intervals.length; i++) {
-                    if (localMinima >= intervals[i][0] && localMinima < intervals[i][1]) {
-                        interval = intervals[i]
-                        diff = diffs[i];
-                    }
-                }
-
-                //Buscamos máximo local
-                for (let j = i; j < fft.length; j++) {
-                    resta1 = fft[j] - fft[j - 1];
-                    resta2 = fft[j] - fft[j + 1];
-
-                    if (resta1 > 0 && resta2 > 0) {
-                        //Máximo local encontrado;
-                        localMaxima = fft[j];
-                        break;
-                    }
-                }
-
-                //Vemos si la diferencia de frecuencias entre el mínimo y el máximo es suficiente
-                if (Math.abs(localMinima - localMaxima) >= diff) {
-                    //Miramos si está lo suficientemente lejos del mínimo local anterior
-                    if (Math.abs(i - previousMin) >= minDistance || previousMin == -1) {
-                        var minimum = new Minimum(i, pathY[i], false,circleAnimation,successAnimation,successAnimation2,successAnimation3,failAnimation,failAnimation2,failAnimation3,lowestScoreAnimation,midScoreAnimation,highestScoreAnimation);
-                        localMinimas.push(minimum);
-                        localMinimas[localMinimas.length-1].index = localMinimas.length-1;
-                        previousMin = i;
-                    }
-                }
-            }
-        }
-
-        for (var j = 0; j < localMinimas.length; j++) {
-            localMinimas[j].second = (songDuration * localMinimas[j].x) / ((pathY.length - 1)); //localMinimas[localMinimas.length - 1].x;
-            localMinimas[j].second = Math.round(localMinimas[j].second * 10) / 10;
-        }
-
-        playerSecond = songDuration * pointer.x / ((pathY.length - 1) * graphAmplitude);
-        playerSecond = Math.round(playerSecond * 10) / 10 //Redondeamos un decimal
-
-        recorridoEnSegundos = localMinimas[nextMinimum].second - playerSecond;
+        pointer = new Pointer(0, 0, 75, sphereAnimation); 
 
         nbAudioContext.playTrack();
-        drawBool = true;
-
-    }
+        canvas.background(0);
+    }    
     //#endregion
    
     //#region[rgba(0, 0, 255, 0.1)]Draw
@@ -208,8 +80,6 @@ function GameState() {
         let bgIndex = Math.floor(backgroundIndex % backgroundAnimation.length);
         imageMode(CORNER);
         image(backgroundAnimation[bgIndex], 0, 0, width, height);
-
-        if (!drawBool) return;
 
         //Offset para sincronizar los tiempos a la hora de empezar la canción
         if (timeOffSet === null) {
@@ -378,23 +248,6 @@ function GameState() {
                 break;
         }
     }
-
-    this.handleFileSelect = function(evt) {
-        var f = evt.file;   
-        secondsFromMinimun = chosenDifficulty.secondsFromMinimun;
-        graphAmplitude = chosenDifficulty.graphAmplitude;    
-        nbAudioContext.changeSmoothing(chosenDifficulty.waveSmoothing)
-        //Cargar el archivo    
-        if (f.type === "audio/aiff" || true) {
-            var reader = new FileReader();
-            reader.onload = function (file) {
-                nbAudioContext.decodeAudio(file);
-            }
-            reader.readAsArrayBuffer(f);
-        } else {
-            trow("No good file");
-        }    
-    }
     //#endregion
 
     //#region [rgba(28, 99, 155, 0.1)]Cosas de Dani
@@ -414,9 +267,7 @@ function GameState() {
     }
 
     this.defeat = function(){
-        container.remove();
-        input.remove();
-        sel.remove();   
+        container.remove();        
         mgr.showScene(DefeatState);
     }
 

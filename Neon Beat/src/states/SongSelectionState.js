@@ -1,3 +1,6 @@
+var chosenDifficulty;
+var songFile;
+
 function SongSelectionState(){    
         
     var container;
@@ -12,7 +15,33 @@ function SongSelectionState(){
     var normalButton;
     var hardButton;
 
-    var selectionImage;
+    var selectionImage;  
+
+    var songSelectionBGIndex = 0;
+
+    var difficulties = {
+        easy:{
+            graphAmplitude: 4,
+            secondsFromMinimun: 0.5,
+            waveSmoothing: 0.95,
+            diffs: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40],
+            minDistance: 10,
+        },
+        normal: {
+            graphAmplitude: 6,
+            secondsFromMinimun: 1,
+            waveSmoothing: 0.9,
+            diffs: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40],
+            minDistance: 10,
+        },
+        difficult: {
+            graphAmplitude: 8,
+            secondsFromMinimun: 0.1,
+            waveSmoothing: 0.6,
+            diffs: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40],
+            minDistance: 10,
+        }
+    }
 
     this.enter = function()
     {
@@ -36,6 +65,8 @@ function SongSelectionState(){
         selectionImage.parent(selectionButton);
         state = 0;
 
+        chosenDifficulty = difficulties.normal;
+
         //crear botones de dificultad
         /*easyButton = createDiv();
         easyButton.parent(container);
@@ -50,28 +81,28 @@ function SongSelectionState(){
         background(0);
 
         //Animación del fondo
-        let bgIndex = Math.floor(backgroundIndex % backgroundAnimation.length);
+        let bgIndex = Math.floor(songSelectionBGIndex % menuBackground.length);
         imageMode(CORNER);
-        image(backgroundAnimation[bgIndex], 0, 0, width, height);
+        image(menuBackground[bgIndex], 0, 0, width, height);
 
-        backgroundIndex++;
+        songSelectionBGIndex++;
         
     }
 
     this.handleFileSelect = function(evt) {
-        var f = evt.file;   
-        secondsFromMinimun = chosenDifficulty.secondsFromMinimun;
-        graphAmplitude = chosenDifficulty.graphAmplitude;    
-        nbAudioContext.changeSmoothing(chosenDifficulty.waveSmoothing)
+        var f = evt.file;           
         //Cargar el archivo    
         if (f.type === "audio/aiff" || true) {
             var reader = new FileReader();
             reader.onload = function (file) {
-                nbAudioContext.decodeAudio(file);
+                //nbAudioContext.decodeAudio(file);
+                songFile = file;
+                selectionButton.remove();
+                mgr.showScene(PreloadState);
             }
             reader.readAsArrayBuffer(f);
         } else {
-            trow("No good file");
+            throw("No good file");
         }    
     }
 }

@@ -1,21 +1,12 @@
-function MainMenuState(){    
-    
-    var creditos_apagados_img;
-    var creditos_encendidos_img;
-    var fondo_menu_img;
-    var jugar_apagado_img;
-    var jugar_encendido_img;
-    var titulo_img;
-    var placeholder_fondotitulo_img;
-
+function MainMenuState(){      
     var boton_creditos;
     var boton_jugar;
     
     var container;
     var canvas;
-    var backgroundIndex = 0;
-
     var state;
+
+    var menuBackgroundIndex = 0;
 
     this.enter = function()
     {
@@ -69,12 +60,11 @@ function MainMenuState(){
         background(0);
 
         //Animación del fondo
-        let bgIndex = Math.floor(backgroundIndex % backgroundAnimation.length);
+        let bgIndex = Math.floor(menuBackgroundIndex % menuBackground.length);
         imageMode(CORNER);
-        image(backgroundAnimation[bgIndex], 0, 0, width, height);
+        image(menuBackground[bgIndex], 0, 0, width, height);
 
-        backgroundIndex++;
-        
+        menuBackgroundIndex++;        
     }
 
     this.mouseClicked = function(){
@@ -105,7 +95,7 @@ function MainMenuState(){
         if(keyCode === 32){
             if(state === 0){
                 container.remove();
-                mgr.showScene(GameState);
+                mgr.showScene(SongSelectionState);
             }
             if(state === 1){
                 container.remove();
