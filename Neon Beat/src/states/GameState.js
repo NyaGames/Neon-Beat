@@ -32,6 +32,7 @@ function GameState() {
     var secondsFromMinimun;
     var canvas;
     var fade = 2;
+    var flashBool =false;
 
     var drawBool = false;
     var timeOffSet = null;
@@ -210,6 +211,13 @@ function GameState() {
         imageMode(CORNER);
         image(backgroundAnimation[bgIndex], 0, 0, width, height);
 
+        //flash
+        if(flashBool){
+            imageMode(CORNER);
+            image(flash, 0, 0, width, height);
+            flashBool=false;
+        }
+
         if (!drawBool) return;
 
         //Offset para sincronizar los tiempos a la hora de empezar la canción
@@ -279,6 +287,8 @@ function GameState() {
         } else if (playerSecond > minimumSecondsRange.max && nextMinimum + 1 < localMinimas.length) { //Si me he pasado el mínimo,ya no estoy en ese mínimo
             if (!localMinimas[nextMinimum].success) { //Si ese mínimo no se ha acertado
                 localMinimas[nextMinimum].fail = true;
+                //en la siguiente pasada hay un flash
+                flashBool = true;
                 this.playerLoseHp();
                 combo = 1;
             }

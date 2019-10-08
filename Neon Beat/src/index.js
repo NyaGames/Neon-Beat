@@ -1,6 +1,7 @@
 var mgr;
 var nbAudioContext;
 var img;
+var flash;
 
 var sphereAnimNumber = 60;
 var backgroundNumber = 180;
@@ -32,6 +33,7 @@ var finalScore = 0;
 var maxCombo = 0;
 
 function preload(){    
+  flash = loadImage('assets/images/flashes/flash.png');
   img = loadImage('assets/images/pelota.png');  
   for (let i = 0; i < sphereAnimNumber; i++) {
     if(i < 10){
