@@ -7,8 +7,7 @@ function CreditsState(){
     {
         console.log("[DEBUG] ***ENTERING CREDITS STATE***")
 
-        container = createDiv();
-        container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
+        container = document.getElementById("container");
 
         //crear imagenes
         canvas = createCanvas(1120, 630);
@@ -22,7 +21,7 @@ function CreditsState(){
 
     this.keyPressed = function(){
         if(keyCode === 27){
-            container.remove();
+            canvas.remove();
             mgr.showScene(MainMenuState);
         }
     }

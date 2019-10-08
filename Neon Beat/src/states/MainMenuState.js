@@ -21,9 +21,7 @@ function MainMenuState(){
         titulo_img = loadImage('assets/images/menuPrincipal/titulo.png'); 
         placeholder_fondotitulo_img = loadImage('assets/images/menuPrincipal/placeholder_animacion_titulo.png'); 
 
-        container = createDiv();
-        container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
-        container.id("container");
+        container = document.getElementById("container");
 
         //crear imagenes
         canvas = createCanvas(1120, 630);
@@ -94,11 +92,11 @@ function MainMenuState(){
         console.log(state);
         if(keyCode === 32){
             if(state === 0){
-                container.remove();
+                canvas.remove();
                 mgr.showScene(SongSelectionState);
             }
             if(state === 1){
-                container.remove();
+                canvas.remove();
                 mgr.showScene(CreditsState);
             }
         }else{

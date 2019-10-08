@@ -33,7 +33,7 @@ class Pointer{
             var pos = this.history[i];
             tint(lerpColor(this.minColor,this.maxColor,this.actualHp/this.maxHp), alpha);
             imageMode(CENTER);    
-            image(img, pos.x, pos.y, tamaño, tamaño);  
+            //image(img, pos.x, pos.y, tamaño, tamaño);  
             noTint();
         }
 

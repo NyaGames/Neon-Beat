@@ -18,13 +18,12 @@ function DefeatState(){
     {
         console.log("[DEBUG] ***ENTERING DEFEAT STATE***")
 
-        container = createDiv();
-        container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
-
+        container = document.getElementById("container");
         state = 0;
 
         //crear imagenes
         canvas = createCanvas(1120, 630);
+        canvas.position(0,0);
         canvas.parent(container);
         canvas.background(0);
 
