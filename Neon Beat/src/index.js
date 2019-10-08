@@ -1,6 +1,7 @@
 var mgr;
 var nbAudioContext;
 var img;
+var flash;
 
 /*var sphereAnimNumber = 60;
 var backgroundNumber = 180;
