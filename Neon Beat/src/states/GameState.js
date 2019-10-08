@@ -2,7 +2,7 @@ function GameState() {
 
     //#region [rgba(255, 0, 0, 0.1)]Variables
     var difficulties = {
-        easy:{
+        easy: {
             graphAmplitude: 4,
             secondsFromMinimun: 0.5,
             waveSmoothing: 0.95,
@@ -31,8 +31,9 @@ function GameState() {
     var graphAmplitude;
     var secondsFromMinimun;
     var canvas;
+    var fade = 2;
 
-    var drawBool = false;   
+    var drawBool = false;
     var timeOffSet = null;
     var pointer = new Pointer(0, 0, 75, sphereAnimation);
 
@@ -48,7 +49,7 @@ function GameState() {
 
     //Gameplay variables
     var songDuration;
-    var playerSecond;  
+    var playerSecond;
     var lowestScore = 100;
     var midScore = 200;
     var highestScore = 300;
@@ -85,33 +86,33 @@ function GameState() {
         sel.changed(this.selectEvent);
 
         console.log("[DEBUG] ***ENTERING GAME STATE***");
-        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             console.log("[DEBUG] ***MOBILE DEVICE DETECTED***");
-            canvas = createCanvas(screen.availWidth, screen.availHeight - 50);         
-            canvas.position(0, 0);    
-         
+            canvas = createCanvas(screen.availWidth, screen.availHeight - 50);
+            canvas.position(0, 0);
+
             input.position(0, window.outerHeight - 30)
             sel.position(320, window.outerHeight - 30);
 
-        }else{
+        } else {
             canvas = createCanvas(window.outerWidth * 0.7875 - window.outerWidth * 0.2085, window.outerHeight * 0.772 - window.outerHeight * 0.168);
-            canvas.position(window.outerWidth * 0.2085, window.outerHeight * 0.168);            
-        }                     
-    
+            canvas.position(window.outerWidth * 0.2085, window.outerHeight * 0.168);
+        }
+
         cameraOffset = width * 1 / 3;
 
         chosenDifficulty = difficulties.normal;
         nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, chosenDifficulty.waveSmoothing);
 
-         
+
         canvas.background(0);
-    }    
+    }
     //#endregion
 
     //#region [rgba(0, 255, 0, 0.1)]Procesamiento de la onda y mínimos
-    this.songLoaded = function (fft, d) {    
+    this.songLoaded = function (fft, d) {
         songDuration = Math.round(d);
-        let maxY = Math.max.apply(null, fft);        
+        let maxY = Math.max.apply(null, fft);
         for (let i = 0; i < fft.length; i++) {
             let y = map(fft[i], 0, maxY, height * 4 / 5, height * 1 / 5);
             pathY.push(y);
@@ -174,9 +175,9 @@ function GameState() {
                 if (Math.abs(localMinima - localMaxima) >= diff) {
                     //Miramos si está lo suficientemente lejos del mínimo local anterior
                     if (Math.abs(i - previousMin) >= minDistance || previousMin == -1) {
-                        var minimum = new Minimum(i, pathY[i], false,circleAnimation,successAnimation,successAnimation2,successAnimation3,failAnimation,failAnimation2,failAnimation3,lowestScoreAnimation,midScoreAnimation,highestScoreAnimation);
+                        var minimum = new Minimum(i, pathY[i], false, circleAnimation, successAnimation, successAnimation2, successAnimation3, failAnimation, failAnimation2, failAnimation3, lowestScoreAnimation, midScoreAnimation, highestScoreAnimation);
                         localMinimas.push(minimum);
-                        localMinimas[localMinimas.length-1].index = localMinimas.length-1;
+                        localMinimas[localMinimas.length - 1].index = localMinimas.length - 1;
                         previousMin = i;
                     }
                 }
@@ -198,10 +199,10 @@ function GameState() {
 
     }
     //#endregion
-   
+
     //#region[rgba(0, 0, 255, 0.1)]Draw
     this.draw = function () {
-        
+
         background(0);
 
         //Animación del fondo
@@ -222,7 +223,7 @@ function GameState() {
 
 
         //Colores de las lineas para crear un efecto de neón.            
-        let colors = [        
+        let colors = [
             [1, 15, 195, 200],
             [0, 239, 250, 255],
             [1, 15, 195, 200]
@@ -232,7 +233,7 @@ function GameState() {
         let limite1 = Math.floor(playerIndex - cameraOffset);
         let tmp = 103.333 * graphAmplitude * width / 1120;
         let limite2 = Math.floor(limite1 + width) - tmp;
-        this.checkEndGame();
+        
 
 
         //Se dibujan varias lineas de distinto color para crear el efecto neón
@@ -276,34 +277,34 @@ function GameState() {
                 nextMinimum++;
             }*/
         } else if (playerSecond > minimumSecondsRange.max && nextMinimum + 1 < localMinimas.length) { //Si me he pasado el mínimo,ya no estoy en ese mínimo
-            if(!localMinimas[nextMinimum].success){ //Si ese mínimo no se ha acertado
+            if (!localMinimas[nextMinimum].success) { //Si ese mínimo no se ha acertado
                 localMinimas[nextMinimum].fail = true;
                 this.playerLoseHp();
                 combo = 1;
-            }                   
-            if(playerSecond > minimumSecondsRange.max + secondsFromMinimun/4){
+            }
+            if (playerSecond > minimumSecondsRange.max + secondsFromMinimun / 4) {
                 playerAtMinimum = false;
                 console.log("NO SE QUE PASA");
                 nextMinimum++;
             }
-            
+
         }
-        
+
 
         //Update de los mínimos(pintarlos,sus círculos y sus textos)
         for (let i = 0; i < localMinimas.length; i++) {
-            localMinimas[i].drawCircle(pointer.x,startDiameter,graphAmplitude); 
+            localMinimas[i].drawCircle(pointer.x, startDiameter, graphAmplitude);
             localMinimas[i].successOrFail(graphAmplitude);
             localMinimas[i].drawText(graphAmplitude);
-            if(localMinimas[i].success){
+            if (localMinimas[i].success) {
                 stroke(0, 255, 0);
                 fill(0, 255, 0);
                 ellipse(localMinimas[i].x * graphAmplitude, localMinimas[i].y, 10, 10);
-            }else if(localMinimas[i].fail){
+            } else if (localMinimas[i].fail) {
                 stroke(255, 0, 0);
                 fill(255, 0, 0);
                 ellipse(localMinimas[i].x * graphAmplitude, localMinimas[i].y, 10, 10);
-            } else{
+            } else {
                 stroke(0, 0, 255);
                 fill(0, 0, 255);
                 ellipse(localMinimas[i].x * graphAmplitude, localMinimas[i].y, 10, 10);
@@ -318,7 +319,9 @@ function GameState() {
         //pointer.actualIntervalo = this.getPlayerIntervalo();
         backgroundIndex++;
 
+        this.checkEndGame();
         this.updateText();
+
     }
 
     //#endregion
@@ -326,24 +329,24 @@ function GameState() {
     //#region[rgba(155, 28, 99, 0.1)]Eventos
     this.keyPressed = function () {
         //Si pulsamos la tecla y todavía no hemos acertado ni fallado, se considera acierto
-        if (keyCode === 32){
+        if (keyCode === 32) {
             this.handleInput();
         }
     }
 
-    this.handleInput = function(){
-        if(playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail) { // 32 = Barra espaciadora
+    this.handleInput = function () {
+        if (playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail) { // 32 = Barra espaciadora
             var rangeSize = startDiameter - localMinimas[nextMinimum].sizeForPerfectSuccsess;
-            var firstRange = startDiameter - ((rangeSize/5)*3); //En los primeros 3 tercios del rango se puntúa 100
+            var firstRange = startDiameter - ((rangeSize / 5) * 3); //En los primeros 3 tercios del rango se puntúa 100
             var secondRange = localMinimas[nextMinimum].sizeForPerfectSuccsess + 3; //Hasta 3 pixeles antes de que se cierre el círculo se puntúa 200
 
-            if(localMinimas[nextMinimum].size <= startDiameter && localMinimas[nextMinimum].size > firstRange){
+            if (localMinimas[nextMinimum].size <= startDiameter && localMinimas[nextMinimum].size > firstRange) {
                 points += lowestScore * combo;
                 localMinimas[nextMinimum].score = 100;
-            }else if(localMinimas[nextMinimum].size <= firstRange && localMinimas[nextMinimum].size > secondRange){
+            } else if (localMinimas[nextMinimum].size <= firstRange && localMinimas[nextMinimum].size > secondRange) {
                 points += midScore * combo;
                 localMinimas[nextMinimum].score = 200;
-            }else if(localMinimas[nextMinimum].size <= secondRange && localMinimas[nextMinimum].size >= localMinimas[nextMinimum].sizeForPerfectSuccsess){
+            } else if (localMinimas[nextMinimum].size <= secondRange && localMinimas[nextMinimum].size >= localMinimas[nextMinimum].sizeForPerfectSuccsess) {
                 points += highestScore * combo;
                 localMinimas[nextMinimum].score = 300;
             }
@@ -351,28 +354,28 @@ function GameState() {
             this.playerGetHp();
             localMinimas[nextMinimum].fail = false;
             combo++;
-            if(combo > maximumCombo){
+            if (combo > maximumCombo) {
                 maximumCombo = combo;
             }
 
-        }else if(keyCode === 32 && !playerAtMinimum && !localMinimas[nextMinimum].fail && nextMinimum + 1 < localMinimas.length){ //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos
+        } else if (keyCode === 32 && !playerAtMinimum && !localMinimas[nextMinimum].fail && nextMinimum + 1 < localMinimas.length) { //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos
             localMinimas[nextMinimum].success = false;
             this.playerLoseHp();
             console.log("LE DISTE PRONTO");
             localMinimas[nextMinimum].fail = true;
             combo = 1;
             //nextMinimum++;      
-        }    
+        }
     }
 
-    this.touchStarted = function(){
-        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    this.touchStarted = function () {
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             this.handleInput();
-        }        
+        }
     }
 
     this.selectEvent = function () {
-        switch(sel.value()){
+        switch (sel.value()) {
             case 'Normal':
                 chosenDifficulty = difficulties.normal;
                 break;
@@ -385,10 +388,10 @@ function GameState() {
         }
     }
 
-    this.handleFileSelect = function(evt) {
-        var f = evt.file;   
+    this.handleFileSelect = function (evt) {
+        var f = evt.file;
         secondsFromMinimun = chosenDifficulty.secondsFromMinimun;
-        graphAmplitude = chosenDifficulty.graphAmplitude;    
+        graphAmplitude = chosenDifficulty.graphAmplitude;
         nbAudioContext.changeSmoothing(chosenDifficulty.waveSmoothing)
         //Cargar el archivo    
         if (f.type === "audio/aiff" || true) {
@@ -399,19 +402,19 @@ function GameState() {
             reader.readAsArrayBuffer(f);
         } else {
             trow("No good file");
-        }    
+        }
     }
     //#endregion
 
     //#region [rgba(28, 99, 155, 0.1)]Cosas de Dani
-    this.playerGetHp = function(){
+    this.playerGetHp = function () {
         pointer.actualHp += hpForSuccess;
-        if(pointer.actualHp > pointer.maxHp){
+        if (pointer.actualHp > pointer.maxHp) {
             pointer.actualHp = pointer.maxHp;
         }
     }
 
-    this.playerLoseHp = function(){
+    this.playerLoseHp = function () {
         pointer.actualHp += hpForFail;
         /*if(pointer.actualHp <= 0){
             pointer.actualHp = 0;
@@ -419,10 +422,10 @@ function GameState() {
         }*/
     }
 
-    this.defeat = function(){
+    this.defeat = function () {
         container.remove();
         input.remove();
-        sel.remove();   
+        sel.remove();
         mgr.showScene(DefeatState);
     }
 
@@ -444,7 +447,7 @@ function GameState() {
         stroke('rgba(100%,0%,100%,0.0)');
         text('Combo X' + combo, textPosX - 200, textPosY);
 
-        
+
         fill(255, 255, 255);
         textSize(20);
         stroke('rgba(100%,0%,100%,0.0)');
@@ -457,11 +460,17 @@ function GameState() {
 
     }
 
-    this.checkEndGame = function(){
-        if(playerSecond > songDuration + 1){
-            mgr.showScene(EndGameState);
-            maxCombo = maximumCombo;
-            finalScore = points;
+    this.checkEndGame = function () {
+        if (playerSecond > songDuration - fade) {
+            alpha = lerp(0, 255, (playerSecond - (songDuration - fade)) / (songDuration + 1-(songDuration - fade)));
+            
+            fill(0, 0, 0, alpha);
+            ellipse(pointer.x, 0, 5000, 5000);
+            if (playerSecond > songDuration + 1) {
+                mgr.showScene(EndGameState);
+                maxCombo = maximumCombo;
+                finalScore = points;
+            }
         }
     }
     //#endregion

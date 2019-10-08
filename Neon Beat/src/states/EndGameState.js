@@ -7,6 +7,7 @@ function EndGameState(){
     // Note: Animation1() doesn't have setup() or draw()
     this.enter = function()
     {
+        console.log("[DEBUG] ***ENTERING ENDGAME STATE***")
         background("teal");
         /*textX = 10;
         textY = 0;
