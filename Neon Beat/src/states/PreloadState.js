@@ -40,10 +40,15 @@ function PreloadState() {
     this.midScoreNumber = 30;
     this.highestScoreNumber = 30;
    
-
+    var container;
+    var canvas;
     this.enter = function () {
         console.log("[DEBUG] ***ENTERING LOADING STATE***");
-        createCanvas(1120, 630);
+        
+        container = document.getElementById("container");
+        canvas = createCanvas(1120, 630);
+        canvas.position(0,0);
+        canvas.parent(container);
         nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, chosenDifficulty.waveSmoothing);
         this.loadAssets();       
     }

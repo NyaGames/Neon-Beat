@@ -15,6 +15,8 @@ var mainMenuCounter = 0;
 
 var bootLoading = true;
 
+var container;
+var canvas;
 function BootState(){
     ///Estado encargado de cargar los assets que aparecen en el menú
     this.angle = 0;
@@ -22,8 +24,13 @@ function BootState(){
     this.enter = function()
     {
        console.log("[DEBUG] ***ENTERING BOOT STATE***")
+       container = createDiv();
+        container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
+        container.id("container");
        this.loadAssets();
-       createCanvas(1120, 630);
+       canvas = createCanvas(1120, 630);
+       canvas.position(0,0);
+       canvas.parent(container);
        //mgr.showScene(MainMenuState);
     }  
 
