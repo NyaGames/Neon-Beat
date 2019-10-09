@@ -17,6 +17,8 @@ var bootLoading = true;
 
 var container;
 var canvas;
+var fondo_atencion;
+
 function BootState(){
     ///Estado encargado de cargar los assets que aparecen en el menú
     this.angle = 0;
@@ -31,11 +33,14 @@ function BootState(){
        canvas = createCanvas(1120, 630);
        canvas.position(0,0);
        canvas.parent(container);
+
+       fondo_atencion = createImg('assets/images/atencion.png');
+       fondo_atencion.position(0,0);
+       fondo_atencion.parent(container);
        //mgr.showScene(MainMenuState);
     }  
 
     this.draw = function(){
-        background(51);
         if (bootLoading) {
             stroke(255);
             noFill();
@@ -77,6 +82,7 @@ function BootState(){
             mainMenuCounter++;
 
             if (mainMenuCounter == totalMainMenuAssets - 1) {
+                canvas.remove();
                 mgr.showScene(MainMenuState);
             }
         }
