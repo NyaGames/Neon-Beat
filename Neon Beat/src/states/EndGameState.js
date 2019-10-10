@@ -2,12 +2,15 @@ function EndGameState(){
     var textX;
     var textY;
 
-    var container;
-    var canvas;
+    var boton_creditos;
+    var boton_jugar;
 
     var fondoVictoria;
     var placeholder_particulas;
     var texto_victoria;
+
+    var boton_intentar;
+    var boton_salir;
 
     var button_salir_encendido;
     var button_salir_apagado;
@@ -30,30 +33,33 @@ function EndGameState(){
 
         //crear imagenes
         canvas = createCanvas(1120, 630);
-        canvas.position(0,0);
         canvas.parent(container);
         canvas.background(0);
 
-        fondoVictoria = createImg('assets/images/PantallaVictoria/fondo.png'); 
-        fondoVictoria.position(0, 0); 
-        fondoVictoria.parent(container);
+        placeholder_fondotitulo_img = createImg('assets/images/menuPrincipal/placeholder_animacion_titulo.png'); 
+        placeholder_fondotitulo_img.position(106, 0); 
+        placeholder_fondotitulo_img.parent(container);
 
-        placeholder_particulas = createImg('assets/images/PantallaVictoria/placeholder_particulas.png'); 
-        placeholder_particulas.position(0, 0); 
-        placeholder_particulas.parent(container);
+        titulo_img = createImg('assets/images/menuPrincipal/titulo.png');
+        titulo_img.position(52, 0); 
+        titulo_img.parent(container); 
 
-        texto_victoria = createImg('assets/images/PantallaVictoria/cartelVictoria.png'); 
-        texto_victoria.position(0, 0); 
-        texto_victoria.parent(container);     
+        //crear botones
+        boton_intentar = createDiv();
+        boton_intentar.parent(container);
+        boton_intentar.position(375, 250);
+        boton_intentar.mousePressed(this.clickJugar); 
+        button_otravez_encendido = createImg('assets/images/menuPrincipal/jugar_encendido.png'); 
+        button_otravez_encendido.parent(boton_intentar);
 
-        button_salir_apagado = createImg('assets/images/PantallaVictoria/boton_salir_apagado.png'); 
-        button_salir_apagado.position(767, 320); 
-        button_salir_apagado.parent(container);
+        boton_salir = createDiv();
+        boton_salir.parent(container);
+        boton_salir.position(502.5, 500);
+        boton_salir.mousePressed(this.clickCreditos);
+        button_salir_apagado = createImg('assets/images/menuPrincipal/creditos_apagado.png'); 
+        button_salir_apagado.parent(boton_salir);
 
-        button_otravez_encendido = createImg('assets/images/PantallaVictoria/boton_otravez.png'); 
-        button_otravez_encendido.position(771, 100); 
-        button_otravez_encendido.parent(container); 
-
+        state = 0;
         /*background("teal");
         textX = 10;
         textY = 0;
@@ -68,44 +74,44 @@ function EndGameState(){
         text('Final Score: ' + finalScore + "\n" + 
             "Max combo: " + maxCombo, 100, 100);*/
     }
-    this.keyPressed = function(){
-        if(keyCode === 32){
-            if(state === 0){
-                canvas.remove();
-                mgr.showScene(GameState);
-            }
-            if(state === 1){
-                canvas.remove();
-                mgr.showScene(MainMenuState);
-            }
-        }else{
-            if(keyCode === 83 || keyCode === 87){
-                if(state === 0){
-                    state = 1;
-                    button_intentar_encendido.remove();
-                    button_intentar_apagado = createImg('assets/images/PantallaVictoria/boton_intentar_apagado.png'); 
-                    button_intentar_apagado.position(0, 0); 
-                    button_intentar_apagado.parent(container);  
-                    button_salir_apagado.remove();
-                    button_salir_encendido = createImg('assets/images/PantallaDerrota/boton_salir.png'); 
-                    button_salir_encendido.position(0, 0); 
-                    button_salir_encendido.parent(container);
-                }else if(state === 1){
-                    state = 0;
-                    button_intentar_apagado.remove();
-                    button_intentar_encendido = createImg('assets/images/PantallaDerrota/boton_intentar.png'); 
-                    button_intentar_encendido.position(0, 0); 
-                    button_intentar_encendido.parent(container);  
-                    button_salir_encendido.remove();
-                    button_salir_apagado = createImg('assets/images/PantallaDerrota/boton_salir_apagado.png'); 
-                    button_salir_apagado.position(0, 0); 
-                    button_salir_apagado.parent(container);
-                }
-            }
+    
+    this.clickJugar = function(){
+        if(state === 1){
+            state = 0;
+            button_otravez_apagado.remove();
+            button_otravez_encendido = createImg('assets/images/menuPrincipal/jugar_encendido.png'); 
+            button_otravez_encendido.parent(boton_intentar);
+            boton_intentar.position(375, 250);
+            button_salir_encendido.remove();
+            button_salir_apagado = createImg('assets/images/menuPrincipal/creditos_apagado.png'); 
+            button_salir_apagado.parent(boton_salir);
+            boton_salir.position(502.5, 500);
+        }else if(state === 0){            
+            canvas.remove();
+            mgr.showScene(PreloadState);
         }
     }
-    this.mousePressed = function()
+
+    this.clickCreditos = function(){
+        if(state === 0){
+            state = 1;
+            button_otravez_encendido.remove();
+            button_otravez_apagado = createImg('assets/images/menuPrincipal/jugar_apagado.png'); 
+            button_otravez_apagado.parent(boton_intentar);
+            boton_intentar.position(486.5, 350);
+            button_salir_apagado.remove();
+            button_salir_encendido = createImg('assets/images/menuPrincipal/creditos_encendidos.png'); 
+            button_salir_encendido.parent(boton_salir);
+            boton_salir.position(317, 370);
+        }else if(state === 1){            
+            canvas.remove();
+            mgr.showScene(MainMenuState);
+        }
+    }
+
+
+    /*this.mousePressed = function()
     {
         this.sceneManager.showNextScene();
-    }
+    }*/
 }
