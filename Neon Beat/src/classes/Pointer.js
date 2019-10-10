@@ -31,10 +31,10 @@ class Pointer{
             var alpha = lerp(0, 255, i/this.history.length);
             var tamaño = lerp(0, this.r*0.3, i/this.history.length);
             var pos = this.history[i];
-            /*tint(lerpColor(this.minColor,this.maxColor,this.actualHp/this.maxHp), alpha);
+            tint(lerpColor(this.minColor,this.maxColor,this.actualHp/this.maxHp), alpha);
             imageMode(CENTER);    
             image(playerTrail[0], pos.x, pos.y, tamaño, tamaño);  
-            noTint();*/
+            noTint();
         }
 
         tint(lerpColor(this.minColor,this.maxColor,this.actualHp/this.maxHp));

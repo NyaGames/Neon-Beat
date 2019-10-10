@@ -81,15 +81,14 @@ function MainMenuState(){
             boton_creditos.position(502.5, 500);
         }
     }
-    this.keyPressed = function(){
-        console.log(state);
+    this.keyPressed = function(){        
         if(keyCode === 32){
             if(state === 0){
-                canvas.remove();
+                container.remove();
                 mgr.showScene(SongSelectionState);
             }
             if(state === 1){
-                canvas.remove();
+                container.remove();
                 mgr.showScene(CreditsState);
             }
         }else{

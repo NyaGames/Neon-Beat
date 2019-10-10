@@ -11,6 +11,7 @@ var lowestScoreAnimation = [];
 var midScoreAnimation = [];
 var highestScoreAnimation = [];
 var playerTrail = [];
+var flash = [];
 
 var pathY = [];
 var localMinimas = [];
@@ -18,9 +19,8 @@ var graphAmplitude;
 var secondsFromMinimun;
 var nextMinimum = 0;
 
-var assets = [];
 var counter = 0;
-var totalAssets = 13;
+var totalAssets = 14;
 var loadingAssets = true;
 var generatingMap = false;
 
@@ -185,12 +185,8 @@ function PreloadState() {
             let numCols = w / width;
             let numRows = h / height;
 
-            for (let y = 0, i = 0; y < numRows; y++) {
-                for (let x = 0; x < numCols; x++ , i++) {
-                    if (i == numImages - 1) {
-                        break;
-                    }
-
+            for (let y = 0, i = 0; y < numRows, i < numImages; y++) {
+                for (let x = 0; x < numCols; x++ , i++) {                  
                     let img = asset.get(x * width, y * height, width, height);
                     arr.push(img);
                 }
@@ -209,7 +205,7 @@ function PreloadState() {
     this.loadAssets = function () {
 
         this.loadSpritesheet(sphereAnimation, 60, 150, 150, "assets/images/Player/player.png");
-        this.loadSpritesheet(backgroundAnimation, 180, 1920, 1080, "assets/AfterEffect/GameBG/image1.png");
+        this.loadSpritesheet(backgroundAnimation, 120, 912, 513, "assets/AfterEffect/Menu/menu_animation.png");
         this.loadSpritesheet(circleAnimation, 30, 300, 300, "assets/AfterEffect/Circunferencia/circunferencia_animation.png");
 
         this.loadSpritesheet(successAnimation,  16, 500, 500, "assets/AfterEffect/Aciertos/Acierto1_animation.png");
@@ -224,7 +220,8 @@ function PreloadState() {
         this.loadSpritesheet(midScoreAnimation, 30, 500, 500, "assets/AfterEffect/Puntuaciones/200_animation.png");
         this.loadSpritesheet(highestScoreAnimation, 30, 500, 500, "assets/AfterEffect/Puntuaciones/300_animation.png");
 
-        this.loadSpritesheet(playerTrail, 1, 50, 50, 'assets/images/pelota.png');       
+        this.loadSpritesheet(playerTrail, 1, 50, 50, 'assets/images/pelota.png');    
+        this.loadSpritesheet(flash, 1, 600, 500, 'assets/images/flashes/flash.png');      
     }
 
 }

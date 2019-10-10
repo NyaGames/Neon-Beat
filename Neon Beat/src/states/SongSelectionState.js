@@ -5,9 +5,6 @@ function SongSelectionState(){
         
     var container;
     var canvas;
-    var backgroundIndex = 0;
-
-    var state;
 
     var selectionButton;
 

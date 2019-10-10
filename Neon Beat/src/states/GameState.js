@@ -34,8 +34,7 @@ function GameState() {
     //#endregion
 
     //#region[rgba(28, 155, 99, 0.1)]Setup
-    this.enter = function () {    
-        mgr.showScene(EndGameState);  
+    this.enter = function () {            
         console.log("[DEBUG] ***ENTERING GAME STATE***");
         container = document.getElementById("container");
 
@@ -84,11 +83,11 @@ function GameState() {
         image(backgroundAnimation[bgIndex], 0, 0, width, height);
 
         //flash
-        /*if(flashBool){
+        if(flashBool){
             imageMode(CORNER);
-            //image(flash, 0, 0, width, height);
+            image(flash[0], 0, 0, width, height);
             flashBool=false;
-        }*/
+        }
 
         //Offset para sincronizar los tiempos a la hora de empezar la canción
         if (timeOffSet === null) {
@@ -281,7 +280,7 @@ function GameState() {
         pointer.actualHp += hpForFail;
         if(pointer.actualHp <= 0){
             pointer.actualHp = 0;
-            this.defeat();
+            //this.defeat();
         }
     }
 
