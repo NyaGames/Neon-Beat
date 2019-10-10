@@ -89,12 +89,10 @@ function GameState() {
         let bgIndex = Math.floor(backgroundIndex % backgroundAnimation.length);
         imageMode(CORNER);
         image(backgroundAnimation[bgIndex], 0, 0, width, height);
-
-        //flash
         if(flashBool){
             imageMode(CORNER);
             image(flash[0], 0, 0, width, height);
-            flashBool=false;
+            flashBool = false;
         }
 
         //Offset para sincronizar los tiempos a la hora de empezar la canción
@@ -104,7 +102,6 @@ function GameState() {
 
         //Mueve el canavas para crear un efecto de 'cámara'
         let playerIndex = Math.floor((pathY.length) * (nbAudioContext.currentTime() - timeOffSet) / nbAudioContext.getTrackDuration());
-        console.log(playerIndex);
         translate(-playerIndex * graphAmplitude + cameraOffset, 0);
 
 
@@ -121,6 +118,7 @@ function GameState() {
         let limite2 = Math.floor(limite1 + width) - tmp;
         
 
+        
 
         //Se dibujan varias lineas de distinto color para crear el efecto neón
         for (let offset = (-colors.length - 1) * 0.5, j = 0; j < colors.length; offset++ , j++) {
@@ -143,7 +141,7 @@ function GameState() {
             }
 
             endShape();
-        }
+        }        
 
         //Move text position(a la vez que la cámara o empieza a rebotar D:)
         textPosX = playerIndex * graphAmplitude + cameraOffset;
@@ -157,16 +155,9 @@ function GameState() {
         if (playerSecond >= minimumSecondsRange.min && playerSecond <= minimumSecondsRange.max) {
             localMinimas[nextMinimum].visited = true;
             playerAtMinimum = true;
-            /*Si ese mínimo ya ha sido puntuado o fallado, dejo de estar en el mínimo
-            if((localMinimas[nextMinimum].success || localMinimas[nextMinimum].fail) && nextMinimum + 1 < localMinimas.length){ 
-                playerAtMinimum = false;
-                nextMinimum++;
-            }*/
         } else if (playerSecond > minimumSecondsRange.max && nextMinimum + 1 < localMinimas.length) { //Si me he pasado el mínimo,ya no estoy en ese mínimo
             if (!localMinimas[nextMinimum].success) { //Si ese mínimo no se ha acertado
                 localMinimas[nextMinimum].fail = true;
-                //en la siguiente pasada hay un flash
-                flashBool = true;
                 this.playerLoseHp();
                 combo = 1;
             }
@@ -174,10 +165,9 @@ function GameState() {
                 playerAtMinimum = false;
                 nextMinimum++;
             }
-
         }
 
-
+      
         //Update de los mínimos(pintarlos,sus círculos y sus textos)
         for (let i = 0; i < localMinimas.length; i++) {
             localMinimas[i].drawCircle(pointer.x, startDiameter, graphAmplitude);
@@ -217,13 +207,17 @@ function GameState() {
     this.keyPressed = function () {
         //Si pulsamos la tecla y todavía no hemos acertado ni fallado, se considera acierto
         if (keyCode === 32) {
-            this.handleInput();
+            this.handleInput(); // 32 = Barra espaciadora
         }
     }
 
     this.handleInput = function () {
-        if (playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail) { // 32 = Barra espaciadora
-            var rangeSize = startDiameter - localMinimas[nextMinimum].sizeForPerfectSuccsess;
+        if (playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail) { 
+            //flash
+            if(localMinimas[nextMinimum].flash){
+                flashBool=true;
+            }
+
             var firstRange = new Range(localMinimas[nextMinimum].second - secondsFromMinimun,localMinimas[nextMinimum].second - (2*secondsFromMinimun/3));
             var secondRange = new Range(firstRange.max,localMinimas[nextMinimum].second - secondsFromMinimun/3);
             var thirdRange = new Range(secondRange.max,localMinimas[nextMinimum].second);

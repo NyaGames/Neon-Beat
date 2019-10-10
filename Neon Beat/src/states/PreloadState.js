@@ -158,6 +158,9 @@ function PreloadState() {
                     //Miramos si está lo suficientemente lejos del mínimo local anterior
                     if (Math.abs(i - previousMin) >= minDistance || previousMin == -1) {
                         var minimum = new Minimum(i, pathY[i], false,circleAnimation,successAnimation,successAnimation2,successAnimation3,failAnimation,failAnimation2,failAnimation3,lowestScoreAnimation,midScoreAnimation,highestScoreAnimation);
+                        if((localMaxima - localMinima) >= 1000){
+                            minimum.flash = true;
+                        }
                         localMinimas.push(minimum);
                         localMinimas[localMinimas.length-1].index = localMinimas.length-1;
                         previousMin = i;
