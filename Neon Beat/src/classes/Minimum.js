@@ -57,7 +57,11 @@ class Minimum{
     drawCircle(playerX,startDiameter,graphAmplitude){
         var x = 500;
         if(((this.x * graphAmplitude) - playerX) <= x && ((this.x * graphAmplitude)- playerX) >= 0){
-            this.size = lerp(this.sizeForPerfectSuccsess,startDiameter,((this.x * graphAmplitude) - playerX)/300);
+            this.size = lerp(this.sizeForPerfectSuccsess,startDiameter,((this.x * graphAmplitude) - playerX)/500);
+            console.log(this.size);
+            if(this.size > startDiameter){
+                console.log("estamos jodidos");
+            }
             let index = Math.floor(this.animationIndex) % this.animationLength;
             imageMode(CENTER);       
             image(this.animation[index], this.x * graphAmplitude, this.y, this.size, this.size);      

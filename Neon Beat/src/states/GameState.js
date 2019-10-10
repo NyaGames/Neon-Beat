@@ -96,6 +96,7 @@ function GameState() {
 
         //Mueve el canavas para crear un efecto de 'cámara'
         let playerIndex = Math.floor((pathY.length) * (nbAudioContext.currentTime() - timeOffSet) / nbAudioContext.getTrackDuration());
+        console.log(playerIndex);
         translate(-playerIndex * graphAmplitude + cameraOffset, 0);
 
 
@@ -163,7 +164,6 @@ function GameState() {
             }
             if (playerSecond > minimumSecondsRange.max + secondsFromMinimun / 4) {
                 playerAtMinimum = false;
-                console.log("NO SE QUE PASA");
                 nextMinimum++;
             }
 
@@ -240,7 +240,6 @@ function GameState() {
         } else if (keyCode === 32 && !playerAtMinimum && !localMinimas[nextMinimum].fail && nextMinimum + 1 < localMinimas.length) { //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos
             localMinimas[nextMinimum].success = false;
             this.playerLoseHp();
-            console.log("LE DISTE PRONTO");
             localMinimas[nextMinimum].fail = true;
             combo = 1;
             //nextMinimum++;      
@@ -308,10 +307,11 @@ function GameState() {
         text('Combo X' + combo, textPosX - 200, textPosY);
 
 
-        fill(255, 255, 255);
+        /*fill(255, 255, 255);
         textSize(20);
         stroke('rgba(100%,0%,100%,0.0)');
-        text(nextMinimum, localMinimas[nextMinimum].x * graphAmplitude, localMinimas[nextMinimum].y - 30);
+        text(localMinimas[nextMinimum].size, localMinimas[nextMinimum].x * graphAmplitude, localMinimas[nextMinimum].y - 30);
+        */
 
         fill(255, 255, 255);
         textSize(30);

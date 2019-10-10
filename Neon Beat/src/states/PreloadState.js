@@ -24,6 +24,8 @@ var totalAssets = 14;
 var loadingAssets = true;
 var generatingMap = false;
 
+var playerSecond;
+
 
 function PreloadState() {  
     this.angle = 0;   
@@ -206,7 +208,7 @@ function PreloadState() {
 
         this.loadSpritesheet(sphereAnimation, 60, 150, 150, "assets/images/Player/player.png");
         this.loadSpritesheet(backgroundAnimation, 120, 912, 513, "assets/AfterEffect/Menu/menu_animation.png");
-        this.loadSpritesheet(circleAnimation, 30, 300, 300, "assets/AfterEffect/Circunferencia/circunferencia_animation.png");
+        this.loadSpritesheet(circleAnimation, 24, 300, 300, "assets/AfterEffect/Circunferencia/circunferencia_animation.png");
 
         this.loadSpritesheet(successAnimation,  16, 500, 500, "assets/AfterEffect/Aciertos/Acierto1_animation.png");
         this.loadSpritesheet(successAnimation2, 16, 500, 500, "assets/AfterEffect/Aciertos/Acierto2_animation.png");
