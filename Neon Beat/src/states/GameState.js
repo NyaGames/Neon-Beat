@@ -84,11 +84,11 @@ function GameState() {
         image(backgroundAnimation[bgIndex], 0, 0, width, height);
 
         //flash
-        if(flashBool){
+        /*if(flashBool){
             imageMode(CORNER);
             image(flash, 0, 0, width, height);
             flashBool=false;
-        }
+        }*/
 
         //Offset para sincronizar los tiempos a la hora de empezar la canción
         if (timeOffSet === null) {

@@ -10,6 +10,7 @@ var failAnimation3 = [];
 var lowestScoreAnimation = [];
 var midScoreAnimation = [];
 var highestScoreAnimation = [];
+var playerTrail = [];
 
 var pathY = [];
 var localMinimas = [];
@@ -19,29 +20,17 @@ var nextMinimum = 0;
 
 var assets = [];
 var counter = 0;
-var totalAssets = 60 + 180 + 30 + 16 * 6 + 30 * 3;
+var totalAssets = 13;
 var loadingAssets = true;
 var generatingMap = false;
 
 
 function PreloadState() {  
     this.angle = 0;   
-  
-    this.sphereAnimNumber = 60;
-    this.backgroundNumber = 180;
-    this.circleNumber = 30;
-    this.successNumber = 16;
-    this.successNumber2 = 16;
-    this.successNumber3 = 16;
-    this.failNumber = 16;
-    this.failNumber2 = 16;
-    this.failNumber3 = 16;
-    this.lowestScoreNumber = 30;
-    this.midScoreNumber = 30;
-    this.highestScoreNumber = 30;
    
     var container;
     var canvas;
+
     this.enter = function () {
         console.log("[DEBUG] ***ENTERING LOADING STATE***");
         
@@ -86,175 +75,13 @@ function PreloadState() {
         this.angle += 1;          
              
     }
-
-    this.loadAssets = function () {
-        for (let i = 0; i < this.sphereAnimNumber; i++) {
-            if (i < 10) {
-                //sphereAnimation.push(loadImage('assets/images/EsferaPrueba/0000' + i + '.png'));
-                this.loadAsset("IMAGE", sphereAnimation, i, 'assets/images/EsferaPrueba/0000' + i + '.png');
-            } else if (i < 100) {
-                //sphereAnimation.push(loadImage('assets/images/EsferaPrueba/000' + i + '.png'));
-                this.loadAsset("IMAGE", sphereAnimation, i, 'assets/images/EsferaPrueba/000' + i + '.png');
-            } else if (i < 1000) {
-                //sphereAnimation.push(loadImage('assets/images/EsferaPrueba/00' + i + '.png'));
-                this.loadAsset("IMAGE", sphereAnimation, i, 'assets/images/EsferaPrueba/00' + i + '.png');
-            }
-        }
-
-        for (let i = 0; i < this.backgroundNumber; i++) {
-            if (i < 10) {
-                //backgroundAnimation.push(loadImage('assets/AfterEffect/NuevasParticulillas/0000' + i + '.png'));
-                this.loadAsset("IMAGE", backgroundAnimation, i, 'assets/AfterEffect/NuevasParticulillas/0000' + i + '.png');
-            } else if (i < 100) {
-                this.loadAsset("IMAGE", backgroundAnimation, i, 'assets/AfterEffect/NuevasParticulillas/000' + i + '.png');
-            } else if (i < 1000) {
-                this.loadAsset("IMAGE", backgroundAnimation, i, 'assets/AfterEffect/NuevasParticulillas/00' + i + '.png');
-            }
-        }
-
-        for (let i = 0; i < this.circleNumber; i++) {
-            if (i < 10) {
-                //circleAnimation.push(loadImage('assets/AfterEffect/Circunferencia/0000' + i + '.png'));
-                this.loadAsset("IMAGE", circleAnimation, i, 'assets/AfterEffect/Circunferencia/0000' + i + '.png');
-            } else if (i < 100) {
-                this.loadAsset("IMAGE", circleAnimation, i, 'assets/AfterEffect/Circunferencia/000' + i + '.png');
-            } else if (i < 1000) {
-                this.loadAsset("IMAGE", circleAnimation, i, 'assets/AfterEffect/Circunferencia/00' + i + '.png');
-            }
-        }
-
-        //Animaciones de ACIERTO
-        for (let i = 0; i < this.successNumber; i++) {
-            if (i < 10) {
-                //successAnimation.push(loadImage('assets/AfterEffect/Acierto/0000' + i + '.png'));
-                this.loadAsset("IMAGE", successAnimation, i, 'assets/AfterEffect/Acierto/0000' + i + '.png');
-            } else if (i < 100) {
-                this.loadAsset("IMAGE", successAnimation, i, 'assets/AfterEffect/Acierto/000' + i + '.png');
-            } else if (i < 1000) {
-                this.loadAsset("IMAGE", successAnimation, i, 'assets/AfterEffect/Acierto/00' + i + '.png');
-            }
-        }
-
-        for (let i = 0; i < this.successNumber2; i++) {
-            if (i < 10) {
-                //successAnimation2.push(loadImage('assets/AfterEffect/Acierto2/0000' + i + '.png'));
-                this.loadAsset("IMAGE", successAnimation2, i, 'assets/AfterEffect/Acierto2/0000' + i + '.png');
-            } else if (i < 100) {
-                this.loadAsset("IMAGE", successAnimation2, i, 'assets/AfterEffect/Acierto2/000' + i + '.png');
-            } else if (i < 1000) {
-                this.loadAsset("IMAGE", successAnimation2, i, 'assets/AfterEffect/Acierto2/00' + i + '.png');
-            }
-        }
-
-        for (let i = 0; i < this.successNumber3; i++) {
-            if (i < 10) {
-                //successAnimation3.push(loadImage('assets/AfterEffect/Acierto3/0000' + i + '.png'));
-                this.loadAsset("IMAGE", successAnimation3, i, 'assets/AfterEffect/Acierto3/0000' + i + '.png');
-            } else if (i < 100) {
-                this.loadAsset("IMAGE", successAnimation3, i, 'assets/AfterEffect/Acierto3/000' + i + '.png');
-            } else if (i < 1000) {
-                this.loadAsset("IMAGE", successAnimation3, i, 'assets/AfterEffect/Acierto3/00' + i + '.png');
-            }
-        }
-
-
-        // Animaciones de FALLO
-        for (let i = 0; i < this.failNumber; i++) {
-            if (i < 10) {
-                //failAnimation.push(loadImage('assets/AfterEffect/fallo/0000' + i + '.png'));
-                this.loadAsset("IMAGE", failAnimation, i, 'assets/AfterEffect/fallo/0000' + i + '.png');
-            } else if (i < 100) {
-                this.loadAsset("IMAGE", failAnimation, i, 'assets/AfterEffect/fallo/000' + i + '.png');
-            } else if (i < 1000) {
-                this.loadAsset("IMAGE", failAnimation, i, 'assets/AfterEffect/fallo/00' + i + '.png');
-            }
-        }
-
-        for (let i = 0; i < this.failNumber2; i++) {
-            if (i < 10) {
-                //failAnimation2.push(loadImage('assets/AfterEffect/fallo2/0000' + i + '.png'));
-                this.loadAsset("IMAGE", failAnimation2, i, 'assets/AfterEffect/fallo2/0000' + i + '.png');
-            } else if (i < 100) {
-                this.loadAsset("IMAGE", failAnimation2, i, 'assets/AfterEffect/fallo2/000' + i + '.png');
-            } else if (i < 1000) {
-                this.loadAsset("IMAGE", failAnimation2, i, 'assets/AfterEffect/fallo2/00' + i + '.png');
-            }
-        }
-
-        for (let i = 0; i < this.failNumber3; i++) {
-            if (i < 10) {
-                //failAnimation3.push(loadImage('assets/AfterEffect/fallo3/0000' + i + '.png'));
-                this.loadAsset("IMAGE", failAnimation3, i, 'assets/AfterEffect/fallo3/0000' + i + '.png');
-            } else if (i < 100) {
-                this.loadAsset("IMAGE", failAnimation3, i, 'assets/AfterEffect/fallo3/000' + i + '.png');
-            } else if (i < 1000) {
-                this.loadAsset("IMAGE", failAnimation3, i, 'assets/AfterEffect/fallo3/00' + i + '.png');
-            }
-        }
-
-        //Animaciones de puntuaciones
-        for (let i = 0; i < this.lowestScoreNumber; i++) {
-            if (i < 10) {
-                //lowestScoreAnimation.push(loadImage('assets/AfterEffect/100/0000' + i + '.png'));
-                this.loadAsset("IMAGE", lowestScoreAnimation, i, 'assets/AfterEffect/100/0000' + i + '.png');
-            } else if (i < 100) {
-                this.loadAsset("IMAGE", lowestScoreAnimation, i, 'assets/AfterEffect/100/000' + i + '.png');
-            } else if (i < 1000) {
-                this.loadAsset("IMAGE", lowestScoreAnimation, i, 'assets/AfterEffect/100/00' + i + '.png');
-            }
-        }
-
-        for (let i = 0; i < this.midScoreNumber; i++) {
-            if (i < 10) {
-                //midScoreAnimation.push(loadImage('assets/AfterEffect/200/0000' + i + '.png'));
-                this.loadAsset("IMAGE", midScoreAnimation, i, 'assets/AfterEffect/200/0000' + i + '.png');
-            } else if (i < 100) {
-                //midScoreAnimation.push(loadImage('assets/AfterEffect/200/000' + i + '.png'));
-                this.loadAsset("IMAGE", midScoreAnimation, i, 'assets/AfterEffect/200/000' + i + '.png');
-            } else if (i < 1000) {
-                //midScoreAnimation.push(loadImage('assets/AfterEffect/200/00' + i + '.png'));
-                this.loadAsset("IMAGE", midScoreAnimation, i, 'assets/AfterEffect/200/00' + i + '.png');
-            }
-        }
-
-        for (let i = 0; i < this.highestScoreNumber; i++) {
-            if (i < 10) {
-                //highestScoreAnimation.push(loadImage('assets/AfterEffect/300/0000' + i + '.png'));
-                this.loadAsset("IMAGE", highestScoreAnimation, i, 'assets/AfterEffect/300/0000' + i + '.png');
-            } else if (i < 100) {
-                this.loadAsset("IMAGE", highestScoreAnimation, i, 'assets/AfterEffect/300/000' + i + '.png');
-            } else if (i < 1000) {
-                this.loadAsset("IMAGE", highestScoreAnimation, i, 'assets/AfterEffect/300/00' + i + '.png');
-            }
-        }
-    }
-
+   
     this.progress = function (percentage) {
         console.log(floor(percentage * 100));
     }
 
     this.onloadingAssetsError = function (err) {
         console.log(err);
-    }
-
-    this.loadAsset = function (type, arr, index, url) {
-        switch (type) {
-            case "IMAGE":
-                loadImage(url, this.assetLoaded, this.onloadingAssetsError)
-                break;
-        }
-
-        this.assetLoaded = function (asset) {      
-            assets[counter] = asset;
-            arr[index] = asset;
-            counter++;
-
-            if (counter == totalAssets - 1) {
-                this.loadingAssets = false;
-                this.generatingMap = true;
-                generateMap();
-            }
-        }
     }    
 
     this.songLoaded = function(fft, d){
@@ -347,6 +174,59 @@ function PreloadState() {
             mgr.showScene(GameState);
         }
     } 
+
+    this.loadSpritesheet = function (arr, numImages, width, height, url) {
+        loadImage(url, assetLoaded, this.onLoadingError);
+
+        function assetLoaded(asset) {
+            let w = asset.width;
+            let h = asset.height;
+
+            let numCols = w / width;
+            let numRows = h / height;
+
+            for (let y = 0, i = 0; y < numRows; y++) {
+                for (let x = 0; x < numCols; x++ , i++) {
+                    if (i == numImages - 1) {
+                        break;
+                    }
+
+                    let img = asset.get(x * width, y * height, width, height);
+                    arr.push(img);
+                }
+            }
+
+            counter++;
+
+            if (counter == totalAssets) {
+                this.loadingAssets = false;
+                this.generatingMap = true;
+                generateMap();
+            }
+        }
+    }
+
+    this.loadAssets = function () {
+
+        this.loadSpritesheet(sphereAnimation, 60, 150, 150, "assets/images/Player/player.png");
+        this.loadSpritesheet(backgroundAnimation, 180, 1920, 1080, "assets/AfterEffect/GameBG/image1.png");
+        this.loadSpritesheet(circleAnimation, 30, 300, 300, "assets/AfterEffect/Circunferencia/circunferencia_animation.png");
+
+        this.loadSpritesheet(successAnimation,  16, 500, 500, "assets/AfterEffect/Aciertos/Acierto1_animation.png");
+        this.loadSpritesheet(successAnimation2, 16, 500, 500, "assets/AfterEffect/Aciertos/Acierto2_animation.png");
+        this.loadSpritesheet(successAnimation3, 16, 500, 500, "assets/AfterEffect/Aciertos/Acierto3_animation.png");
+
+        this.loadSpritesheet(failAnimation,  15, 500, 500, "assets/AfterEffect/Fallos/fallo1_animation.png");
+        this.loadSpritesheet(failAnimation2, 15, 500, 500, "assets/AfterEffect/Fallos/fallo2_animation.png");
+        this.loadSpritesheet(failAnimation3, 15, 500, 500, "assets/AfterEffect/Fallos/fallo3_animation.png");
+
+        this.loadSpritesheet(lowestScoreAnimation, 30, 500, 500, "assets/AfterEffect/Puntuaciones/100_animation.png");
+        this.loadSpritesheet(midScoreAnimation, 30, 500, 500, "assets/AfterEffect/Puntuaciones/200_animation.png");
+        this.loadSpritesheet(highestScoreAnimation, 30, 500, 500, "assets/AfterEffect/Puntuaciones/300_animation.png");
+
+        this.loadSpritesheet(playerTrail, 1, 50, 50, 'assets/images/pelota.png');       
+    }
+
 }
 
 function generateMap(){
