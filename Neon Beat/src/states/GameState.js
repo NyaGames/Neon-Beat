@@ -327,6 +327,7 @@ function GameState() {
             fill(0, 0, 0, alpha);
             ellipse(pointer.x, 0, 5000, 5000);
             if (playerSecond > songDuration + 1) {
+                canvas.remove();
                 mgr.showScene(EndGameState);
                 maxCombo = maximumCombo;
                 finalScore = points;
