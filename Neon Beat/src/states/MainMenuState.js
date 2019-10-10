@@ -85,11 +85,11 @@ function MainMenuState(){
         console.log(state);
         if(keyCode === 32){
             if(state === 0){
-                container.remove();
+                canvas.remove();
                 mgr.showScene(SongSelectionState);
             }
             if(state === 1){
-                container.remove();
+                canvas.remove();
                 mgr.showScene(CreditsState);
             }
         }else{
