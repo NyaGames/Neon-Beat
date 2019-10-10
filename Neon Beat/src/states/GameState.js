@@ -198,6 +198,7 @@ function GameState() {
 
         this.checkEndGame();
         this.updateText();
+        this.drawSongDuration();
 
     }
 
@@ -350,6 +351,14 @@ function GameState() {
                 finalScore = points;
             }
         }
+    }
+
+    //Song duration
+    this.drawSongDuration = function(){
+        stroke(255,255,255);
+        fill(255,255,255);
+        let newWidth = (600 * playerSecond ) / songDuration;
+        rect(pointer.x - 150,height - 20,newWidth,10);
     }
     //#endregion
 

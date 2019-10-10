@@ -48,11 +48,7 @@ class Pointer{
         if(this.actualHp < 0){
             this.actualHp = 0;
         }
-        //rectMode(CENTER);
-        stroke(255,0,0);
-        fill(255,0,0);
-        let newWidth = (this.actualHp * this.startWidth) / this.maxHp;
-        rect(this.x - 150,height - 20,newWidth,10); 
+         
     }
 
     setPosition(x, y){
