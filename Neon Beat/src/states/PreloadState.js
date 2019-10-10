@@ -24,12 +24,15 @@ var totalAssets = 14;
 var loadingAssets = true;
 var generatingMap = false;
 
+var animationIndex = 0;
 
 function PreloadState() {  
     this.angle = 0;   
    
     var container;
     var canvas;
+
+    var tutorial;
 
     this.enter = function () {
         console.log("[DEBUG] ***ENTERING LOADING STATE***");
@@ -38,13 +41,18 @@ function PreloadState() {
         canvas = createCanvas(1120, 630);
         canvas.position(0,0);
         canvas.parent(container);
+
+        tutorial = loadImage("assets/images/tutorial.png");
         nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, chosenDifficulty.waveSmoothing);
         this.loadAssets();       
     }
 
     this.draw = function () {
 
-        background(51);
+        background(51);        
+        
+        imageMode(CORNER);
+        image(tutorial, 0, 0, width, height);
         
         stroke(255);
         noFill();
@@ -72,7 +80,7 @@ function PreloadState() {
         strokeWeight(4);
         stroke(255);
         line(0, 0, 100, 0);
-        this.angle += 1;          
+        this.angle += 1;       
              
     }
    

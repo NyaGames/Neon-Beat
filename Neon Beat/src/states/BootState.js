@@ -1,4 +1,5 @@
 var menuBackground = [];
+var loadingScreen = [];
 
 var mainMenuAssets = [];
 
@@ -7,6 +8,8 @@ var totalMainMenuAssets = 1;
 
 var container;
 var canvas;
+
+var atencion;
 
 function BootState() {
     ///Estado encargado de cargar los assets que aparecen en el menú
@@ -17,16 +20,24 @@ function BootState() {
         container = createDiv();
         container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
         container.id("container");
-        this.loadAssets();
+
         canvas = createCanvas(1120, 630);
         canvas.position(0, 0);
-        canvas.parent(container);        
+        canvas.parent(container);  
+
+        atencion = loadImage("assets/images/atencion.png")
+        
+        this.loadAssets();      
     }
 
     this.draw = function () {
         background(51);
+
+        
+        imageMode(CORNER);
+        image(atencion, 0, 0, width, height);
        
-        stroke(255);
+        /*stroke(255);
         noFill();
         rect(10, 10, 200, 20);
 
@@ -45,7 +56,7 @@ function BootState() {
         strokeWeight(4);
         stroke(255);
         line(0, 0, 100, 0);
-        this.angle += 1;        
+        this.angle += 1;*/   
     }
 
     this.loadSpritesheet = function (arr, numImages, width, height, url) {
