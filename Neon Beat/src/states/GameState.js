@@ -22,7 +22,9 @@ function GameState() {
     var combo = 1;
     var maximumCombo = 1;
     var damageOverTime = 0.1;
-    var hpForSuccess = 5;
+    var hpFor100 = 3;
+    var hpFor200 = 5;
+    var hpFor300 = 7;
     var hpForFail = -7.5;
 
     //Minimum circles
@@ -30,6 +32,12 @@ function GameState() {
     var playerAtMinimum = false;
     var startDiameter = 100;
     minimumSecondsRange = new Range(0, 0);
+
+    //Animaciones
+    var incrementCombo = 0;
+    var indexCombo = 0;
+    var incrementPoints=0;
+    var indexPoints = 0;
 
     //#endregion
 
@@ -162,7 +170,7 @@ function GameState() {
                 this.playerLoseHp();
                 combo = 1;
             }
-            if (playerSecond > minimumSecondsRange.max + secondsFromMinimun / 4) {
+            if (playerSecond > minimumSecondsRange.max + 0.08) {
                 playerAtMinimum = false;
                 nextMinimum++;
             }
@@ -216,21 +224,25 @@ function GameState() {
     this.handleInput = function () {
         if (playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail) { // 32 = Barra espaciadora
             var rangeSize = startDiameter - localMinimas[nextMinimum].sizeForPerfectSuccsess;
-            var firstRange = startDiameter - ((rangeSize / 5) * 3); //En los primeros 3 tercios del rango se puntúa 100
-            var secondRange = localMinimas[nextMinimum].sizeForPerfectSuccsess + 3; //Hasta 3 pixeles antes de que se cierre el círculo se puntúa 200
+            var firstRange = new Range(localMinimas[nextMinimum].second - secondsFromMinimun,localMinimas[nextMinimum].second - (2*secondsFromMinimun/3));
+            var secondRange = new Range(firstRange.max,localMinimas[nextMinimum].second - secondsFromMinimun/3);
+            var thirdRange = new Range(secondRange.max,localMinimas[nextMinimum].second);
 
-            if (localMinimas[nextMinimum].size <= startDiameter && localMinimas[nextMinimum].size > firstRange) {
+            if (playerSecond >= firstRange.min && playerSecond <= firstRange.max) {
                 points += lowestScore * combo;
                 localMinimas[nextMinimum].score = 100;
-            } else if (localMinimas[nextMinimum].size <= firstRange && localMinimas[nextMinimum].size > secondRange) {
+                this.playerGetHp(100);
+            } else if (playerSecond >= secondRange.min && playerSecond <= secondRange.max) {
                 points += midScore * combo;
                 localMinimas[nextMinimum].score = 200;
-            } else if (localMinimas[nextMinimum].size <= secondRange && localMinimas[nextMinimum].size >= localMinimas[nextMinimum].sizeForPerfectSuccsess) {
+                this.playerGetHp(200);
+            } else if (playerSecond >= thirdRange.min && playerSecond <= thirdRange.max) {
                 points += highestScore * combo;
                 localMinimas[nextMinimum].score = 300;
+                this.playerGetHp(300);
             }
             localMinimas[nextMinimum].success = true;
-            this.playerGetHp();
+            
             localMinimas[nextMinimum].fail = false;
             combo++;
             if (combo > maximumCombo) {
@@ -268,8 +280,18 @@ function GameState() {
     //#endregion
 
     //#region [rgba(28, 99, 155, 0.1)]Cosas de Dani
-    this.playerGetHp = function () {
-        pointer.actualHp += hpForSuccess;
+    this.playerGetHp = function (points) {
+        switch(points){
+            case 100:
+                pointer.actualHp += hpFor100;
+                break;
+            case 200:
+                pointer.actualHp += hpFor200;
+                break;
+            case 300:
+                pointer.actualHp += hpFor300;
+                break;
+        }
         if (pointer.actualHp > pointer.maxHp) {
             pointer.actualHp = pointer.maxHp;
         }
@@ -296,28 +318,30 @@ function GameState() {
 
     //Text
     this.updateText = function () {
+        //Points
+        incrementPoints += 4;
+        let index1 = Math.floor(indexPoints) % pointsAnimation.length;
+        imageMode(CENTER);       
+        image(pointsAnimation[index1], textPosX - 50, textPosY + 20, 200, 200);      
+        indexPoints += 0.6; 
+
+        fill(255, 255, 255);
+        textFont(myFont);
+        textSize(30);
+        stroke('rgba(100%,0%,100%,0.0)');
+        text(points,textPosX + 200, textPosY);   
+
+        //Combo
+        incrementCombo += 4;
+        let index = Math.floor(indexCombo) % comboAnimation.length;
+        imageMode(CENTER);       
+        image(comboAnimation[index], textPosX - 400, textPosY, 200, 200);      
+        indexCombo += 0.6;    
+
         fill(255, 255, 255);
         textSize(30);
         stroke('rgba(100%,0%,100%,0.0)');
-        text('Points:' + points, textPosX, textPosY);
-
-        fill(255, 255, 255);
-        textSize(30);
-        stroke('rgba(100%,0%,100%,0.0)');
-        text('Combo X' + combo, textPosX - 200, textPosY);
-
-
-        /*fill(255, 255, 255);
-        textSize(20);
-        stroke('rgba(100%,0%,100%,0.0)');
-        text(localMinimas[nextMinimum].size, localMinimas[nextMinimum].x * graphAmplitude, localMinimas[nextMinimum].y - 30);
-        */
-
-        fill(255, 255, 255);
-        textSize(30);
-        stroke('rgba(100%,0%,100%,0.0)');
-        text('Min ' + nextMinimum, textPosX - 500, textPosY);
-
+        text('X' + combo, textPosX - 300, textPosY + 20);
     }
 
     this.checkEndGame = function () {

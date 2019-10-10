@@ -13,6 +13,9 @@ var highestScoreAnimation = [];
 var playerTrail = [];
 var flash = [];
 
+var comboAnimation = [];
+var pointsAnimation =  [];
+
 var pathY = [];
 var localMinimas = [];
 var graphAmplitude;
@@ -20,12 +23,13 @@ var secondsFromMinimun;
 var nextMinimum = 0;
 
 var counter = 0;
-var totalAssets = 14;
+var totalAssets = 16;
 var loadingAssets = true;
 var generatingMap = false;
 
 var playerSecond;
 
+var myFont;
 
 function PreloadState() {  
     this.angle = 0;   
@@ -42,6 +46,8 @@ function PreloadState() {
         canvas.parent(container);
         nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, chosenDifficulty.waveSmoothing);
         this.loadAssets();       
+
+        myFont = loadFont('assets/fonts/gill-sans-ultra-bold-2.ttf');
     }
 
     this.draw = function () {
@@ -222,8 +228,13 @@ function PreloadState() {
         this.loadSpritesheet(midScoreAnimation, 30, 500, 500, "assets/AfterEffect/Puntuaciones/200_animation.png");
         this.loadSpritesheet(highestScoreAnimation, 30, 500, 500, "assets/AfterEffect/Puntuaciones/300_animation.png");
 
+        this.loadSpritesheet(comboAnimation, 60, 500, 500, 'assets/AfterEffect/Combo/combo_animation.png'); 
+        this.loadSpritesheet(pointsAnimation, 60, 500, 500, 'assets/AfterEffect/Puntos/points.png'); 
+
         this.loadSpritesheet(playerTrail, 1, 50, 50, 'assets/images/pelota.png');    
-        this.loadSpritesheet(flash, 1, 600, 500, 'assets/images/flashes/flash.png');      
+        this.loadSpritesheet(flash, 1, 600, 500, 'assets/images/flashes/flash.png'); 
+
+           
     }
 
 }
