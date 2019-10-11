@@ -11,15 +11,12 @@ function GameState() {
 
     var backgroundIndex = 0;
 
-    var textPosX = 0;
-    var textPosY = 30;
-    var points = 0;
-
     //Gameplay variables
     var lowestScore = 100;
     var midScore = 200;
     var highestScore = 300;
     var combo = 1;
+    var points = 0;
     var maximumCombo = 1;
     var damageOverTime = 0.1;
     var hpFor100 = 3;
@@ -27,10 +24,12 @@ function GameState() {
     var hpFor300 = 7;
     var hpForFail = -7.5;
 
+    var endSecond;
+
     //Minimum circles
    
     var playerAtMinimum = false;
-    var startDiameter = 100;
+    var startDiameter = width/6;
     minimumSecondsRange = new Range(0, 0);
 
     //Animaciones
@@ -38,6 +37,7 @@ function GameState() {
     var indexCombo = 0;
     var incrementPoints=0;
     var indexPoints = 0;
+
 
     //#endregion
 
@@ -307,45 +307,55 @@ function GameState() {
 
     this.getPlayerSecond = function () {
         //Calculamos en qué segundo está el jugador 
-        playerSecond = songDuration * pointer.x / ((pathY.length - 1) * graphAmplitude);
-        playerSecond = Math.round(playerSecond * 10) / 10 //Redondeamos un decimal
+        if(playerSecond <= songDuration){
+            playerSecond = songDuration * pointer.x / ((pathY.length - 1) * graphAmplitude);
+            playerSecond = Math.round(playerSecond * 10) / 10 //Redondeamos un decimal
+            endSecond = playerSecond;
+        }else{
+            endSecond = songDuration * pointer.x / ((pathY.length - 1) * graphAmplitude);
+            endSecond = Math.round(endSecond * 10) / 10 //Redondeamos un decimal
+        }
+      
     }
 
     //Text
     this.updateText = function () {
+        let animationY = height/11;
+        let textY = height/9;
+        let size =  height/3;
         //Points
         incrementPoints += 4;
         let index1 = Math.floor(indexPoints) % pointsAnimation.length;
         imageMode(CENTER);       
-        image(pointsAnimation[index1], textPosX - 50, textPosY + 20, 200, 200);      
+        image(pointsAnimation[index1], pointer.x + width/3, animationY, size, size);      
         indexPoints += 0.6; 
 
         fill(255, 255, 255);
         textFont(myFont);
         textSize(30);
         stroke('rgba(100%,0%,100%,0.0)');
-        text(points,textPosX + 200, textPosY);   
+        text(points,pointer.x + width/2, textY);   
 
         //Combo
         incrementCombo += 4;
         let index = Math.floor(indexCombo) % comboAnimation.length;
         imageMode(CENTER);       
-        image(comboAnimation[index], textPosX - 400, textPosY, 200, 200);      
+        image(comboAnimation[index], pointer.x - width/10,animationY, size, size);      
         indexCombo += 0.6;    
 
         fill(255, 255, 255);
         textSize(30);
         stroke('rgba(100%,0%,100%,0.0)');
-        text('X' + combo, textPosX - 300, textPosY + 20);
+        text('X' + combo, pointer.x + width/14, textY);
     }
 
     this.checkEndGame = function () {
-        if (playerSecond > songDuration - fade) {
-            alpha = lerp(0, 255, (playerSecond - (songDuration - fade)) / (songDuration + 1-(songDuration - fade)));
+        if (endSecond > songDuration - fade) {
+            alpha = lerp(0, 255, (endSecond - (songDuration - fade)) / (songDuration + 1-(songDuration - fade)));
             
             fill(0, 0, 0, alpha);
             ellipse(pointer.x, 0, 5000, 5000);
-            if (playerSecond > songDuration + 1) {
+            if (endSecond > songDuration + 1) {
                 mgr.showScene(EndGameState);
                 maxCombo = maximumCombo;
                 finalScore = points;
@@ -357,8 +367,8 @@ function GameState() {
     this.drawSongDuration = function(){
         stroke(255,255,255);
         fill(255,255,255);
-        let newWidth = (600 * playerSecond ) / songDuration;
-        rect(pointer.x - 150,height - 20,newWidth,10);
+        let newWidth = ((2*width/3) * playerSecond) / songDuration;
+        rect(pointer.x - width/5,height - height/9,newWidth,height/40);
     }
     //#endregion
 
