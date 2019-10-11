@@ -173,7 +173,7 @@ function GameState() {
             localMinimas[i].drawCircle(pointer.x, startDiameter, graphAmplitude);
             localMinimas[i].successOrFail(graphAmplitude);
             localMinimas[i].drawText(graphAmplitude);
-            if (localMinimas[i].success) {
+            /*if (localMinimas[i].success) {
                 stroke(0, 255, 0);
                 fill(0, 255, 0);
                 ellipse(localMinimas[i].x * graphAmplitude, localMinimas[i].y, 10, 10);
@@ -185,7 +185,8 @@ function GameState() {
                 stroke(0, 0, 255);
                 fill(0, 0, 255);
                 ellipse(localMinimas[i].x * graphAmplitude, localMinimas[i].y, 10, 10);
-            }
+            }*/
+            localMinimas[i].display(graphAmplitude,pointer.r);
         }
 
         //Mueve el puntero del jugador     

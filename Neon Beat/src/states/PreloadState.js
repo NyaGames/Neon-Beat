@@ -13,6 +13,8 @@ var highestScoreAnimation = [];
 var playerTrail = [];
 var flash = [];
 
+var minimumAnimation = [];
+
 var comboAnimation = [];
 var pointsAnimation =  [];
 
@@ -23,7 +25,7 @@ var secondsFromMinimun;
 var nextMinimum = 0;
 
 var counter = 0;
-var totalAssets = 16;
+var totalAssets = 17;
 var loadingAssets = true;
 var generatingMap = false;
 
@@ -157,7 +159,7 @@ function PreloadState() {
                 if (Math.abs(localMinima - localMaxima) >= diff) {
                     //Miramos si está lo suficientemente lejos del mínimo local anterior
                     if (Math.abs(i - previousMin) >= minDistance || previousMin == -1) {
-                        var minimum = new Minimum(i, pathY[i], false,circleAnimation,successAnimation,successAnimation2,successAnimation3,failAnimation,failAnimation2,failAnimation3,lowestScoreAnimation,midScoreAnimation,highestScoreAnimation);
+                        var minimum = new Minimum(i, pathY[i], false,circleAnimation,successAnimation,successAnimation2,successAnimation3,failAnimation,failAnimation2,failAnimation3,lowestScoreAnimation,midScoreAnimation,highestScoreAnimation,minimumAnimation);
                         if((localMaxima - localMinima) >= 1000){
                             minimum.flash = true;
                         }
@@ -233,6 +235,8 @@ function PreloadState() {
 
         this.loadSpritesheet(comboAnimation, 60, 500, 500, 'assets/AfterEffect/Combo/combo_animation.png'); 
         this.loadSpritesheet(pointsAnimation, 60, 500, 500, 'assets/AfterEffect/Puntos/points.png'); 
+
+        this.loadSpritesheet(minimumAnimation, 50, 152, 152, 'assets/images/EsferaPequeñisima/esferaPequeña.png'); 
 
         this.loadSpritesheet(playerTrail, 1, 50, 50, 'assets/images/pelota.png');    
         this.loadSpritesheet(flash, 1, 600, 500, 'assets/images/flashes/flash.png'); 
