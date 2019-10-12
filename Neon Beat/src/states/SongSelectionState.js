@@ -45,8 +45,7 @@ function SongSelectionState(){
         console.log("[DEBUG] ***ENTERING SONG SELECTION STATE***")
        
         //cargar imagenes
-        container = createDiv();
-        container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
+        container = document.getElementById("container");
 
         //crear imagenes
         canvas = createCanvas(1120, 630);

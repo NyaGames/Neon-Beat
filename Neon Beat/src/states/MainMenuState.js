@@ -12,9 +12,7 @@ function MainMenuState(){
     {
         console.log("[DEBUG] ***ENTERING MAIN MENU STATE***")
        
-        container = createDiv();
-        container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
-        container.id("container");
+        container = document.getElementById("container");
 
         //crear imagenes
         canvas = createCanvas(1120, 630);
@@ -33,13 +31,14 @@ function MainMenuState(){
         boton_jugar = createDiv();
         boton_jugar.parent(container);
         boton_jugar.position(375, 250);
-        //boton_jugar.mouseClicked(); 
+        boton_jugar.mousePressed(this.clickJugar); 
         jugar_encendido_img = createImg('assets/images/menuPrincipal/jugar_encendido.png'); 
         jugar_encendido_img.parent(boton_jugar);
 
         boton_creditos = createDiv();
         boton_creditos.parent(container);
         boton_creditos.position(502.5, 500);
+        boton_creditos.mousePressed(this.clickCreditos);
         creditos_apagados_img = createImg('assets/images/menuPrincipal/creditos_apagado.png'); 
         creditos_apagados_img.parent(boton_creditos);
 
@@ -58,7 +57,24 @@ function MainMenuState(){
         menuBackgroundIndex++;        
     }
 
-    this.mouseClicked = function(){
+    this.clickJugar = function(){
+        if(state === 1){
+            state = 0;
+            jugar_apagado_img.remove();
+            jugar_encendido_img = createImg('assets/images/menuPrincipal/jugar_encendido.png'); 
+            jugar_encendido_img.parent(boton_jugar);
+            boton_jugar.position(375, 250);
+            creditos_encendidos_img.remove();
+            creditos_apagados_img = createImg('assets/images/menuPrincipal/creditos_apagado.png'); 
+            creditos_apagados_img.parent(boton_creditos);
+            boton_creditos.position(502.5, 500);
+        }else if(state === 0){            
+            canvas.remove();
+            mgr.showScene(EndGameState);
+        }
+    }
+
+    this.clickCreditos = function(){
         if(state === 0){
             state = 1;
             jugar_encendido_img.remove();
@@ -69,26 +85,20 @@ function MainMenuState(){
             creditos_encendidos_img = createImg('assets/images/menuPrincipal/creditos_encendidos.png'); 
             creditos_encendidos_img.parent(boton_creditos);
             boton_creditos.position(317, 370);
-        }else if(state === 1){
-            state = 0;
-            jugar_apagado_img.remove();
-            jugar_encendido_img = createImg('assets/images/menuPrincipal/jugar_encendido.png'); 
-            jugar_encendido_img.parent(boton_jugar);
-            boton_jugar.position(375, 250);
-            creditos_encendidos_img.remove();
-            creditos_apagados_img = createImg('assets/images/menuPrincipal/creditos_apagado.png'); 
-            creditos_apagados_img.parent(boton_creditos);
-            boton_creditos.position(502.5, 500);
+        }else if(state === 1){            
+            canvas.remove();
+            mgr.showScene(CreditsState);
         }
     }
+
     this.keyPressed = function(){        
         if(keyCode === 32){
             if(state === 0){
-                container.remove();
+                canvas.remove();
                 mgr.showScene(SongSelectionState);
             }
             if(state === 1){
-                container.remove();
+                canvas.remove();
                 mgr.showScene(CreditsState);
             }
         }else{
