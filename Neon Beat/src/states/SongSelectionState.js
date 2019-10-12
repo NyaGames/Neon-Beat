@@ -26,7 +26,7 @@ function SongSelectionState(){
         },
         normal: {
             graphAmplitude: 6,
-            secondsFromMinimun: 1,
+            secondsFromMinimun: 0.3,
             waveSmoothing: 0.9,
             diffs: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40],
             minDistance: 10,

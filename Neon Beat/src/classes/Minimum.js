@@ -1,6 +1,6 @@
 class Minimum{
 
-    constructor(x,y,visited,animation,successAnimation,successAnimation2,successAnimation3,failAnimation,failAnimation2,failAnimation3,lowestScoreAnimation,midScoreAnimation,highestScoreAnimation){
+    constructor(x,y,visited,animation,successAnimation,successAnimation2,successAnimation3,failAnimation,failAnimation2,failAnimation3,lowestScoreAnimation,midScoreAnimation,highestScoreAnimation,sphereAnimation){
         this.x = x;
         this.y = y;
         this.visited = visited;
@@ -9,7 +9,7 @@ class Minimum{
         this.animation = animation;
         this.animationIndex = 0;
         this.animationLength = this.animation.length;
-        this.sizeForPerfectSuccsess = 30;
+        this.sizeForPerfectSuccsess = 24;
         this.size;
         //Partículas de acierto y error
         this.success = false;
@@ -36,6 +36,7 @@ class Minimum{
         this.failAnimation3Length = this.failAnimation3.length;
         this.randomFail = Math.floor(Math.random() * 3);   
 
+        //Textos de puntuaciones
         this.endAnimation = false;
         this.increment = 0;
         this.endScoreAnimation = false;
@@ -52,12 +53,22 @@ class Minimum{
         this.highestScoreAnimationIndex = 0;
         this.highestScoreAnimationLength = this.highestScoreAnimation.length;
         this.scoreSize = 100;
+
+        //Dibujar el mínimo
+        this.sphereIncrement = 0;
+        this.sphereAnimation = sphereAnimation;
+        this.sphereAnimationIndex = 0;
+        this.successColor = color(0,255,0);
+        this.notVisitedColor = color(0,0,255);
+        this.failColor = color(255,0,0);
+
+        this.flash = false;
     }
 
     drawCircle(playerX,startDiameter,graphAmplitude){
         var x = 500;
         if(((this.x * graphAmplitude) - playerX) <= x && ((this.x * graphAmplitude)- playerX) >= 0){
-            this.size = lerp(this.sizeForPerfectSuccsess,startDiameter,((this.x * graphAmplitude) - playerX)/300);
+            this.size = lerp(this.sizeForPerfectSuccsess,startDiameter,((this.x * graphAmplitude) - playerX)/500);
             let index = Math.floor(this.animationIndex) % this.animationLength;
             imageMode(CENTER);       
             image(this.animation[index], this.x * graphAmplitude, this.y, this.size, this.size);      
@@ -180,6 +191,21 @@ class Minimum{
             }
         }
         
+    }
+
+    display(graphAmplitude,r){
+        let index = Math.floor(this.sphereAnimationIndex) % this.sphereAnimation.length;
+        /*if(this.success){
+            tint(this.successColor);
+        }else if(this.fail){
+            tint(this.failColor);
+        }else{
+            tint(this.notVisitedColor);
+        }*/
+        imageMode(CENTER);       
+        image(this.sphereAnimation[index],this.x * graphAmplitude, this.y , r, r);    
+        noTint();
+        this.sphereAnimationIndex += 0.6;   
     }
 
 }
