@@ -67,7 +67,7 @@ function GameState() {
         cameraOffset = width * 1 / 3;
         pointer = new Pointer(0, 0, 75, sphereAnimation); 
 
-        nbAudioContext.playTrack();
+        nbAudioContext.playTrackFromBeginning();
         canvas.background(0);
     }
     //#endregion
@@ -280,7 +280,8 @@ function GameState() {
         pointer.actualHp += hpForFail;
         if(pointer.actualHp <= 0){
             pointer.actualHp = 0;
-            //this.defeat();
+            nbAudioContext.stop();
+            this.defeat();
         }
     }
 

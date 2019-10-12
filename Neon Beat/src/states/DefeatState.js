@@ -55,6 +55,7 @@ function DefeatState(){
                 mgr.showScene(GameState);
             }
             if(state === 1){
+                reset();
                 canvas.remove();
                 mgr.showScene(MainMenuState);
             }

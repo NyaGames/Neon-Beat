@@ -112,7 +112,8 @@ class NeonBeatAudioContext {
     }
 
     getAudioContext() { return audioCtx; }
-    playTrack() { source.start(0); }
+    playTrackFromBeginning() { source.start(0); }
+    stop(){source.stop();}
     getTrackDuration() { return duration; }
     currentTime() { return audioCtx.currentTime; }
     changeSmoothing(smooth){smoothValue = smooth;}

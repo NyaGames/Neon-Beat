@@ -25,19 +25,19 @@ class Pointer{
     display(damageOverTime){
         let index = Math.floor(this.index) % this.len;
 
-
+        let col = lerpColor(this.minColor,this.maxColor,this.actualHp/this.maxHp);
         //Imagenes de la cola de la bola
         for(var i=1; i < this.history.length-1; i++){
             var alpha = lerp(0, 255, i/this.history.length);
             var tamaño = lerp(0, this.r*0.3, i/this.history.length);
             var pos = this.history[i];
-            tint(lerpColor(this.minColor,this.maxColor,this.actualHp/this.maxHp), alpha);
-            imageMode(CENTER);    
+            imageMode(CENTER); 
+            tint(col.levels[0], col.levels[1], col.levels[2], alpha);            
             image(playerTrail[0], pos.x, pos.y, tamaño, tamaño);  
             noTint();
         }
 
-        tint(lerpColor(this.minColor,this.maxColor,this.actualHp/this.maxHp));
+        tint(col.levels);
         imageMode(CENTER);       
         image(this.animation[index], this.x, this.y, this.r, this.r);      
         noTint();

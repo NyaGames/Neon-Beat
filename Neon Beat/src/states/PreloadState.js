@@ -21,7 +21,7 @@ var nextMinimum = 0;
 
 var counter = 0;
 var totalAssets = 14;
-var loadingAssets = true;
+var loadingAssets = false;
 var generatingMap = false;
 
 
@@ -39,7 +39,14 @@ function PreloadState() {
         canvas.position(0,0);
         canvas.parent(container);
         nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, chosenDifficulty.waveSmoothing);
-        this.loadAssets();       
+
+        if(!loadingAssets){
+            loadingAssets = true;
+            this.loadAssets();       
+        }else{
+            generatingMap = false;
+            generateMap();
+        }
     }
 
     this.draw = function () {
@@ -170,7 +177,7 @@ function PreloadState() {
     }
 
     this.keyPressed = function(){
-        if(!this.loadingAssets && !this.generatingMap){
+        if(!loadingAssets && !generatingMap){
             mgr.showScene(GameState);
         }
     } 
@@ -205,7 +212,7 @@ function PreloadState() {
     this.loadAssets = function () {
 
         this.loadSpritesheet(sphereAnimation, 60, 150, 150, "assets/images/Player/player.png");
-        this.loadSpritesheet(backgroundAnimation, 120, 912, 513, "assets/AfterEffect/Menu/menu_animation.png");
+        this.loadSpritesheet(backgroundAnimation, 180, 912, 513, "assets/AfterEffect/NuevasParticulillas/image1.png");
         this.loadSpritesheet(circleAnimation, 30, 300, 300, "assets/AfterEffect/Circunferencia/circunferencia_animation.png");
 
         this.loadSpritesheet(successAnimation,  16, 500, 500, "assets/AfterEffect/Aciertos/Acierto1_animation.png");
@@ -231,4 +238,11 @@ function generateMap(){
     secondsFromMinimun = chosenDifficulty.secondsFromMinimun;
     graphAmplitude = chosenDifficulty.graphAmplitude;    
     nbAudioContext.decodeAudio(songFile);
+}
+
+function reset(){
+    nbAudioContext = null;
+    pathY = [];
+    localMinimas = [];
+    generatingMap = false;
 }
