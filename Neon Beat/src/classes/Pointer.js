@@ -16,7 +16,6 @@ class Pointer{
         this.startWidth = 600;
         this.maxColor = color(100,239,255,255);
         this.minColor = color(0,30,30,255);
-
         //Cola de la bola
         this.history = [];
         var v=createVector(this.x, this.y);
@@ -27,15 +26,15 @@ class Pointer{
 
 
         //Imagenes de la cola de la bola
-        /*for(var i=1; i < this.history.length-1; i++){
+        for(var i=1; i < this.history.length-1; i++){
             var alpha = lerp(0, 255, i/this.history.length);
             var tamaño = lerp(0, this.r*0.3, i/this.history.length);
             var pos = this.history[i];
-            tint(lerpColor(this.minColor,this.maxColor,this.actualHp/this.maxHp), alpha);
+            tint(lerpColor(color(0,30,30,alpha),color(100,239,255,alpha),this.actualHp/this.maxHp));
             imageMode(CENTER);    
             image(playerTrail[0], pos.x, pos.y, tamaño, tamaño);  
             noTint();
-        }*/
+        }
 
         tint(lerpColor(this.minColor,this.maxColor,this.actualHp/this.maxHp));
         imageMode(CENTER);       
