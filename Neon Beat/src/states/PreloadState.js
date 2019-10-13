@@ -22,12 +22,13 @@ var pathY = [];
 var localMinimas = [];
 var graphAmplitude;
 var secondsFromMinimun;
-var nextMinimum = 0;
 
 var counter = 0;
 var totalAssets = 17;
 var loadingAssets = false;
+var assetsLoaded = false;
 var generatingMap = false;
+var mapGenerated = false;
 var playerSecond;
 var myFont;
 
@@ -50,15 +51,20 @@ function PreloadState() {
         canvas.parent(container);
 
         tutorial = loadImage("assets/images/tutorial.png");
-        nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, chosenDifficulty.waveSmoothing);
 
-        if(!loadingAssets){
+        if(!mapGenerated){
+            nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, chosenDifficulty.waveSmoothing);
+        }
+
+        if(!assetsLoaded){
             loadingAssets = true;
             this.loadAssets();                
             myFont = loadFont('assets/fonts/gill-sans-ultra-bold-2.ttf');   
         }else{
-            generatingMap = false;
-            generateMap();
+            if(!mapGenerated){
+                generatingMap = true;
+                generateMap();
+            }
         }
 
     }
@@ -193,7 +199,7 @@ function PreloadState() {
         playerSecond = songDuration * 0 / ((pathY.length - 1) * graphAmplitude);
         playerSecond = Math.round(playerSecond * 10) / 10 //Redondeamos un decimal        
 
-        this.generatingMap = false;
+        generatingMap = false;
     }
 
     this.keyPressed = function(){
@@ -222,8 +228,9 @@ function PreloadState() {
             counter++;
 
             if (counter == totalAssets) {
-                this.loadingAssets = false;
-                this.generatingMap = true;
+                loadingAssets = false;
+                generatingMap = true;
+                assetsLoaded = true;
                 generateMap();
             }
         }
@@ -233,7 +240,7 @@ function PreloadState() {
 
         this.loadSpritesheet(sphereAnimation, 60, 150, 150, "assets/images/Player/player.png");
         this.loadSpritesheet(backgroundAnimation, 180, 912, 513, "assets/AfterEffect/NuevasParticulillas/image1.png");
-        this.loadSpritesheet(circleAnimation, 30, 300, 300, "assets/AfterEffect/Circunferencia/circunferencia_animation.png");
+        this.loadSpritesheet(circleAnimation, 24, 300, 300, "assets/AfterEffect/Circunferencia/circunferencia_animation.png");
 
         this.loadSpritesheet(successAnimation,  16, 500, 500, "assets/AfterEffect/Aciertos/Acierto1_animation.png");
         this.loadSpritesheet(successAnimation2, 16, 500, 500, "assets/AfterEffect/Aciertos/Acierto2_animation.png");
@@ -265,11 +272,33 @@ function generateMap(){
     secondsFromMinimun = chosenDifficulty.secondsFromMinimun;
     graphAmplitude = chosenDifficulty.graphAmplitude;    
     nbAudioContext.decodeAudio(songFile);
+    mapGenerated = true;
 }
 
-function reset(){
+function reset(playAgain){
+    resetGame();
+
+    nbAudioContext.reset();
+    mapGenerated = false;
     nbAudioContext = null;
+
     pathY = [];
     localMinimas = [];
+
+    generatingMap = false;  
+
+    if(!playAgain){
+        songFile = null;
+    }
+}
+
+function playAgain(){ 
+    resetGame();    
+
+    generatingMap = true;
+    for (let i = 0; i < localMinimas.length; i++) {
+        const element = localMinimas[i];
+        element.reset();        
+    }
     generatingMap = false;
 }

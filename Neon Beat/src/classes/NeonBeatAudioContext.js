@@ -13,6 +13,8 @@ var onGraphCompleted;
 var duration;
 var smoothValue;
 
+var songBuffer;
+
 class NeonBeatAudioContext {
 
     constructor(fft, sampleRate, callback, smoothing) {
@@ -32,6 +34,7 @@ class NeonBeatAudioContext {
     }
 
     processBuffer(buffer) {
+        songBuffer = buffer;
         duration = buffer.duration;
         length = buffer.length;
 
@@ -52,11 +55,6 @@ class NeonBeatAudioContext {
         offlineSource = offlineCtx.createBufferSource();
         offlineSource.buffer = buffer;
         offlineSource.connect(analyser);
-
-        //Creamos el buffer para que suene la canción a tiempo real
-        source = audioCtx.createBufferSource();
-        source.buffer = buffer;
-        source.connect(audioCtx.destination);
 
         //Asignamos la función que se va a llamar en cada paso de tiempo de la canción
         processor.onaudioprocess = NeonBeatAudioContext.prototype.processAudio;  
@@ -112,9 +110,33 @@ class NeonBeatAudioContext {
     }
 
     getAudioContext() { return audioCtx; }
-    playTrackFromBeginning() { source.start(0); }
+    playTrackFromBeginning() {          
+        source = audioCtx.createBufferSource();
+        source.buffer = songBuffer;
+        source.connect(audioCtx.destination);
+        source.start(0); 
+    }
     stop(){source.stop();}
     getTrackDuration() { return duration; }
     currentTime() { return audioCtx.currentTime; }
     changeSmoothing(smooth){smoothValue = smooth;}
+
+    reset(){
+        audioCtx = null;
+        offlineCtx = null;
+        analyser = null;
+        processAudio = null;
+        onGraphCompleted = null;
+        songBuffer = null;
+
+        offlineSource = null;
+        source = null;
+        processor = null;
+        fftHistory = [];
+
+        fftSize = 0;
+        samplerate = 0;
+        duration = 0;
+        smoothValue = 0;
+    }
 }

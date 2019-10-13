@@ -1,8 +1,7 @@
-function GameState() {
-    //#region [rgba(255, 0, 0, 0.1)]Variables
+//#region [rgba(255, 0, 0, 0.1)]Variables
     var canvas;
     var fade = 2;
-    var flashBool =false;
+    var flashBool = false;
 
     var timeOffSet = null;
     var pointer;
@@ -21,22 +20,25 @@ function GameState() {
     var damageOverTime = 0.1;
     var hpFor100 = 3;
     var hpFor200 = 5;
-    var hpFor300 = 7;
-    var hpForFail = -7.5;
+    var hpFor300 = 7;  
+    var hpForFail = -7.5; 
 
     var endSecond;
 
-    //Minimum circles
-   
-    var playerAtMinimum = false;
-    var startDiameter = width/6;
-    minimumSecondsRange = new Range(0, 0);
+    //Minimum circles  
+    var playerAtMinimum = false; 
+    var nextMinimum = 0;
 
     //Animaciones
     var incrementCombo = 0;
     var indexCombo = 0;
     var incrementPoints=0;
     var indexPoints = 0;
+
+function GameState() {   
+
+    var startDiameter = width / 6;
+    var minimumSecondsRange = new Range(0, 0);
 
 
     //#endregion
@@ -89,11 +91,11 @@ function GameState() {
         let bgIndex = Math.floor(backgroundIndex % backgroundAnimation.length);
         imageMode(CORNER);
         image(backgroundAnimation[bgIndex], 0, 0, width, height);
-        if(flashBool){
+        /*if(flashBool){
             imageMode(CORNER);
             image(flash[0], 0, 0, width, height);
             flashBool = false;
-        }
+        }*/
 
         //Offset para sincronizar los tiempos a la hora de empezar la canción
         if (timeOffSet === null) {
@@ -186,7 +188,7 @@ function GameState() {
                 fill(0, 0, 255);
                 ellipse(localMinimas[i].x * graphAmplitude, localMinimas[i].y, 10, 10);
             }*/
-            localMinimas[i].display(graphAmplitude,pointer.r - 50);
+            localMinimas[i].display(graphAmplitude,pointer.r - 25);
         }
 
         //Mueve el puntero del jugador     
@@ -237,9 +239,10 @@ function GameState() {
                 localMinimas[nextMinimum].score = 300;
                 this.playerGetHp(300);
             }
-            localMinimas[nextMinimum].success = true;
-            
+
+            localMinimas[nextMinimum].success = true;            
             localMinimas[nextMinimum].fail = false;
+
             combo++;
             if (combo > maximumCombo) {
                 maximumCombo = combo;
@@ -372,8 +375,48 @@ function GameState() {
         let newWidth = ((2*width/3) * playerSecond) / songDuration;
         rect(pointer.x - width/5,height - height/9,newWidth,height/40);
     }
-    //#endregion
+    //#endregion    
 
+}
+
+function resetGame(){
+    canvas = null;
+    fade = 2;
+    flashBool = false;
+
+    timeOffSet = null;
+    pointer = null;
+    
+    cameraOffset = 0;
+
+    backgroundIndex = 0;
+
+    //Gameplay variables
+    lowestScore = 100;
+    midScore = 200;
+    highestScore = 300;
+    combo = 1;
+    points = 0;
+    maximumCombo = 1;
+    damageOverTime = 0.1;
+    hpFor100 = 3;
+    hpFor200 = 5;
+    hpFor300 = 7;
+    hpForFail = -7.5;
+
+    endSecond = 0;
+    nextMinimum = 0;
+
+    //Minimum circles  
+    playerAtMinimum = false;   
+    minimumSecondsRange = new Range(0, 0);
+    playerSecond = 0;
+
+    //Animaciones
+    incrementCombo = 0;
+    indexCombo = 0;
+    incrementPoints = 0;
+    indexPoints = 0;
 }
 
 class Range {

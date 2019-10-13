@@ -92,8 +92,8 @@ function DefeatState(){
             button_salir_apagado.parent(boton_salir);
             boton_salir.position(777, 350);
         }else if(state === 0){            
-            canvas.remove();
-            /*placeholder_particulas.remove();
+            /*canvas.remove();
+            placeholder_particulas.remove();
             texto_derrota.remove();
         
             boton_intentar.remove();
@@ -103,8 +103,14 @@ function DefeatState(){
             button_salir_apagado.remove();
             button_otravez_encendido.remove();
             button_otravez_apagado.remove();*/
+
+            //reset(true);
+            playAgain();
+            
             cancion_perder.stop();
             mgr.showScene(PreloadState);
+
+            //location.reload(); 
         }
     }
 
@@ -131,8 +137,12 @@ function DefeatState(){
             button_salir_apagado.remove();
             button_otravez_encendido.remove();
             button_otravez_apagado.remove();*/
+
+            reset(false);
             cancion_perder.stop();
             mgr.showScene(MainMenuState);
+
+            //location.reload(); 
         }
     }
 }

@@ -11,9 +11,8 @@ class Minimum{
         this.animationLength = this.animation.length;
         this.sizeForPerfectSuccsess = 24;
         this.size;
-        //Partículas de acierto y error
-        this.success = false;
-        this.fail = false;
+       
+
         this.successAnimation = successAnimation;
         this.successAnimationIndex = 0;
         this.successAnimationLength = this.successAnimation.length;
@@ -208,4 +207,34 @@ class Minimum{
         this.sphereAnimationIndex += 0.6;   
     }
 
+    reset(){
+        this.endAnimation = false;
+        this.increment = 0;
+        this.endScoreAnimation = false;
+        this.score = 0;
+        this.scoreIncrement = 0;
+
+        //Partículas de acierto y error
+        this.success = false;
+        this.fail = false;
+
+        this.sphereIncrement = 0;
+        this.sphereAnimationIndex = 0;
+
+        this.animationIndex = 0;
+
+        this.successAnimationIndex = 0;
+        this.successAnimation2Index = 0;
+        this.successAnimation3Index = 0;
+
+        this.failAnimationIndex = 0;
+        this.failAnimation2Index = 0;
+        this.failAnimation3Index = 0;
+
+        this.lowestScoreAnimationIndex = 0;
+        this.midScoreAnimationIndex = 0;
+        this.highestScoreAnimationIndex = 0;
+
+        this.scoreSize = 100;
+    }
 }

@@ -95,7 +95,7 @@ function EndGameState(){
             boton_salir.position(767, 290);
         }else if(state === 0){            
             canvas.remove();
-           /* placeholder_particulas.remove();
+            /*placeholder_particulas.remove();
             texto_victoria.remove();
         
             boton_intentar.remove();
@@ -105,8 +105,10 @@ function EndGameState(){
             button_salir_apagado.remove();
             button_otravez_encendido.remove();
             button_otravez_apagado.remove();*/
+            
+            playAgain();
             cancion_ganar.stop();
-            mgr.showScene(PreloadState);
+            mgr.showScene(PreloadState);            
         }
     }
 
@@ -122,7 +124,7 @@ function EndGameState(){
             button_salir_encendido.parent(boton_salir);
             boton_salir.position(767, 290);
         }else if(state === 1){            
-            canvas.remove();
+            
             /*placeholder_particulas.remove();
             texto_victoria.remove();
         
@@ -133,6 +135,9 @@ function EndGameState(){
             button_salir_apagado.remove();
             button_otravez_encendido.remove();
             button_otravez_apagado.remove();*/
+
+            canvas.remove();
+            reset();
             cancion_ganar.stop();
             mgr.showScene(MainMenuState);
         }
