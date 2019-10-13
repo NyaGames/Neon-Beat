@@ -30,6 +30,11 @@ function DefeatState(){
         container = document.getElementById("container");
         state = 0;
 
+        //cancion
+        if(!cancion_perder.isPlaying()){
+            cancion_perder.play();
+        }
+        
         //crear imagenes
         canvas = createCanvas(1120, 630);
         canvas.position(0, 0); 
@@ -88,6 +93,17 @@ function DefeatState(){
             boton_salir.position(777, 350);
         }else if(state === 0){            
             canvas.remove();
+            /*placeholder_particulas.remove();
+            texto_derrota.remove();
+        
+            boton_intentar.remove();
+            boton_salir.remove();
+        
+            button_salir_encendido.remove();
+            button_salir_apagado.remove();
+            button_otravez_encendido.remove();
+            button_otravez_apagado.remove();*/
+            cancion_perder.stop();
             mgr.showScene(PreloadState);
         }
     }
@@ -103,8 +119,19 @@ function DefeatState(){
             button_salir_encendido = createImg('assets/images/PantallaDerrota/boton_salir.png'); 
             button_salir_encendido.parent(boton_salir);
             boton_salir.position(667, 300);
-        }else if(state === 1){            
+        }else if(state === 1){         
             canvas.remove();
+            /*placeholder_particulas.remove();
+            texto_derrota.remove();
+        
+            boton_intentar.remove();
+            boton_salir.remove();
+        
+            button_salir_encendido.remove();
+            button_salir_apagado.remove();
+            button_otravez_encendido.remove();
+            button_otravez_apagado.remove();*/
+            cancion_perder.stop();
             mgr.showScene(MainMenuState);
         }
     }

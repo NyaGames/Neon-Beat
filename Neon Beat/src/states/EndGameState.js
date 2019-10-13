@@ -31,6 +31,12 @@ function EndGameState(){
         container = document.getElementById("container");
         state = 0;
 
+        //cancion
+        if(!cancion_ganar.isPlaying()){
+            cancion_ganar.play();
+        }
+        
+
         //crear imagenes
         canvas = createCanvas(1120, 630);
         canvas.position(0,0);
@@ -89,6 +95,17 @@ function EndGameState(){
             boton_salir.position(767, 290);
         }else if(state === 0){            
             canvas.remove();
+           /* placeholder_particulas.remove();
+            texto_victoria.remove();
+        
+            boton_intentar.remove();
+            boton_salir.remove();
+        
+            button_salir_encendido.remove();
+            button_salir_apagado.remove();
+            button_otravez_encendido.remove();
+            button_otravez_apagado.remove();*/
+            cancion_ganar.stop();
             mgr.showScene(PreloadState);
         }
     }
@@ -106,6 +123,17 @@ function EndGameState(){
             boton_salir.position(767, 290);
         }else if(state === 1){            
             canvas.remove();
+            /*placeholder_particulas.remove();
+            texto_victoria.remove();
+        
+            boton_intentar.remove();
+            boton_salir.remove();
+        
+            button_salir_encendido.remove();
+            button_salir_apagado.remove();
+            button_otravez_encendido.remove();
+            button_otravez_apagado.remove();*/
+            cancion_ganar.stop();
             mgr.showScene(MainMenuState);
         }
     }

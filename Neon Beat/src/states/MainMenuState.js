@@ -8,6 +8,7 @@ function MainMenuState(){
     var canvas;
     var state;
 
+
     var menuBackgroundIndex = 0;
 
     this.enter = function()
@@ -15,6 +16,11 @@ function MainMenuState(){
         console.log("[DEBUG] ***ENTERING MAIN MENU STATE***")
        
         container = document.getElementById("container");
+
+        //cancion de menu
+        if(!cancion_menu.isPlaying()){
+            cancion_menu.play();
+        }
 
         //crear imagenes
         canvas = createCanvas(1120, 630);

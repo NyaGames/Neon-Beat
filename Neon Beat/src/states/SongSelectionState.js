@@ -95,6 +95,7 @@ function SongSelectionState(){
                 songFile = file;
                 canvas.remove();
                 selectionButton.remove();
+                cancion_menu.stop();
                 mgr.showScene(PreloadState);
             }
             reader.readAsArrayBuffer(f);

@@ -10,6 +10,9 @@ var container;
 var canvas;
 
 var atencion;
+var cancion_menu;
+var cancion_perder;
+var cancion_ganar;
 
 function BootState() {
     ///Estado encargado de cargar los assets que aparecen en el menú
@@ -26,6 +29,9 @@ function BootState() {
         canvas.parent(container);  
 
         atencion = loadImage("assets/images/atencion.png")
+        cancion_menu = loadSound("assets/ost/Kate_Orange_-_You__instrumental_.mp3")
+        cancion_perder = loadSound("assets/ost/Julius_Nox_-_Giulio_s_Page_-_Tortoise.mp3")
+        cancion_ganar = loadSound("assets/ost/Sergey_Tsygankov_-_Spring_Rays.mp3")
         
         this.loadAssets();      
     }
