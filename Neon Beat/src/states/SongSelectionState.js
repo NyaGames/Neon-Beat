@@ -93,6 +93,7 @@ function SongSelectionState(){
             reader.onload = function (file) {
                 //nbAudioContext.decodeAudio(file);
                 songFile = file;
+                canvas.remove();
                 selectionButton.remove();
                 mgr.showScene(PreloadState);
             }

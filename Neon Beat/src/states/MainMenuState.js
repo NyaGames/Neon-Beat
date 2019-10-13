@@ -1,6 +1,8 @@
 function MainMenuState(){      
     var boton_creditos;
     var boton_jugar;
+    var placeholder_fondotitulo_img;
+    var titulo_img;
     
     var container;
     var canvas;
@@ -70,7 +72,11 @@ function MainMenuState(){
             boton_creditos.position(502.5, 500);
         }else if(state === 0){            
             canvas.remove();
-            mgr.showScene(EndGameState);
+            boton_creditos.remove();
+            boton_jugar.remove();
+            placeholder_fondotitulo_img.remove();
+            titulo_img.remove();
+            mgr.showScene(SongSelectionState);
         }
     }
 
@@ -85,8 +91,16 @@ function MainMenuState(){
             creditos_encendidos_img = createImg('assets/images/menuPrincipal/creditos_encendidos.png'); 
             creditos_encendidos_img.parent(boton_creditos);
             boton_creditos.position(317, 370);
-        }else if(state === 1){            
+        }else if(state === 1){      
             canvas.remove();
+            boton_creditos.remove();
+            boton_jugar.remove();
+            placeholder_fondotitulo_img.remove();
+            titulo_img.remove();
+            boton_creditos.remove();
+            boton_jugar.remove();
+            placeholder_fondotitulo_img.remove();
+            titulo_img.remove();
             mgr.showScene(CreditsState);
         }
     }
@@ -95,10 +109,18 @@ function MainMenuState(){
         if(keyCode === 32){
             if(state === 0){
                 canvas.remove();
+                boton_creditos.remove();
+                boton_jugar.remove();
+                placeholder_fondotitulo_img.remove();
+                titulo_img.remove();
                 mgr.showScene(SongSelectionState);
             }
             if(state === 1){
                 canvas.remove();
+                boton_creditos.remove();
+                boton_jugar.remove();
+                placeholder_fondotitulo_img.remove();
+                titulo_img.remove();
                 mgr.showScene(CreditsState);
             }
         }else{

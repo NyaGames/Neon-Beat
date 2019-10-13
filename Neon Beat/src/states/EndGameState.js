@@ -33,6 +33,7 @@ function EndGameState(){
 
         //crear imagenes
         canvas = createCanvas(1120, 630);
+        canvas.position(0,0);
         canvas.parent(container);
         canvas.background(0);
 
