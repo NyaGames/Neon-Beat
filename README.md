@@ -66,6 +66,11 @@ El estilo visual se basa principalente en luces de neón que permiten transmitir
 
 ### 4.1 Audio
 Es una de los pilares de nuestro videojuego. Durante los menús sonará una banda sonora propia y durante la partida se escuchará la canción elegida. Además, se podrán importar nuevas canciones al juego.
+  
+Las canciones utilizadas para la interfaz y el menú son:  
+  Julius_Nox_-_Giulio_s_Page_-_Tortoise  
+  Kate_Orange_-_You__instrumental_  
+  Sergey_Tsygankov_-_Spring_Rays  
 
 ## 5. Equipo desarrollador
 ### NyaGames

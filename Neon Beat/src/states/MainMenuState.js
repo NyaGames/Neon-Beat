@@ -23,36 +23,36 @@ function MainMenuState(){
         }
 
         //crear imagenes
-
-        var ancho = window.innerWidth - window.innerWidth*0.208*2;        
-        var alto = window.innerHeight - window.innerHeight*0.163*2;
-
         canvas = createCanvas(ancho, alto);
         canvas.parent(container);
         canvas.background(0);
 
         placeholder_fondotitulo_img = createImg('assets/images/menuPrincipal/placeholder_animacion_titulo.png'); 
-        placeholder_fondotitulo_img.position(106, 0); 
+        placeholder_fondotitulo_img.position(106 * wPercentaje, 0); 
         placeholder_fondotitulo_img.parent(container);
+        placeholder_fondotitulo_img.size(908 * wPercentaje, 206 * hPercentaje);
 
         titulo_img = createImg('assets/images/menuPrincipal/titulo.png');
-        titulo_img.position(52, 0); 
+        titulo_img.position(52 * wPercentaje, 0 * hPercentaje);         
+        titulo_img.size(1011 * wPercentaje, 316 * hPercentaje); 
         titulo_img.parent(container); 
 
         //crear botones
         boton_jugar = createDiv();
         boton_jugar.parent(container);
-        boton_jugar.position(375, 250);
+        boton_jugar.position(375 * wPercentaje, 250 * hPercentaje);
         boton_jugar.mousePressed(this.clickJugar); 
         jugar_encendido_img = createImg('assets/images/menuPrincipal/jugar_encendido.png'); 
         jugar_encendido_img.parent(boton_jugar);
+        jugar_encendido_img.size(377 * wPercentaje, 237 * hPercentaje);
 
         boton_creditos = createDiv();
         boton_creditos.parent(container);
-        boton_creditos.position(502.5, 500);
+        boton_creditos.position(502.5* wPercentaje, 500* hPercentaje);
         boton_creditos.mousePressed(this.clickCreditos);
         creditos_apagados_img = createImg('assets/images/menuPrincipal/creditos_apagado.png'); 
         creditos_apagados_img.parent(boton_creditos);
+        creditos_apagados_img.size(115 * wPercentaje, 40 * hPercentaje);
 
         state = 0;
     }  
@@ -75,11 +75,13 @@ function MainMenuState(){
             jugar_apagado_img.remove();
             jugar_encendido_img = createImg('assets/images/menuPrincipal/jugar_encendido.png'); 
             jugar_encendido_img.parent(boton_jugar);
-            boton_jugar.position(375, 250);
+            jugar_encendido_img.size(377 * wPercentaje, 237 * hPercentaje);
+            boton_jugar.position(375* wPercentaje, 250* hPercentaje);
             creditos_encendidos_img.remove();
             creditos_apagados_img = createImg('assets/images/menuPrincipal/creditos_apagado.png'); 
             creditos_apagados_img.parent(boton_creditos);
-            boton_creditos.position(502.5, 500);
+            creditos_apagados_img.size(115 * wPercentaje, 40 * hPercentaje);
+            boton_creditos.position(502.5* wPercentaje, 500* hPercentaje);
         }else if(state === 0){            
             canvas.remove();
             boton_creditos.remove();
@@ -96,11 +98,13 @@ function MainMenuState(){
             jugar_encendido_img.remove();
             jugar_apagado_img = createImg('assets/images/menuPrincipal/jugar_apagado.png'); 
             jugar_apagado_img.parent(boton_jugar);
-            boton_jugar.position(486.5, 350);
+            jugar_apagado_img.size(141 * wPercentaje, 56 * hPercentaje);
+            boton_jugar.position(530* wPercentaje, 350* hPercentaje);
             creditos_apagados_img.remove();
             creditos_encendidos_img = createImg('assets/images/menuPrincipal/creditos_encendidos.png'); 
             creditos_encendidos_img.parent(boton_creditos);
-            boton_creditos.position(317, 370);
+            creditos_encendidos_img.size(486 * wPercentaje, 259 * hPercentaje);
+            boton_creditos.position(317* wPercentaje, 370* hPercentaje);
         }else if(state === 1){      
             canvas.remove();
             boton_creditos.remove();
@@ -112,51 +116,6 @@ function MainMenuState(){
             placeholder_fondotitulo_img.remove();
             titulo_img.remove();
             mgr.showScene(CreditsState);
-        }
-    }
-
-    this.keyPressed = function(){        
-        if(keyCode === 32){
-            if(state === 0){
-                canvas.remove();
-                boton_creditos.remove();
-                boton_jugar.remove();
-                placeholder_fondotitulo_img.remove();
-                titulo_img.remove();
-                mgr.showScene(SongSelectionState);
-            }
-            if(state === 1){
-                canvas.remove();
-                boton_creditos.remove();
-                boton_jugar.remove();
-                placeholder_fondotitulo_img.remove();
-                titulo_img.remove();
-                mgr.showScene(CreditsState);
-            }
-        }else{
-            if(keyCode === 83 || keyCode === 87){
-                if(state === 0){
-                    state = 1;
-                    jugar_encendido_img.remove();
-                    jugar_apagado_img = createImg('assets/images/menuPrincipal/jugar_apagado.png'); 
-                    jugar_apagado_img.parent(boton_jugar);
-                    boton_jugar.position(486.5, 350);
-                    creditos_apagados_img.remove();
-                    creditos_encendidos_img = createImg('assets/images/menuPrincipal/creditos_encendidos.png'); 
-                    creditos_encendidos_img.parent(boton_creditos);
-                    boton_creditos.position(317, 370);
-                }else if(state === 1){
-                    state = 0;
-                    jugar_apagado_img.remove();
-                    jugar_encendido_img = createImg('assets/images/menuPrincipal/jugar_encendido.png'); 
-                    jugar_encendido_img.parent(boton_jugar);
-                    boton_jugar.position(375, 250);
-                    creditos_encendidos_img.remove();
-                    creditos_apagados_img = createImg('assets/images/menuPrincipal/creditos_apagado.png'); 
-                    creditos_apagados_img.parent(boton_creditos);
-                    boton_creditos.position(502.5, 500);
-                }
-            }
         }
     }
 }

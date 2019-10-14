@@ -48,10 +48,6 @@ function SongSelectionState(){
         container = document.getElementById("container");
 
         //crear imagenes
-
-        var ancho = window.innerWidth - window.innerWidth*0.208*2;        
-        var alto = window.innerHeight - window.innerHeight*0.163*2;
-
         canvas = createCanvas(ancho, alto);
         canvas.parent(container);
         canvas.background(0);
@@ -60,7 +56,7 @@ function SongSelectionState(){
         selectionButton = createFileInput(this.handleFileSelect);
         selectionButton.parent(container);
         selectionButton.position(0, 250);
-        selectionButton.size(584, 278);
+        selectionButton.size(584*wPercentaje, 278*hPercentaje);
         selectionImage = createImg('assets/images/PantallaVictoria/caja_cancion.png');
         selectionImage.parent(selectionButton);
         state = 0;
