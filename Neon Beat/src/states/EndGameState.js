@@ -58,6 +58,7 @@ function EndGameState(){
         boton_intentar.mousePressed(this.clickJugar); 
         button_otravez_encendido = createImg('assets/images/PantallaVictoria/boton_otravez.png'); 
         button_otravez_encendido.parent(boton_intentar);
+        button_otravez_encendido.size(348*wPercentaje, 220*hPercentaje);
 
         boton_salir = createDiv();
         boton_salir.parent(container);
@@ -65,6 +66,7 @@ function EndGameState(){
         boton_salir.mousePressed(this.clickCreditos);
         button_salir_apagado = createImg('assets/images/PantallaVictoria/boton_salir_apagado.png'); 
         button_salir_apagado.parent(boton_salir);
+        button_salir_apagado.size(364*wPercentaje, 236*hPercentaje);
 
         state = 0;
         /*background("teal");
@@ -88,14 +90,16 @@ function EndGameState(){
             button_otravez_apagado.remove();
             button_otravez_encendido = createImg('assets/images/PantallaVictoria/boton_otravez.png');  
             button_otravez_encendido.parent(boton_intentar);
+            button_otravez_encendido.size(348*wPercentaje, 220*hPercentaje);
             boton_intentar.position(772*wPercentaje, 101*hPercentaje);
             button_salir_encendido.remove();
             button_salir_apagado = createImg('assets/images/PantallaVictoria/boton_salir_apagado.png'); 
             button_salir_apagado.parent(boton_salir);
+            button_salir_apagado.size(364*wPercentaje, 236*hPercentaje);
             boton_salir.position(767*wPercentaje, 290*hPercentaje);
         }else if(state === 0){            
             canvas.remove();
-            /*placeholder_particulas.remove();
+            placeholder_particulas.remove();
             texto_victoria.remove();
         
             boton_intentar.remove();
@@ -104,7 +108,7 @@ function EndGameState(){
             button_salir_encendido.remove();
             button_salir_apagado.remove();
             button_otravez_encendido.remove();
-            button_otravez_apagado.remove();*/
+            button_otravez_apagado.remove();
             
             playAgain();
             cancion_ganar.stop();
@@ -119,12 +123,14 @@ function EndGameState(){
             button_otravez_apagado = createImg('assets/images/PantallaVictoria/boton_otravez_apagado.png'); 
             button_otravez_apagado.parent(boton_intentar);
             boton_intentar.position(772*wPercentaje, 101*hPercentaje);
+            button_otravez_apagado.size(348*wPercentaje, 220*hPercentaje);
             button_salir_apagado.remove();
             button_salir_encendido = createImg('assets/images/PantallaVictoria/boton_salir.png'); 
             button_salir_encendido.parent(boton_salir);
             boton_salir.position(767*wPercentaje, 290*hPercentaje);
+            button_salir_encendido.size(364*wPercentaje, 236*hPercentaje);
         }else if(state === 1){          
-            /*placeholder_particulas.remove();
+            placeholder_particulas.remove();
             texto_victoria.remove();
         
             boton_intentar.remove();
@@ -133,7 +139,7 @@ function EndGameState(){
             button_salir_encendido.remove();
             button_salir_apagado.remove();
             button_otravez_encendido.remove();
-            button_otravez_apagado.remove();*/
+            button_otravez_apagado.remove();
 
             canvas.remove();
             reset();

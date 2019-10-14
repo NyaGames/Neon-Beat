@@ -75,10 +75,10 @@ function PreloadState() {
         background(51);        
         
         imageMode(CORNER);
-        image(tutorial, 0, 0, width, height);
+        image(tutorial, 0, 0, ancho, alto);
 
         let index = this.animationIndex % loadingScreen.length;      
-        image(loadingScreen[index], width * 3.75 / 5, height * 3.75/5, 350, 150);       
+        image(loadingScreen[index], ancho * 3.75 / 5, alto * 3.75/5, 350, 150);       
 
         fill(255, 200);
         textSize(32);

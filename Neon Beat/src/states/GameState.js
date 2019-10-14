@@ -90,7 +90,7 @@ function GameState() {
         //Animación del fondo
         let bgIndex = Math.floor(backgroundIndex % backgroundAnimation.length);
         imageMode(CORNER);
-        image(backgroundAnimation[bgIndex], 0, 0, width, height);
+        image(backgroundAnimation[bgIndex], 0, 0, ancho, alto);
         /*if(flashBool){
             imageMode(CORNER);
             image(flash[0], 0, 0, width, height);

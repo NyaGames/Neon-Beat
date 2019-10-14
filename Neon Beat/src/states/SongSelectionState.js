@@ -55,10 +55,11 @@ function SongSelectionState(){
         //crear boton de seleccion        
         selectionButton = createFileInput(this.handleFileSelect);
         selectionButton.parent(container);
-        selectionButton.position(0, 250);
-        selectionButton.size(584*wPercentaje, 278*hPercentaje);
+        selectionButton.position(0*wPercentaje, 250*hPercentaje);
         selectionImage = createImg('assets/images/PantallaVictoria/caja_cancion.png');
+        selectionButton.position(0, 0);
         selectionImage.parent(selectionButton);
+        selectionImage.size(584*wPercentaje, 278*hPercentaje);
         state = 0;
 
         chosenDifficulty = difficulties.normal;
@@ -79,7 +80,7 @@ function SongSelectionState(){
         //Animación del fondo
         let bgIndex = Math.floor(songSelectionBGIndex % menuBackground.length);
         imageMode(CORNER);
-        image(menuBackground[bgIndex], 0, 0, width, height);
+        image(menuBackground[bgIndex], 0, 0, ancho, alto);
 
         songSelectionBGIndex++;
         
