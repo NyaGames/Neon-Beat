@@ -336,6 +336,7 @@ function GameState() {
         indexPoints += 0.6; 
 
         fill(255, 255, 255);
+        textAlign(CENTER);
         textFont(myFont);
         textSize(30);
         stroke('rgba(100%,0%,100%,0.0)');

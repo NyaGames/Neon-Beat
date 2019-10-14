@@ -32,10 +32,10 @@ var mapGenerated = false;
 var playerSecond;
 var myFont;
 
-var animationIndex = 0;
 
 function PreloadState() {  
-    this.angle = 0;   
+    this.angle = 0;  
+    this.animationIndex = 0; 
    
     var container;
     var canvas;
@@ -75,34 +75,30 @@ function PreloadState() {
         
         imageMode(CORNER);
         image(tutorial, 0, 0, width, height);
-        
-        stroke(255);
-        noFill();
-        rect(10, 10, 200, 20);
 
-        noStroke();
-        fill(255, 100);
+        let index = this.animationIndex % loadingScreen.length;      
+        image(loadingScreen[index], width * 3.75 / 5, height * 3.75/5, 350, 150);       
 
-        var w = 200 * counter / totalAssets;
-        rect(10, 10, w, 20);
-           
+        fill(255, 200);
         textSize(32);
-        textAlign(CENTER);     
+        textFont(p5.Font);
+        textAlign(RIGHT);     
         if(loadingAssets){
-            text('Loading assets', width / 2, height - 100);
+            text('Cargando assets...', width * 3.75 / 5, height *4.5/5);      
         }else if(generatingMap){
-            text('Generating map', width / 2, height - 100);
+            text('Generando mapa...', width * 3.75 / 5, height * 4.5/5);
         }else{            
-            text('Press any key to continue', width / 2, height - 100);
+            text('Pulsa cualquier tecla para continuar', width * 3.75 / 5, height * 4.5/5);
         }
 
 
-        translate(width * 0.5, height * 0.5);
+        /*translate(width * 0.5, height * 0.5);
         rotate(this.angle);
         strokeWeight(4);
         stroke(255);
-        line(0, 0, 100, 0);
-        this.angle += 1;       
+        line(0, 0, 100, 0);*/
+        this.angle += 1;      
+        this.animationIndex++; 
              
     }
    

@@ -4,7 +4,7 @@ var loadingScreen = [];
 var mainMenuAssets = [];
 
 var mainMenuCounter = 0;
-var totalMainMenuAssets = 1;
+var totalMainMenuAssets = 2;
 
 var container;
 var canvas;
@@ -38,10 +38,15 @@ function BootState() {
 
     this.draw = function () {
         background(51);
-
         
         imageMode(CORNER);
         image(atencion, 0, 0, width, height);
+
+        noStroke();
+        fill(255, 200);
+        textSize(32);
+        textAlign(LEFT);
+        text('Cargando assets...', 40, 80);
        
         /*stroke(255);
         noFill();
@@ -53,16 +58,15 @@ function BootState() {
         var w = 200 * mainMenuCounter / totalMainMenuAssets;
         rect(10, 10, w, 20);
 
-        textSize(32);
-        textAlign(CENTER);
-        text('Loading assets', width / 2, height - 100);
+        */
 
-        translate(width * 0.5, height * 0.5);
+
+        translate(width * 6 / 7, 80);
         rotate(this.angle);
         strokeWeight(4);
         stroke(255);
-        line(0, 0, 100, 0);
-        this.angle += 1;*/   
+        line(0, 0, 50, 0);
+        this.angle += 1;  
     }
 
     this.loadSpritesheet = function (arr, numImages, width, height, url) {
@@ -96,5 +100,6 @@ function BootState() {
 
     this.loadAssets = function () {
         this.loadSpritesheet(menuBackground, 120, 912, 513, "assets/AfterEffect/Menu/menu_animation.png");
+        this.loadSpritesheet(loadingScreen, 120, 450, 250, "assets/AfterEffect/CargaBGpeque/image1.png");
     }
 }
