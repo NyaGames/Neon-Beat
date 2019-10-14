@@ -24,7 +24,10 @@ function BootState() {
         container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
         container.id("container");
 
-        canvas = createCanvas(1120, 630);
+        var ancho = window.innerWidth - window.innerWidth*0.208*2;        
+        var alto = window.innerHeight - window.innerHeight*0.163*2;
+
+        canvas = createCanvas(ancho, alto);
         canvas.position(0, 0);
         canvas.parent(container);  
 
