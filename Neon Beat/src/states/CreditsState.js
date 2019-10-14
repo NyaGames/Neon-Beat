@@ -10,23 +10,21 @@ function CreditsState(){
         container = document.getElementById("container");
 
         //crear imagenes
-
-        var ancho = window.innerWidth - window.innerWidth*0.208*2;        
-        var alto = window.innerHeight - window.innerHeight*0.163*2;
-
         canvas = createCanvas(ancho, alto);
-        canvas.parent(container);
+        canvas.parent(container);        
+        canvas.mousePressed(this.escape); 
         canvas.background(0);
 
         creditos = createImg('assets/images/creditos.png');
         creditos.position(0, 0); 
         creditos.parent(container);
+        creditos.mousePressed(this.escape); 
+        creditos.size(1120 * wPercentaje, 630 * hPercentaje);
     }  
 
-    this.keyPressed = function(){
-        if(keyCode === 27){
-            canvas.remove();
-            mgr.showScene(MainMenuState);
-        }
+    this.escape = function(){
+        canvas.remove();
+        creditos.remove();
+        mgr.showScene(MainMenuState);
     }
 }

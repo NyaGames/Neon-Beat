@@ -9,6 +9,11 @@ var totalMainMenuAssets = 2;
 var container;
 var canvas;
 
+var ancho = window.innerWidth - window.innerWidth*0.208*2;        
+var alto = window.innerHeight - window.innerHeight*0.163*2;
+var wPercentaje = ancho/1120;
+var hPercentaje = alto/630;
+
 var atencion;
 var cancion_menu;
 var cancion_perder;
@@ -20,12 +25,10 @@ function BootState() {
 
     this.enter = function () {
         console.log("[DEBUG] ***ENTERING BOOT STATE***")
+
         container = createDiv();
         container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
         container.id("container");
-
-        var ancho = window.innerWidth - window.innerWidth*0.208*2;        
-        var alto = window.innerHeight - window.innerHeight*0.163*2;
 
         canvas = createCanvas(ancho, alto);
         canvas.position(0, 0);

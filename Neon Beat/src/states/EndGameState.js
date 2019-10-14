@@ -38,10 +38,6 @@ function EndGameState(){
         
 
         //crear imagenes
-
-        var ancho = window.innerWidth - window.innerWidth*0.208*2;        
-        var alto = window.innerHeight - window.innerHeight*0.163*2;
-
         canvas = createCanvas(ancho, alto);
         canvas.position(0,0);
         canvas.parent(container);
@@ -58,14 +54,14 @@ function EndGameState(){
         //crear botones
         boton_intentar = createDiv();
         boton_intentar.parent(container);
-        boton_intentar.position(772, 101);
+        boton_intentar.position(772*wPercentaje, 101*hPercentaje);
         boton_intentar.mousePressed(this.clickJugar); 
         button_otravez_encendido = createImg('assets/images/PantallaVictoria/boton_otravez.png'); 
         button_otravez_encendido.parent(boton_intentar);
 
         boton_salir = createDiv();
         boton_salir.parent(container);
-        boton_salir.position(767, 290);
+        boton_salir.position(767*wPercentaje, 290*hPercentaje);
         boton_salir.mousePressed(this.clickCreditos);
         button_salir_apagado = createImg('assets/images/PantallaVictoria/boton_salir_apagado.png'); 
         button_salir_apagado.parent(boton_salir);
@@ -92,11 +88,11 @@ function EndGameState(){
             button_otravez_apagado.remove();
             button_otravez_encendido = createImg('assets/images/PantallaVictoria/boton_otravez.png');  
             button_otravez_encendido.parent(boton_intentar);
-            boton_intentar.position(772, 101);
+            boton_intentar.position(772*wPercentaje, 101*hPercentaje);
             button_salir_encendido.remove();
             button_salir_apagado = createImg('assets/images/PantallaVictoria/boton_salir_apagado.png'); 
             button_salir_apagado.parent(boton_salir);
-            boton_salir.position(767, 290);
+            boton_salir.position(767*wPercentaje, 290*hPercentaje);
         }else if(state === 0){            
             canvas.remove();
             /*placeholder_particulas.remove();
@@ -122,13 +118,12 @@ function EndGameState(){
             button_otravez_encendido.remove();
             button_otravez_apagado = createImg('assets/images/PantallaVictoria/boton_otravez_apagado.png'); 
             button_otravez_apagado.parent(boton_intentar);
-            boton_intentar.position(772, 101);
+            boton_intentar.position(772*wPercentaje, 101*hPercentaje);
             button_salir_apagado.remove();
             button_salir_encendido = createImg('assets/images/PantallaVictoria/boton_salir.png'); 
             button_salir_encendido.parent(boton_salir);
-            boton_salir.position(767, 290);
-        }else if(state === 1){            
-            
+            boton_salir.position(767*wPercentaje, 290*hPercentaje);
+        }else if(state === 1){          
             /*placeholder_particulas.remove();
             texto_victoria.remove();
         
