@@ -173,10 +173,11 @@ function GameState() {
         //Update de los mínimos(pintarlos,sus círculos y sus textos)
         for (let i = 0; i < localMinimas.length; i++) {
             if(playerSecond >= localMinimas[i].second - 2 && playerSecond <= localMinimas[i].second + 1){
-            localMinimas[i].drawCircle(pointer.x, startDiameter, graphAmplitude);
-            localMinimas[i].successOrFail(graphAmplitude);
-            localMinimas[i].drawText(graphAmplitude);
-            localMinimas[i].display(graphAmplitude,pointer.r - 25);
+                localMinimas[i].drawCircle(pointer.x, startDiameter, graphAmplitude);
+                localMinimas[i].successOrFail(graphAmplitude);
+                localMinimas[i].drawText(graphAmplitude);
+                localMinimas[i].display(graphAmplitude,pointer.r - 25);
+            }
         }
 
         //Mueve el puntero del jugador     
@@ -416,3 +417,4 @@ class Range {
     }
 
 }
+
