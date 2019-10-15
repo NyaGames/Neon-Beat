@@ -64,7 +64,7 @@ function SongSelectionState(){
 
         chosenDifficulty = difficulties.normal;
 
-        this.chooseSong("assets/ost/Kate_Orange_-_Twilight__instrumental_.mp3");
+        //this.chooseSong("assets/ost/Kate_Orange_-_Twilight__instrumental_.mp3");
 
         //crear botones de dificultad
         /*easyButton = createDiv();
@@ -125,7 +125,13 @@ function SongSelectionState(){
     }
     
     this.chooseSong = function(url){
-        var f = new Audio(url);
-        console.log("ZA WARUDO");
+        var song = loadSound(url, function(){          
+            songFile = song;
+            canvas.remove();
+            selectionButton.remove();
+            cancion_menu.stop();
+            mgr.showScene(PreloadState);
+        })          
+      
     }
 }

@@ -278,7 +278,7 @@ function PreloadState() {
         this.loadImageForMobile(comboAnimation,  500, 500, 'assets/AfterEffect/Combo/combo_animation.png'); 
         this.loadImageForMobile(pointsAnimation,  500, 500, 'assets/AfterEffect/Puntos/points.png'); 
 
-        this.loadImageForMobile(minimumAnimation,  152, 152, 'assets/images/EsferaPequeñisima/esferaPequeña.png'); 
+        this.loadImageForMobile(minimumAnimation,  152, 152, 'assets/images/EsferaPequenisima/esferaPequena.png'); 
 
         this.loadImageForMobile(playerTrail, 50, 50, 'assets/images/pelota.png');    
     }

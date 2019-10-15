@@ -28,11 +28,11 @@ class Pointer{
         //Imagenes de la cola de la bola
         for(var i=1; i < this.history.length-1; i++){
             var alpha = lerp(0, 255, i/this.history.length);
-            var tamaño = lerp(0, this.r*0.3, i/this.history.length);
+            var tamano = lerp(0, this.r*0.3, i/this.history.length);
             var pos = this.history[i];
             imageMode(CENTER); 
             tint(col.levels[0], col.levels[1], col.levels[2], alpha);            
-            image(playerTrail[0], pos.x, pos.y, tamaño, tamaño);  
+            image(playerTrail[0], pos.x, pos.y, tamano, tamano);  
             noTint();
         }
 

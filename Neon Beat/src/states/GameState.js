@@ -105,7 +105,7 @@ function GameState() {
             [1, 15, 195, 200]
         ]
 
-        //Límites del canvas en los que se va a dibujar la onda. Se dibuja solo la parte que se está enseñando
+        //Límites del canvas en los que se va a dibujar la onda. Se dibuja solo la parte que se está ensenando
         let limite1 = Math.floor(playerIndex - cameraOffset);
         let tmp = 103.333 * graphAmplitude * width / 1120;
         let limite2 = Math.floor(limite1 + width) - tmp;
