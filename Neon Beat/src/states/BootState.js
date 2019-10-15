@@ -30,6 +30,7 @@ function BootState() {
         container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
         container.id("container");
 
+
         canvas = createCanvas(ancho, alto);
         canvas.position(0, 0);
         canvas.parent(container);  
