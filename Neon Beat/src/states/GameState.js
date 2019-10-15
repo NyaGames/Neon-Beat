@@ -35,6 +35,10 @@
     var incrementPoints=0;
     var indexPoints = 0;
 
+    var startDelay = 3;
+    var countDown = startDelay;
+    var gameStarted = false;
+
 function GameState() {   
 
     var startDiameter = width / 6;
@@ -53,13 +57,6 @@ function GameState() {
         canvas.position(0,0);
         canvas.parent(container);
         canvas.background(0);
-
-        /*input = createFileInput(this.handleFileSelect)
-        sel = createSelect();
-        sel.option('Normal');
-        sel.option('Easy');
-        sel.option('Difficult');
-        sel.changed(this.selectEvent);*/
   
         if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
             console.log("[DEBUG] ***MOBILE DEVICE DETECTED***");
@@ -76,9 +73,11 @@ function GameState() {
 
         cameraOffset = width * 1 / 3;
         pointer = new Pointer(0, 0, 75, sphereAnimation); 
-
-        nbAudioContext.playTrackFromBeginning();
+  
         canvas.background(0);
+
+        window.setTimeout(this.startGame, 3000);
+        window.setInterval(this.timer, 1000);
     }
     //#endregion
    
@@ -90,22 +89,18 @@ function GameState() {
         //Animación del fondo
         let bgIndex = Math.floor(backgroundIndex % backgroundAnimation.length);
         imageMode(CORNER);
-        image(backgroundAnimation[bgIndex], 0, 0, ancho, alto);
-        /*if(flashBool){
-            imageMode(CORNER);
-            image(flash[0], 0, 0, width, height);
-            flashBool = false;
-        }*/
-
-        //Offset para sincronizar los tiempos a la hora de empezar la canción
-        if (timeOffSet === null) {
-            timeOffSet = nbAudioContext.currentTime();
-        }
+        image(backgroundAnimation[bgIndex], 0, 0, width, height);         
 
         //Mueve el canavas para crear un efecto de 'cámara'
-        let playerIndex = Math.floor((pathY.length) * (nbAudioContext.currentTime() - timeOffSet) / nbAudioContext.getTrackDuration());
-        translate(-playerIndex * graphAmplitude + cameraOffset, 0);
-
+     
+        let playerIndex;
+        if(gameStarted){
+            playerIndex = Math.floor((pathY.length) * (nbAudioContext.currentTime() - timeOffSet) / nbAudioContext.getTrackDuration());   
+        }else{
+            playerIndex = 0;   
+        }
+        
+        translate(-playerIndex * graphAmplitude + cameraOffset, 0);  
 
         //Colores de las lineas para crear un efecto de neón.            
         let colors = [
@@ -149,6 +144,10 @@ function GameState() {
         textPosX = playerIndex * graphAmplitude + cameraOffset;
 
         this.getPlayerSecond();
+
+        if(!gameStarted){
+            playerSecond = 0;
+        }
         //Calculamos el rango para el mínimo, en el que el jugador puede puntuar
         minimumSecondsRange.min = localMinimas[nextMinimum].second - secondsFromMinimun;
         minimumSecondsRange.max = localMinimas[nextMinimum].second; //+ secondsFromMinimun;
@@ -174,7 +173,9 @@ function GameState() {
         for (let i = 0; i < localMinimas.length; i++) {
             if(playerSecond >= localMinimas[i].second - 2 && playerSecond <= localMinimas[i].second + 1){
                 localMinimas[i].drawCircle(pointer.x, startDiameter, graphAmplitude);
-                localMinimas[i].successOrFail(graphAmplitude);
+                if(gameStarted){
+                    localMinimas[i].successOrFail(graphAmplitude);
+                }
                 localMinimas[i].drawText(graphAmplitude);
                 localMinimas[i].display(graphAmplitude,pointer.r - 25);
             }
@@ -186,12 +187,25 @@ function GameState() {
 
         //Mira de qué color tiene que pintar al  jugador
         //pointer.actualIntervalo = this.getPlayerIntervalo();
-        backgroundIndex++;
+        if(gameStarted){
+            backgroundIndex++;
+        }       
+       
 
         this.checkEndGame();
         this.updateText();
         this.drawSongDuration();
 
+        if(!gameStarted){
+            fill(0, 150)
+            rect(0 - cameraOffset, 0, width, height);
+
+            fill(255, 200);
+            textAlign(CENTER);
+            textSize(150);
+            textFont(p5.Font);
+            text(countDown, -  cameraOffset + width * 0.5, height * 0.5)
+        }
     }
 
     //#endregion
@@ -367,6 +381,15 @@ function GameState() {
     }
     //#endregion    
 
+    this.startGame = function(){
+        gameStarted = true;
+        nbAudioContext.playTrackFromBeginning();
+        timeOffSet = nbAudioContext.currentTime();
+    }
+
+    this.timer = function(){
+        countDown--;
+    }
 }
 
 function resetGame(){
@@ -401,6 +424,7 @@ function resetGame(){
     playerAtMinimum = false;   
     minimumSecondsRange = new Range(0, 0);
     playerSecond = 0;
+    gameStarted = false;
 
     //Animaciones
     incrementCombo = 0;
