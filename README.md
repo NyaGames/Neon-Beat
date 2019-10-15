@@ -42,7 +42,7 @@ Durante la partida se pulsarán los botones para ascender o descender en la onda
 ## 3. Interfaz
 
 ### 3.1 Diagrama de flujo 
-VIENE CON EL PRIMER DLC
+![24f67d69-e12d-4b94-aa51-b227feb16da3](https://user-images.githubusercontent.com/43405226/66843271-d3c63700-ef6c-11e9-95f6-e0547431c10d.jpg)
 
 ### 3.2 Menú principal
 ![7aca1365-9b52-4e78-b5ce-196299362c72](https://user-images.githubusercontent.com/43405226/66329251-81629600-e92e-11e9-9ff3-b706dee49a87.jpg)
