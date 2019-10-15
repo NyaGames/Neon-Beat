@@ -40,3 +40,7 @@ function mousePressed(){
 function keyPressed(){
     mgr.handleEvent("keyPressed");
 }
+
+function windowResized(){
+    mgr.handleEvent("windowResized");
+}
