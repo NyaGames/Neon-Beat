@@ -9,10 +9,10 @@ var totalMainMenuAssets = 2;
 var container;
 var canvas;
 
-var ancho = window.innerWidth - window.innerWidth*0.208*2;        
-var alto = window.innerHeight - window.innerHeight*0.163*2;
-var wPercentaje = ancho/1120;
-var hPercentaje = alto/630;
+var ancho;        
+var alto;
+var wPercentaje;
+var hPercentaje;
 
 var atencion;
 var cancion_menu;
@@ -27,7 +27,7 @@ function BootState() {
         console.log("[DEBUG] ***ENTERING BOOT STATE***")
 
         container = createDiv();
-        container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
+        this.setSize();
         container.id("container");
 
 
@@ -108,5 +108,25 @@ function BootState() {
     this.loadAssets = function () {
         this.loadSpritesheet(menuBackground, 120, 912, 513, "assets/AfterEffect/Menu/menu_animation.png");
         this.loadSpritesheet(loadingScreen, 120, 450, 250, "assets/AfterEffect/CargaBGpeque/image1.png");
+    }
+
+    this.setSize = function(){
+        if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
+            ancho = window.innerWidth - window.innerWidth*0.208*2;   
+            alto = window.innerHeight - window.innerHeight*0.163*2;
+            wPercentaje = ancho/1120;
+            hPercentaje = alto/630;
+        }else{
+            container.position(0, 0);                
+            ancho = window.innerWidth;
+            alto = window.innerHeight;
+            wPercentaje = ancho/1120;
+            hPercentaje = alto/630;
+            resizeCanvas(ancho, alto);
+        }
+    }
+    this.windowResized = function(){
+       this.setSize();
     }
 }

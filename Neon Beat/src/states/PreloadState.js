@@ -309,6 +309,27 @@ function PreloadState() {
         this.loadSpritesheet(playerTrail, 1, 50, 50, 'assets/images/pelota.png');          
     }
 
+    this.setSize = function(){
+        if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
+            ancho = window.innerWidth - window.innerWidth*0.208*2;   
+            alto = window.innerHeight - window.innerHeight*0.163*2;
+            wPercentaje = ancho/1120;
+            hPercentaje = alto/630;
+        }else{            
+            ancho = window.innerWidth;
+            alto = window.innerHeight;
+            wPercentaje = ancho/1120;
+            hPercentaje = alto/630;
+            resizeCanvas(ancho, alto);
+            canvas.background(0); 
+        }
+    }
+
+    this.windowResized = function(){
+         this.setSize();
+    }
+
 }
 
 function generateMap(){
