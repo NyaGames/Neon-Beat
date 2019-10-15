@@ -155,21 +155,26 @@ function DefeatState(){
     }
     
     this.setSize = function(){
-        if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-            container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
+        if (!mobileDevice) {
             ancho = window.innerWidth - window.innerWidth*0.208*2;   
             alto = window.innerHeight - window.innerHeight*0.163*2;
             wPercentaje = ancho/1120;
             hPercentaje = alto/630;
+            resizeCanvas(ancho, alto);
+            background(0);
             
             placeholder_fondotitulo_img.size(1120*wPercentaje, 630*hPercentaje); 
             texto_derrota.size(694*wPercentaje, 323*hPercentaje); 
             if(state === 0){
                 button_otravez_encendido.size(475*wPercentaje, 302*hPercentaje); 
+                boton_intentar.position(645*wPercentaje, 100*hPercentaje);
                 button_salir_apagado.size(340*wPercentaje, 209*hPercentaje); 
+                boton_salir.position(777*wPercentaje, 350*hPercentaje);
             }else{
                 button_otravez_apagado.size(379*wPercentaje, 206*hPercentaje); 
+                boton_intentar.position(740*wPercentaje, 150*hPercentaje);
                 button_salir_encendido.size(451*wPercentaje, 282*hPercentaje); 
+                boton_salir.position(667*wPercentaje, 300*hPercentaje);
             }
         }else{            
             ancho = window.innerWidth;
@@ -177,16 +182,20 @@ function DefeatState(){
             wPercentaje = ancho/1120;
             hPercentaje = alto/630;
             resizeCanvas(ancho, alto);
-            canvas.background(0);                   
+            canvas.background(0);                
             
             placeholder_fondotitulo_img.size(1120*wPercentaje, 630*hPercentaje); 
             texto_derrota.size(694*wPercentaje, 323*hPercentaje); 
             if(state === 0){
                 button_otravez_encendido.size(475*wPercentaje, 302*hPercentaje); 
+                boton_intentar.position(645*wPercentaje, 100*hPercentaje);
                 button_salir_apagado.size(340*wPercentaje, 209*hPercentaje); 
+                boton_salir.position(777*wPercentaje, 350*hPercentaje);
             }else{
                 button_otravez_apagado.size(379*wPercentaje, 206*hPercentaje); 
+                boton_intentar.position(740*wPercentaje, 150*hPercentaje);
                 button_salir_encendido.size(451*wPercentaje, 282*hPercentaje); 
+                boton_salir.position(667*wPercentaje, 300*hPercentaje);
             }
     }
 }   

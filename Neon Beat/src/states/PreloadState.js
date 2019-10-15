@@ -310,12 +310,13 @@ function PreloadState() {
     }
 
     this.setSize = function(){
-        if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-            container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
+        if (!mobileDevice) {
             ancho = window.innerWidth - window.innerWidth*0.208*2;   
             alto = window.innerHeight - window.innerHeight*0.163*2;
             wPercentaje = ancho/1120;
             hPercentaje = alto/630;
+            resizeCanvas(ancho, alto);
+            background(0);
         }else{            
             ancho = window.innerWidth;
             alto = window.innerHeight;

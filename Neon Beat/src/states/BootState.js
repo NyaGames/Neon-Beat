@@ -30,7 +30,6 @@ function BootState() {
         this.setSize();
         container.id("container");
 
-
         canvas = createCanvas(ancho, alto);
         canvas.position(0, 0);
         canvas.parent(container);  
@@ -111,12 +110,14 @@ function BootState() {
     }
 
     this.setSize = function(){
-        if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        if (!mobileDevice) {
             container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
             ancho = window.innerWidth - window.innerWidth*0.208*2;   
             alto = window.innerHeight - window.innerHeight*0.163*2;
             wPercentaje = ancho/1120;
             hPercentaje = alto/630;
+            resizeCanvas(ancho, alto);
+            background(0);
         }else{
             container.position(0, 0);                
             ancho = window.innerWidth;
@@ -124,6 +125,7 @@ function BootState() {
             wPercentaje = ancho/1120;
             hPercentaje = alto/630;
             resizeCanvas(ancho, alto);
+            background(0);
         }
     }
     this.windowResized = function(){
