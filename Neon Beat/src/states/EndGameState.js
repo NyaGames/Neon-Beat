@@ -46,10 +46,12 @@ function EndGameState(){
         placeholder_particulas = createImg('assets/images/PantallaVictoria/placeholder_particulas.png'); 
         placeholder_particulas.position(0, 0); 
         placeholder_particulas.parent(container);
+        placeholder_particulas.size(1120*wPercentaje, 603*hPercentaje);
 
         texto_victoria = createImg('assets/images/PantallaVictoria/cartelVictoria.png');
         texto_victoria.position(0, 0); 
         texto_victoria.parent(container); 
+        texto_victoria.size(673*wPercentaje, 333*hPercentaje);
 
         //crear botones
         boton_intentar = createDiv();

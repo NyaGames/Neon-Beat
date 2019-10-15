@@ -62,10 +62,6 @@ function GameState() {
             console.log("[DEBUG] ***MOBILE DEVICE DETECTED***");
             canvas = createCanvas(screen.availWidth, screen.availHeight - 50);
             canvas.position(0, 0);
-
-            input.position(0, window.outerHeight - 30)
-            sel.position(320, window.outerHeight - 30);
-
         } else {
             canvas = createCanvas(window.outerWidth * 0.7875 - window.outerWidth * 0.2085, window.outerHeight * 0.772 - window.outerHeight * 0.168);
             canvas.position(window.outerWidth * 0.2085, window.outerHeight * 0.168);
@@ -219,7 +215,7 @@ function GameState() {
     }
 
     this.handleInput = function () {
-        if (playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail) { 
+        if (playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail && gameStarted) { 
             //flash
             if(localMinimas[nextMinimum].flash){
                 flashBool=true;
@@ -431,6 +427,8 @@ function resetGame(){
     indexCombo = 0;
     incrementPoints = 0;
     indexPoints = 0;
+
+    countDown = startDelay;
 }
 
 class Range {

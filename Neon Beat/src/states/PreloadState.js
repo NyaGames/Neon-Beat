@@ -24,7 +24,7 @@ var graphAmplitude;
 var secondsFromMinimun;
 
 var counter = 0;
-var totalAssets = 17;
+var totalAssets = 16;
 var loadingAssets = false;
 var assetsLoaded = false;
 var generatingMap = false;
@@ -256,10 +256,7 @@ function PreloadState() {
 
         this.loadSpritesheet(minimumAnimation, 50, 152, 152, 'assets/images/EsferaPequeñisima/esferaPequeña.png'); 
 
-        this.loadSpritesheet(playerTrail, 1, 50, 50, 'assets/images/pelota.png');    
-        this.loadSpritesheet(flash, 1, 600, 500, 'assets/images/flashes/flash.png'); 
-
-           
+        this.loadSpritesheet(playerTrail, 1, 50, 50, 'assets/images/pelota.png');          
     }
 
 }
