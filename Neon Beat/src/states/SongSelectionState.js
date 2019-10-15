@@ -103,7 +103,19 @@ function SongSelectionState(){
     }
 
     this.chooseSong = function(url){
-        var f = new Audio(url);
-        console.log("ZA WARUDO");
+        var blob = null
+        var xhr = new XMLHttpRequest()
+        xhr.open("GET", url)
+        xhr.responseType = "arraybuffer"
+        xhr.onload = function() 
+        {
+            blob = xhr.response
+            songFile = blob;
+            canvas.remove();
+            selectionButton.remove();
+            cancion_menu.stop();
+            mgr.showScene(PreloadState);
+        }
+        xhr.send()
     }
 }
