@@ -24,7 +24,9 @@ var graphAmplitude;
 var secondsFromMinimun;
 
 var counter = 0;
-var totalAssets = 17;
+var counterForMobile = 0;
+var totalAssets = 16;
+var totalAssetsForMobile = 16;
 var loadingAssets = false;
 var assetsLoaded = false;
 var generatingMap = false;
@@ -59,7 +61,11 @@ function PreloadState() {
 
         if(!assetsLoaded){
             loadingAssets = true;
-            this.loadAssets();                
+            if(mobileDevice){
+                this.loadAssetsForMobiles();
+            }else{
+                this.loadAssets();    
+            }      
             myFont = loadFont('assets/fonts/gill-sans-ultra-bold-2.ttf');   
         }else{
             if(!mapGenerated){
@@ -233,6 +239,50 @@ function PreloadState() {
         }
     }
 
+    this.loadImageForMobile = function(arr, width, height, url){
+        loadImage(url, assetForMobileLoaded, this.onLoadingError);
+
+        function assetForMobileLoaded(asset) {
+
+            let img = asset.get(0, 0, width, height);
+            arr.push(img);
+
+            counterForMobile++;
+
+            if (counterForMobile == totalAssetsForMobile) {
+                loadingAssets = false;
+                generatingMap = true;
+                assetsLoaded = true;
+                generateMap();
+            }
+        }
+    }
+
+    this.loadAssetsForMobiles = function(){
+        this.loadImageForMobile(sphereAnimation,  150, 150, "assets/images/Player/player.png");
+        this.loadImageForMobile(backgroundAnimation,  912, 513, "assets/AfterEffect/NuevasParticulillas/image1.png");
+        this.loadImageForMobile(circleAnimation,  300, 300, "assets/AfterEffect/Circunferencia/circunferencia_animation.png");
+
+        this.loadImageForMobile(successAnimation,  500, 500, "assets/AfterEffect/Aciertos/Acierto1_animation.png");
+        this.loadImageForMobile(successAnimation2, 500, 500, "assets/AfterEffect/Aciertos/Acierto2_animation.png");
+        this.loadImageForMobile(successAnimation3,  500, 500, "assets/AfterEffect/Aciertos/Acierto3_animation.png");
+
+        this.loadImageForMobile(failAnimation,  500, 500, "assets/AfterEffect/Fallos/fallo1_animation.png");
+        this.loadImageForMobile(failAnimation2,  500, 500, "assets/AfterEffect/Fallos/fallo2_animation.png");
+        this.loadImageForMobile(failAnimation3,  500, 500, "assets/AfterEffect/Fallos/fallo3_animation.png");
+
+        this.loadImageForMobile(lowestScoreAnimation,  500, 500, "assets/AfterEffect/Puntuaciones/100_animation.png");
+        this.loadImageForMobile(midScoreAnimation,  500, 500, "assets/AfterEffect/Puntuaciones/200_animation.png");
+        this.loadImageForMobile(highestScoreAnimation,  500, 500, "assets/AfterEffect/Puntuaciones/300_animation.png");
+
+        this.loadImageForMobile(comboAnimation,  500, 500, 'assets/AfterEffect/Combo/combo_animation.png'); 
+        this.loadImageForMobile(pointsAnimation,  500, 500, 'assets/AfterEffect/Puntos/points.png'); 
+
+        this.loadImageForMobile(minimumAnimation,  152, 152, 'assets/images/EsferaPequeñisima/esferaPequeña.png'); 
+
+        this.loadImageForMobile(playerTrail, 50, 50, 'assets/images/pelota.png');    
+    }
+
     this.loadAssets = function () {
 
         this.loadSpritesheet(sphereAnimation, 60, 150, 150, "assets/images/Player/player.png");
@@ -257,7 +307,7 @@ function PreloadState() {
         this.loadSpritesheet(minimumAnimation, 50, 152, 152, 'assets/images/EsferaPequeñisima/esferaPequeña.png'); 
 
         this.loadSpritesheet(playerTrail, 1, 50, 50, 'assets/images/pelota.png');    
-        this.loadSpritesheet(flash, 1, 600, 500, 'assets/images/flashes/flash.png'); 
+        //this.loadSpritesheet(flash, 1, 600, 500, 'assets/images/flashes/flash.png'); 
 
            
     }

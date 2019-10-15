@@ -58,13 +58,10 @@ function GameState() {
         canvas.parent(container);
         canvas.background(0);
   
-        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        if(mobileDevice) {
             console.log("[DEBUG] ***MOBILE DEVICE DETECTED***");
             canvas = createCanvas(screen.availWidth, screen.availHeight - 50);
             canvas.position(0, 0);
-
-            input.position(0, window.outerHeight - 30)
-            sel.position(320, window.outerHeight - 30);
 
         } else {
             canvas = createCanvas(window.outerWidth * 0.7875 - window.outerWidth * 0.2085, window.outerHeight * 0.772 - window.outerHeight * 0.168);
@@ -339,11 +336,11 @@ function GameState() {
         indexPoints += 0.6; 
 
         fill(255, 255, 255);
-        textAlign(CENTER);
+        textAlign(LEFT);
         textFont(myFont);
         textSize(30);
         stroke('rgba(100%,0%,100%,0.0)');
-        text(points,pointer.x + width/2, textY);   
+        text(points,pointer.x + width * 0.42, textY);   
 
         //Combo
         incrementCombo += 4;
@@ -353,9 +350,10 @@ function GameState() {
         indexCombo += 0.6;    
 
         fill(255, 255, 255);
+        textAlign(LEFT);
         textSize(30);
         stroke('rgba(100%,0%,100%,0.0)');
-        text('X' + combo, pointer.x + width/14, textY);
+        text('X' + combo, (pointer.x - width/10) + (width * 0.1), textY);
     }
 
     this.checkEndGame = function () {

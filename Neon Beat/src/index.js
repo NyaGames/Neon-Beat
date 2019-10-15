@@ -6,7 +6,16 @@ var flash;
 var finalScore = 0;
 var maxCombo = 0;
 
+var mobileDevice = false;
+
 function setup(){
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+        mobileDevice = true;
+    }else{
+        mobileDevice = false;
+    }
+
+    
     createCanvas(600, 500);
 
     angleMode(DEGREES);
