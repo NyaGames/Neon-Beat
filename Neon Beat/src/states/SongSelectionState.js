@@ -64,6 +64,8 @@ function SongSelectionState(){
 
         chosenDifficulty = difficulties.normal;
 
+        this.chooseSong("assets/ost/Kate_Orange_-_Twilight__instrumental_.mp3");
+
         //crear botones de dificultad
         /*easyButton = createDiv();
         easyButton.parent(container);
@@ -91,17 +93,17 @@ function SongSelectionState(){
         //Cargar el archivo    
         if (f.type === "audio/aiff" || true) {
             var reader = new FileReader();
-            reader.onload = function (file) {
-                //nbAudioContext.decodeAudio(file);
-                songFile = file;
-                canvas.remove();
-                selectionButton.remove();
-                cancion_menu.stop();
-                mgr.showScene(PreloadState);
+            reader.onload = function (file) {                
+                
             }
             reader.readAsArrayBuffer(f);
         } else {
             throw("No good file");
         }    
+    }
+
+    this.chooseSong = function(url){
+        var f = new Audio(url);
+        console.log("ZA WARUDO");
     }
 }
