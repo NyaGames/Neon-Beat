@@ -30,6 +30,7 @@ function BootState() {
         this.setSize();
         container.id("container");
 
+
         canvas = createCanvas(ancho, alto);
         canvas.position(0, 0);
         canvas.parent(container);  

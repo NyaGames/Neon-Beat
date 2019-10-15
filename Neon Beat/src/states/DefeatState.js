@@ -99,7 +99,7 @@ function DefeatState(){
             boton_salir.position(777*wPercentaje, 350*hPercentaje);
         }else if(state === 0){            
             canvas.remove();
-            placeholder_particulas.remove();
+            /*placeholder_particulas.remove();
             texto_derrota.remove();
         
             boton_intentar.remove();
@@ -108,7 +108,7 @@ function DefeatState(){
             button_salir_encendido.remove();
             button_salir_apagado.remove();
             button_otravez_encendido.remove();
-            button_otravez_apagado.remove();
+            button_otravez_apagado.remove();*/
 
             //reset(true);
             playAgain();
@@ -135,7 +135,7 @@ function DefeatState(){
             boton_salir.position(667*wPercentaje, 300*hPercentaje);
         }else if(state === 1){         
             canvas.remove();
-            placeholder_particulas.remove();
+            /*placeholder_particulas.remove();
             texto_derrota.remove();
         
             boton_intentar.remove();
@@ -144,7 +144,7 @@ function DefeatState(){
             button_salir_encendido.remove();
             button_salir_apagado.remove();
             button_otravez_encendido.remove();
-            button_otravez_apagado.remove();
+            button_otravez_apagado.remove();*/
 
             reset(false);
             cancion_perder.stop();
