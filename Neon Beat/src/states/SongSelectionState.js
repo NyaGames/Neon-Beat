@@ -64,7 +64,7 @@ function SongSelectionState(){
 
         chosenDifficulty = difficulties.normal;
 
-        this.chooseSong("assets/ost/Kate_Orange_-_Twilight__instrumental_.mp3");
+        //this.chooseSong("assets/ost/Kate_Orange_-_Twilight__instrumental_.mp3");
 
         //crear botones de dificultad
         /*easyButton = createDiv();
@@ -102,41 +102,14 @@ function SongSelectionState(){
         }    
     }
 
-    this.setSize = function(){
-        if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-            container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
-            ancho = window.innerWidth - window.innerWidth*0.208*2;   
-            alto = window.innerHeight - window.innerHeight*0.163*2;
-            wPercentaje = ancho/1120;
-            hPercentaje = alto/630;
-        }else{            
-            ancho = window.innerWidth;
-            alto = window.innerHeight;
-            wPercentaje = ancho/1120;
-            hPercentaje = alto/630;
-            resizeCanvas(ancho, alto);
-            canvas.background(0); 
-        }
-    }
-
-    this.windowResized = function(){
-         this.setSize();
-    }
-    
     this.chooseSong = function(url){
-        var blob = null
-        var xhr = new XMLHttpRequest()
-        xhr.open("GET", url)
-        xhr.responseType = "arraybuffer"
-        xhr.onload = function() 
-        {
-            blob = xhr.response
-            songFile = blob;
+        var song = loadSound(url, function(){          
+            songFile = song;
             canvas.remove();
             selectionButton.remove();
             cancion_menu.stop();
             mgr.showScene(PreloadState);
-        }
-        xhr.send()
+        })          
+      
     }
 }
