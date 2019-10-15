@@ -46,7 +46,7 @@ function BootState() {
         background(51);
         
         imageMode(CORNER);
-        image(atencion, 0, 0, width, height);
+        image(atencion, 0, 0, ancho, alto);
 
         noStroke();
         fill(255, 200);
