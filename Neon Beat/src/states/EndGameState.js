@@ -157,21 +157,26 @@ function EndGameState(){
     }
     
     this.setSize = function(){
-        if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-            container.position(window.outerWidth * 0.205, window.outerHeight * 0.165);
+        if (!mobileDevice) {
             ancho = window.innerWidth - window.innerWidth*0.208*2;   
             alto = window.innerHeight - window.innerHeight*0.163*2;
             wPercentaje = ancho/1120;
             hPercentaje = alto/630;
+            resizeCanvas(ancho, alto);
+            background(0);
             
             placeholder_fondotitulo_img.size(1120*wPercentaje, 630*hPercentaje); 
             texto_victoria.size(694*wPercentaje, 323*hPercentaje); 
             if(state === 0){
                 button_otravez_encendido.size(348*wPercentaje, 220*hPercentaje);
+                boton_intentar.position(772*wPercentaje, 101*hPercentaje);
                 button_salir_apagado.size(364*wPercentaje, 236*hPercentaje);
+                boton_salir.position(767*wPercentaje, 290*hPercentaje);
             }else{
                 button_otravez_apagado.size(348*wPercentaje, 220*hPercentaje);
+                boton_intentar.position(772*wPercentaje, 101*hPercentaje);
                 button_salir_encendido.size(364*wPercentaje, 236*hPercentaje);
+                boton_salir.position(767*wPercentaje, 290*hPercentaje);
             }
         }else{            
             ancho = window.innerWidth;
@@ -185,10 +190,14 @@ function EndGameState(){
             texto_victoria.size(694*wPercentaje, 323*hPercentaje); 
             if(state === 0){
                 button_otravez_encendido.size(348*wPercentaje, 220*hPercentaje);
+                boton_intentar.position(772*wPercentaje, 101*hPercentaje);
                 button_salir_apagado.size(364*wPercentaje, 236*hPercentaje);
+                boton_salir.position(767*wPercentaje, 290*hPercentaje);
             }else{
                 button_otravez_apagado.size(348*wPercentaje, 220*hPercentaje);
+                boton_intentar.position(772*wPercentaje, 101*hPercentaje);
                 button_salir_encendido.size(364*wPercentaje, 236*hPercentaje);
+                boton_salir.position(767*wPercentaje, 290*hPercentaje);
             }
         }
     }
