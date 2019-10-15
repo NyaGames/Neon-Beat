@@ -62,9 +62,7 @@ function SongSelectionState(){
         selectionImage.size(584*wPercentaje, 278*hPercentaje);
         state = 0;
 
-        chosenDifficulty = difficulties.normal;
-
-        //this.chooseSong("assets/ost/Kate_Orange_-_Twilight__instrumental_.mp3");
+        chosenDifficulty = difficulties.normal; 
 
         //crear botones de dificultad
         /*easyButton = createDiv();
@@ -128,14 +126,34 @@ function SongSelectionState(){
          this.setSize();
     }
     
-    this.chooseSong = function(url){
-        var song = loadSound(url, function(){          
-            songFile = song;
-            canvas.remove();
-            selectionButton.remove();
-            cancion_menu.stop();
-            mgr.showScene(PreloadState);
-        })          
-      
+    this.loadSongFromURL = function(url){
+        var request = new XMLHttpRequest();
+        request.open('GET', url, true);
+        request.responseType = 'blob';
+        request.onload = function() {
+            var reader = new FileReader();
+            reader.readAsArrayBuffer(request.response);
+            reader.onload =  function(file){
+                songFile = file;
+                canvas.remove();
+                selectionButton.remove();
+                cancion_menu.stop();
+                mgr.showScene(PreloadState);
+            };
+        };
+        request.send(); 
+    }
+
+    //De Pablo para Jusi: Con todo el amor del mundo
+    this.loadSong1 = function(){
+        this.loadSongFromURL("assets/ost/Kate_Orange_-_Twilight__instrumental_.mp3");
+    }
+
+    this.loadSong2 = function(){
+        this.loadSongFromURL("assets/ost/Kate_Orange_-_LSD__instrumental_.mp3");
+    }
+
+    this.loadSong3 = function(){
+        this.loadSongFromURL("assets/ost/Kate_Orange_-_Stereo_radio.mp3");
     }
 }
