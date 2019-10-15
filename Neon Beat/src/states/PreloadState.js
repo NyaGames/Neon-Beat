@@ -304,7 +304,7 @@ function PreloadState() {
         this.loadSpritesheet(comboAnimation, 60, 500, 500, 'assets/AfterEffect/Combo/combo_animation.png'); 
         this.loadSpritesheet(pointsAnimation, 60, 500, 500, 'assets/AfterEffect/Puntos/points.png'); 
 
-        this.loadSpritesheet(minimumAnimation, 50, 152, 152, 'assets/images/EsferaPequeñisima/esferaPequeña.png'); 
+        this.loadSpritesheet(minimumAnimation, 50, 152, 152, 'assets/images/EsferaPequenisima/esferaPequena.png'); 
 
         this.loadSpritesheet(playerTrail, 1, 50, 50, 'assets/images/pelota.png');          
     }
