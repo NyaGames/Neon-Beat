@@ -94,7 +94,11 @@ function SongSelectionState(){
         if (f.type === "audio/aiff" || true) {
             var reader = new FileReader();
             reader.onload = function (file) {                
-                
+                songFile = file;
+                canvas.remove();
+                selectionButton.remove();
+                cancion_menu.stop();
+                mgr.showScene(PreloadState);
             }
             reader.readAsArrayBuffer(f);
         } else {

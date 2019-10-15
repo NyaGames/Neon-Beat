@@ -39,6 +39,8 @@
     var countDown = startDelay;
     var gameStarted = false;
 
+    var interval;
+
 function GameState() {   
 
     var startDiameter = width / 6;
@@ -73,7 +75,7 @@ function GameState() {
         canvas.background(0);
 
         window.setTimeout(this.startGame, 3000);
-        window.setInterval(this.timer, 1000);
+        interval = window.setInterval(this.timer, 1000);
     }
     //#endregion
    
@@ -382,10 +384,13 @@ function GameState() {
         gameStarted = true;
         nbAudioContext.playTrackFromBeginning();
         timeOffSet = nbAudioContext.currentTime();
+        clearInterval(interval);
     }
 
     this.timer = function(){
-        countDown--;
+        if(!gameStarted){
+            countDown--;
+        }
     }   
     
     this.setSize = function(){
