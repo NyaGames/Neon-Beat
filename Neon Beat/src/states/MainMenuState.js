@@ -18,8 +18,8 @@ function MainMenuState(){
         container = document.getElementById("container");
 
         //cancion de menu
-        if(!cancion_menu.isPlaying()){
-            cancion_menu.play();
+        if(!cancion_menu.sound.isPlaying()){
+            cancion_menu.sound.play();
         }
 
         //crear imagenes

@@ -34,8 +34,8 @@ function EndGameState(){
         state = 0;
 
         //cancion
-        if(!cancion_ganar.isPlaying()){
-            cancion_ganar.play();
+        if(!cancion_ganar.sound.isPlaying()){
+            cancion_ganar.sound.play();
         }
         
 
@@ -160,7 +160,7 @@ function EndGameState(){
 
             canvas.remove();
             reset();
-            cancion_ganar.stop();
+            cancion_ganar.sound.stop();
             mgr.showScene(MainMenuState);
         }
     }
