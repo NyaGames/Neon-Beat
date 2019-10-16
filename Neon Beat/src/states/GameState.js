@@ -155,7 +155,7 @@ function GameState() {
             if (!localMinimas[nextMinimum].success) { //Si ese mínimo no se ha acertado
                 localMinimas[nextMinimum].fail = true;
                 this.playerLoseHp();
-                combo = 1;
+             
             }
             if (playerSecond > minimumSecondsRange.max + 0.08) {
                 playerAtMinimum = false;
@@ -213,6 +213,12 @@ function GameState() {
         }
     }
 
+    this.touchStarted = function () {
+        if (mobileDevice){
+            this.handleInput();
+        }
+    }
+
     this.handleInput = function () {
         if (playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail && gameStarted) { 
             //flash
@@ -246,18 +252,12 @@ function GameState() {
                 maximumCombo = combo;
             }
 
-        } else if (keyCode === 32 && !playerAtMinimum && !localMinimas[nextMinimum].fail && nextMinimum + 1 < localMinimas.length) { //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos
+        } else if (!playerAtMinimum && !localMinimas[nextMinimum].fail && nextMinimum < localMinimas.length) { //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos
             localMinimas[nextMinimum].success = false;
             this.playerLoseHp();
             localMinimas[nextMinimum].fail = true;
-            combo = 1;
+            
             //nextMinimum++;      
-        }
-    }
-
-    this.touchStarted = function () {
-        if (mobileDevice){
-            this.handleInput();
         }
     }
 
@@ -296,6 +296,7 @@ function GameState() {
 
     this.playerLoseHp = function () {
         pointer.actualHp += hpForFail;
+        combo = 1;
         if(pointer.actualHp <= 0){
             pointer.actualHp = 0;
             nbAudioContext.stop();
