@@ -40,7 +40,11 @@ function BootState() {
         cancion_perder = loadSound("assets/ost/Julius_Nox_-_Giulio_s_Page_-_Tortoise.mp3")
         cancion_ganar = loadSound("assets/ost/Sergey_Tsygankov_-_Spring_Rays.mp3")
         
-        this.loadAssets();      
+        if(mobileDevice){
+            this.loadAssetsForMobiles();
+        }else{
+            this.loadAssets();    
+        }     
     }
 
     this.draw = function () {
@@ -108,5 +112,10 @@ function BootState() {
     this.loadAssets = function () {
         this.loadSpritesheet(menuBackground, 120, 912, 513, "assets/AfterEffect/Menu/menu_animation.png");
         this.loadSpritesheet(loadingScreen, 120, 450, 250, "assets/AfterEffect/CargaBGpeque/image1.png");
+    }
+
+    this.loadAssetsForMobiles = function () {
+        this.loadSpritesheet(menuBackground, 2, 912, 513, "assets/AfterEffect/Menu/menu_animation.png");
+        this.loadSpritesheet(loadingScreen, 2, 450, 250, "assets/AfterEffect/CargaBGpeque/image1.png");
     }
 }

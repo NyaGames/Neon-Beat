@@ -179,8 +179,8 @@ function GameState() {
         }
 
         //Mueve el puntero del jugador     
-        pointer.setPosition(playerIndex * graphAmplitude, pathY[playerIndex] - 10);
-        pointer.display(damageOverTime);
+        pointer.setPosition(playerIndex * graphAmplitude, pathY[playerIndex] - 10,mobileDevice);
+        pointer.display(damageOverTime,mobileDevice);
 
         //Mira de qué color tiene que pintar al  jugador
         //pointer.actualIntervalo = this.getPlayerIntervalo();
@@ -258,7 +258,7 @@ function GameState() {
     }
 
     this.touchStarted = function () {
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        if (mobileDevice){
             this.handleInput();
         }
     }

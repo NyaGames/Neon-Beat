@@ -21,25 +21,27 @@ class Pointer{
         var v=createVector(this.x, this.y);
     }
 
-    display(damageOverTime){
+    display(damageOverTime,mobileDevice){
         let index = Math.floor(this.index) % this.len;
 
         let col = lerpColor(this.minColor,this.maxColor,this.actualHp/this.maxHp);
         //Imagenes de la cola de la bola
-        for(var i=1; i < this.history.length-1; i++){
-            var alpha = lerp(0, 255, i/this.history.length);
-            var tamaño = lerp(0, this.r*0.3, i/this.history.length);
-            var pos = this.history[i];
-            imageMode(CENTER); 
-            tint(col.levels[0], col.levels[1], col.levels[2], alpha);            
-            image(playerTrail[0], pos.x, pos.y, tamaño, tamaño);  
-            noTint();
+        if(!mobileDevice){
+            for(var i=1; i < this.history.length-1; i++){
+                var alpha = lerp(0, 255, i/this.history.length);
+                var tamaño = lerp(0, this.r*0.3, i/this.history.length);
+                var pos = this.history[i];
+                imageMode(CENTER); 
+                tint(col.levels[0], col.levels[1], col.levels[2], alpha);            
+                image(playerTrail[0], pos.x, pos.y, tamaño, tamaño);  
+                noTint();
+            }
         }
-
-        tint(col.levels);
+        
+        //tint(col.levels);
         imageMode(CENTER);       
         image(this.animation[index], this.x, this.y, this.r, this.r);      
-        noTint();
+        //noTint();
         this.index += this.speed;   
         
         //Vida del jugador
@@ -50,13 +52,15 @@ class Pointer{
          
     }
 
-    setPosition(x, y){
+    setPosition(x, y,mobileDevice){
         this.x = x;
         this.y = y + 7;
-        var v=createVector(this.x, this.y);
-        this.history.push(v)  
-        if(this.history.length > 10){
-            this.history.splice(0, 1);
+        if(!mobileDevice){
+            var v=createVector(this.x, this.y);
+            this.history.push(v)  
+            if(this.history.length > 10){
+                this.history.splice(0, 1);
+            }
         }
     }
 }
