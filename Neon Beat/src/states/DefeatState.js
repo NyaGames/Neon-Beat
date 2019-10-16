@@ -31,8 +31,8 @@ function DefeatState(){
         state = 0;
 
         //cancion
-        if(!cancion_perder.isPlaying()){
-            cancion_perder.play();
+        if(!cancion_perder.sound.isPlaying()){
+            cancion_perder.sound.play();
         }
         
         //crear imagenes
@@ -113,7 +113,7 @@ function DefeatState(){
             //reset(true);
             playAgain();
             
-            cancion_perder.stop();
+            cancion_perder.sound.stop();
             mgr.showScene(PreloadState);
 
             //location.reload(); 
@@ -147,7 +147,7 @@ function DefeatState(){
             button_otravez_apagado.remove();*/
 
             reset(false);
-            cancion_perder.stop();
+            cancion_perder.sound.stop();
             mgr.showScene(MainMenuState);
 
             //location.reload(); 

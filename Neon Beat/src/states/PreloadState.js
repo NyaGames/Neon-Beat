@@ -210,6 +210,7 @@ function PreloadState() {
             mgr.showScene(GameState);
         }
     } 
+   
 
     this.loadSpritesheet = function (arr, numImages, width, height, url) {
         loadImage(url, assetLoaded, this.onLoadingError);
@@ -329,6 +330,14 @@ function PreloadState() {
 
     this.windowResized = function(){
          this.setSize();
+    }
+
+    this.touchStarted = function () {
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            if(!loadingAssets && !generatingMap){
+                mgr.showScene(GameState);
+            }
+        }
     }
 
 }
