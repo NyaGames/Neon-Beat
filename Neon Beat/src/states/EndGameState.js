@@ -12,6 +12,8 @@ function EndGameState(){
     var boton_intentar;
     var boton_salir;
 
+    var backgroundIndex = 0;
+
     var button_salir_encendido;
     var button_salir_apagado;
     var button_otravez_encendido;
@@ -86,6 +88,17 @@ function EndGameState(){
         stroke('rgba(100%,0%,100%,0.0)');
         text('Final Score: ' + finalScore + "\n" + 
             "Max combo: " + maxCombo, 100, 100);*/
+    }
+
+    this.draw = function(){    
+
+        
+        background(0);
+        //Animación del fondo
+        let bgIndex = Math.floor(backgroundIndex % victoryAnim.length);
+        imageMode(CORNER);
+        image(victoryAnim[bgIndex], 0, 0, width, height);  
+        backgroundIndex++;
     }
     
     this.clickJugar = function(){

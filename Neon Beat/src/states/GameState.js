@@ -110,11 +110,8 @@ function GameState() {
         //Límites del canvas en los que se va a dibujar la onda. Se dibuja solo la parte que se está ensenando
         let limite1 = Math.floor(playerIndex - cameraOffset);
         let tmp = 103.333 * graphAmplitude * width / 1120;
-        let limite2 = Math.floor(limite1 + width) - tmp;
+        let limite2 = Math.floor(limite1 + width) - tmp;     
         
-
-        
-
         //Se dibujan varias lineas de distinto color para crear el efecto neón
         for (let offset = (-colors.length - 1) * 0.5, j = 0; j < colors.length; offset++ , j++) {
 

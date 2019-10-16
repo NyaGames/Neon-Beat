@@ -5,11 +5,12 @@ function DefeatState(){
     var boton_jugar;
 
     var fondoDerrota;
-    var placeholder_particulas;
     var texto_derrota;
 
     var boton_intentar;
     var boton_salir;
+
+    var backgroundIndex = 0;
 
     var button_salir_encendido;
     var button_salir_apagado;
@@ -40,11 +41,6 @@ function DefeatState(){
         canvas.position(0, 0); 
         canvas.parent(container);
         canvas.background(0);
-
-        placeholder_fondotitulo_img = createImg('assets/images/PantallaDerrota/placeholder_particulas.png'); 
-        placeholder_fondotitulo_img.position(0*wPercentaje, 0*hPercentaje);  
-        placeholder_fondotitulo_img.size(1120*wPercentaje, 630*hPercentaje); 
-        placeholder_fondotitulo_img.parent(container);
 
         texto_derrota = createImg('assets/images/PantallaDerrota/texto_derrota.png');
         texto_derrota.position(0, 0); 
@@ -83,6 +79,17 @@ function DefeatState(){
         text('Final Score: ' + finalScore + "\n" + 
             "Max combo: " + maxCombo, 100, 100);*/
     }
+
+    this.draw = function(){    
+        //Animación del fondo
+        
+        background(0);
+        let bgIndex = Math.floor(backgroundIndex % defeatAnim.length);
+        imageMode(CORNER);
+        image(defeatAnim[bgIndex], 0, 0, width, height);  
+
+        backgroundIndex++;
+    }
     
     this.clickJugar = function(){
         if(state === 1){
@@ -119,6 +126,7 @@ function DefeatState(){
             //location.reload(); 
         }
     }
+    
 
     this.clickCreditos = function(){
         if(state === 0){
@@ -163,7 +171,6 @@ function DefeatState(){
             resizeCanvas(ancho, alto);
             background(0);
             
-            placeholder_fondotitulo_img.size(1120*wPercentaje, 630*hPercentaje); 
             texto_derrota.size(694*wPercentaje, 323*hPercentaje); 
             if(state === 0){
                 button_otravez_encendido.size(475*wPercentaje, 302*hPercentaje); 
@@ -184,7 +191,6 @@ function DefeatState(){
             resizeCanvas(ancho, alto);
             canvas.background(0);                
             
-            placeholder_fondotitulo_img.size(1120*wPercentaje, 630*hPercentaje); 
             texto_derrota.size(694*wPercentaje, 323*hPercentaje); 
             if(state === 0){
                 button_otravez_encendido.size(475*wPercentaje, 302*hPercentaje); 

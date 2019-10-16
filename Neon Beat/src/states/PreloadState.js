@@ -12,6 +12,8 @@ var midScoreAnimation = [];
 var highestScoreAnimation = [];
 var playerTrail = [];
 var flash = [];
+var defeatAnim = [];
+var victoryAnim = [];
 
 var minimumAnimation = [];
 
@@ -25,7 +27,7 @@ var secondsFromMinimun;
 
 var counter = 0;
 var counterForMobile = 0;
-var totalAssets = 16;
+var totalAssets = 18;
 var totalAssetsForMobile = 16;
 var loadingAssets = false;
 var assetsLoaded = false;
@@ -306,7 +308,10 @@ function PreloadState() {
 
         this.loadSpritesheet(minimumAnimation, 50, 152, 152, 'assets/images/EsferaPequenisima/esferaPequena.png'); 
 
-        this.loadSpritesheet(playerTrail, 1, 50, 50, 'assets/images/pelota.png');          
+        this.loadSpritesheet(playerTrail, 1, 50, 50, 'assets/images/pelota.png');      
+        
+        this.loadSpritesheet(defeatAnim, 30, 912, 513, "assets/AfterEffect/Derrota/derrota_spritesheet.png");
+        this.loadSpritesheet(victoryAnim, 30, 912, 513, "assets/AfterEffect/Victoria/victory_spritesheet.png");
     }
 
     this.setSize = function(){
