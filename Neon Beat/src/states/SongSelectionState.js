@@ -62,7 +62,7 @@ function SongSelectionState(){
         selectionImage.size(584*wPercentaje, 278*hPercentaje);
         state = 0;
 
-        chosenDifficulty = difficulties.normal;
+        chosenDifficulty = difficulties.normal; 
 
         //crear botones de dificultad
         /*easyButton = createDiv();
@@ -91,17 +91,69 @@ function SongSelectionState(){
         //Cargar el archivo    
         if (f.type === "audio/aiff" || true) {
             var reader = new FileReader();
-            reader.onload = function (file) {
-                //nbAudioContext.decodeAudio(file);
+            reader.onload = function (file) {                
                 songFile = file;
                 canvas.remove();
                 selectionButton.remove();
-                cancion_menu.stop();
+                cancion_menu.sound.stop();
                 mgr.showScene(PreloadState);
             }
             reader.readAsArrayBuffer(f);
         } else {
             throw("No good file");
         }    
+    }
+
+    this.setSize = function(){
+        if (!mobileDevice) {
+            ancho = window.innerWidth - window.innerWidth*0.208*2;   
+            alto = window.innerHeight - window.innerHeight*0.163*2;
+            wPercentaje = ancho/1120;
+            hPercentaje = alto/630;
+            resizeCanvas(ancho, alto);
+            background(0);
+        }else{            
+            ancho = window.innerWidth;
+            alto = window.innerHeight;
+            wPercentaje = ancho/1120;
+            hPercentaje = alto/630;
+            resizeCanvas(ancho, alto);
+            canvas.background(0); 
+        }
+    }
+
+    this.windowResized = function(){
+         this.setSize();
+    }
+    
+    this.loadSongFromURL = function(url){
+        var request = new XMLHttpRequest();
+        request.open('GET', url, true);
+        request.responseType = 'blob';
+        request.onload = function() {
+            var reader = new FileReader();
+            reader.readAsArrayBuffer(request.response);
+            reader.onload =  function(file){
+                songFile = file;
+                canvas.remove();
+                selectionButton.remove();
+                cancion_menu.stop();
+                mgr.showScene(PreloadState);
+            };
+        };
+        request.send(); 
+    }
+
+    //De Pablo para Jusi: Con todo el amor del mundo
+    this.loadSong1 = function(){
+        this.loadSongFromURL("assets/ost/Kate_Orange_-_Twilight__instrumental_.mp3");
+    }
+
+    this.loadSong2 = function(){
+        this.loadSongFromURL("assets/ost/Kate_Orange_-_LSD__instrumental_.mp3");
+    }
+
+    this.loadSong3 = function(){
+        this.loadSongFromURL("assets/ost/Kate_Orange_-_Stereo_radio.mp3");
     }
 }

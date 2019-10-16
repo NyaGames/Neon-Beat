@@ -39,6 +39,8 @@
     var countDown = startDelay;
     var gameStarted = false;
 
+    var interval;
+
 function GameState() {   
 
     var startDiameter = width / 6;
@@ -62,7 +64,6 @@ function GameState() {
             console.log("[DEBUG] ***MOBILE DEVICE DETECTED***");
             canvas = createCanvas(screen.availWidth, screen.availHeight - 50);
             canvas.position(0, 0);
-
         } else {
             canvas = createCanvas(window.outerWidth * 0.7875 - window.outerWidth * 0.2085, window.outerHeight * 0.772 - window.outerHeight * 0.168);
             canvas.position(window.outerWidth * 0.2085, window.outerHeight * 0.168);
@@ -74,7 +75,7 @@ function GameState() {
         canvas.background(0);
 
         window.setTimeout(this.startGame, 3000);
-        window.setInterval(this.timer, 1000);
+        interval = window.setInterval(this.timer, 1000);
     }
     //#endregion
    
@@ -106,14 +107,11 @@ function GameState() {
             [1, 15, 195, 200]
         ]
 
-        //Límites del canvas en los que se va a dibujar la onda. Se dibuja solo la parte que se está enseñando
+        //Límites del canvas en los que se va a dibujar la onda. Se dibuja solo la parte que se está ensenando
         let limite1 = Math.floor(playerIndex - cameraOffset);
         let tmp = 103.333 * graphAmplitude * width / 1120;
-        let limite2 = Math.floor(limite1 + width) - tmp;
+        let limite2 = Math.floor(limite1 + width) - tmp;     
         
-
-        
-
         //Se dibujan varias lineas de distinto color para crear el efecto neón
         for (let offset = (-colors.length - 1) * 0.5, j = 0; j < colors.length; offset++ , j++) {
 
@@ -216,7 +214,7 @@ function GameState() {
     }
 
     this.handleInput = function () {
-        if (playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail) { 
+        if (playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail && gameStarted) { 
             //flash
             if(localMinimas[nextMinimum].flash){
                 flashBool=true;
@@ -383,10 +381,35 @@ function GameState() {
         gameStarted = true;
         nbAudioContext.playTrackFromBeginning();
         timeOffSet = nbAudioContext.currentTime();
+        clearInterval(interval);
     }
 
     this.timer = function(){
-        countDown--;
+        if(!gameStarted){
+            countDown--;
+        }
+    }   
+    
+    this.setSize = function(){
+        if (!mobileDevice) {
+            ancho = window.innerWidth - window.innerWidth*0.208*2;   
+            alto = window.innerHeight - window.innerHeight*0.163*2;
+            wPercentaje = ancho/1120;
+            hPercentaje = alto/630;
+            resizeCanvas(ancho, alto);
+            background(0);
+        }else{            
+            ancho = window.innerWidth;
+            alto = window.innerHeight;
+            wPercentaje = ancho/1120;
+            hPercentaje = alto/630;
+            resizeCanvas(ancho, alto);
+            canvas.background(0); 
+        }
+    }
+
+    this.windowResized = function(){
+         this.setSize();
     }
 }
 
@@ -429,6 +452,8 @@ function resetGame(){
     indexCombo = 0;
     incrementPoints = 0;
     indexPoints = 0;
+
+    countDown = startDelay;
 }
 
 class Range {

@@ -12,6 +12,8 @@ var midScoreAnimation = [];
 var highestScoreAnimation = [];
 var playerTrail = [];
 var flash = [];
+var defeatAnim = [];
+var victoryAnim = [];
 
 var minimumAnimation = [];
 
@@ -25,7 +27,7 @@ var secondsFromMinimun;
 
 var counter = 0;
 var counterForMobile = 0;
-var totalAssets = 16;
+var totalAssets = 18;
 var totalAssetsForMobile = 16;
 var loadingAssets = false;
 var assetsLoaded = false;
@@ -213,6 +215,7 @@ function PreloadState() {
             mgr.showScene(GameState);
         }
     } 
+   
 
     this.touchStarted = function () {
         if (!loadingAssets && !generatingMap){
@@ -313,12 +316,42 @@ function PreloadState() {
         this.loadSpritesheet(comboAnimation, 60, 500, 500, 'assets/AfterEffect/Combo/combo_animation.png'); 
         this.loadSpritesheet(pointsAnimation, 60, 500, 500, 'assets/AfterEffect/Puntos/points.png'); 
 
-        this.loadSpritesheet(minimumAnimation, 50, 152, 152, 'assets/images/EsferaPequeñisima/esferaPequeña.png'); 
+        this.loadSpritesheet(minimumAnimation, 50, 152, 152, 'assets/images/EsferaPequenisima/esferaPequena.png'); 
 
-        this.loadSpritesheet(playerTrail, 1, 50, 50, 'assets/images/pelota.png');    
-        //this.loadSpritesheet(flash, 1, 600, 500, 'assets/images/flashes/flash.png'); 
+        this.loadSpritesheet(playerTrail, 1, 50, 50, 'assets/images/pelota.png');      
+        
+        this.loadSpritesheet(defeatAnim, 30, 912, 513, "assets/AfterEffect/Derrota/derrota_spritesheet.png");
+        this.loadSpritesheet(victoryAnim, 30, 912, 513, "assets/AfterEffect/Victoria/victory_spritesheet.png");
+    }
 
-           
+    this.setSize = function(){
+        if (!mobileDevice) {
+            ancho = window.innerWidth - window.innerWidth*0.208*2;   
+            alto = window.innerHeight - window.innerHeight*0.163*2;
+            wPercentaje = ancho/1120;
+            hPercentaje = alto/630;
+            resizeCanvas(ancho, alto);
+            background(0);
+        }else{            
+            ancho = window.innerWidth;
+            alto = window.innerHeight;
+            wPercentaje = ancho/1120;
+            hPercentaje = alto/630;
+            resizeCanvas(ancho, alto);
+            canvas.background(0); 
+        }
+    }
+
+    this.windowResized = function(){
+         this.setSize();
+    }
+
+    this.touchStarted = function () {
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            if(!loadingAssets && !generatingMap){
+                mgr.showScene(GameState);
+            }
+        }
     }
 
 }

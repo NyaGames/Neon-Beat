@@ -5,11 +5,12 @@ function DefeatState(){
     var boton_jugar;
 
     var fondoDerrota;
-    var placeholder_particulas;
     var texto_derrota;
 
     var boton_intentar;
     var boton_salir;
+
+    var backgroundIndex = 0;
 
     var button_salir_encendido;
     var button_salir_apagado;
@@ -31,8 +32,8 @@ function DefeatState(){
         state = 0;
 
         //cancion
-        if(!cancion_perder.isPlaying()){
-            cancion_perder.play();
+        if(!cancion_perder.sound.isPlaying()){
+            cancion_perder.sound.play();
         }
         
         //crear imagenes
@@ -40,11 +41,6 @@ function DefeatState(){
         canvas.position(0, 0); 
         canvas.parent(container);
         canvas.background(0);
-
-        placeholder_fondotitulo_img = createImg('assets/images/PantallaDerrota/placeholder_particulas.png'); 
-        placeholder_fondotitulo_img.position(0*wPercentaje, 0*hPercentaje);  
-        placeholder_fondotitulo_img.size(1120*wPercentaje, 630*hPercentaje); 
-        placeholder_fondotitulo_img.parent(container);
 
         texto_derrota = createImg('assets/images/PantallaDerrota/texto_derrota.png');
         texto_derrota.position(0, 0); 
@@ -83,6 +79,17 @@ function DefeatState(){
         text('Final Score: ' + finalScore + "\n" + 
             "Max combo: " + maxCombo, 100, 100);*/
     }
+
+    this.draw = function(){    
+        //Animación del fondo
+        
+        background(0);
+        let bgIndex = Math.floor(backgroundIndex % defeatAnim.length);
+        imageMode(CORNER);
+        image(defeatAnim[bgIndex], 0, 0, width, height);  
+
+        backgroundIndex++;
+    }
     
     this.clickJugar = function(){
         if(state === 1){
@@ -99,7 +106,7 @@ function DefeatState(){
             boton_salir.position(777*wPercentaje, 350*hPercentaje);
         }else if(state === 0){            
             canvas.remove();
-            placeholder_particulas.remove();
+            /*placeholder_particulas.remove();
             texto_derrota.remove();
         
             boton_intentar.remove();
@@ -108,17 +115,18 @@ function DefeatState(){
             button_salir_encendido.remove();
             button_salir_apagado.remove();
             button_otravez_encendido.remove();
-            button_otravez_apagado.remove();
+            button_otravez_apagado.remove();*/
 
             //reset(true);
             playAgain();
             
-            cancion_perder.stop();
+            cancion_perder.sound.stop();
             mgr.showScene(PreloadState);
 
             //location.reload(); 
         }
     }
+    
 
     this.clickCreditos = function(){
         if(state === 0){
@@ -135,7 +143,7 @@ function DefeatState(){
             boton_salir.position(667*wPercentaje, 300*hPercentaje);
         }else if(state === 1){         
             canvas.remove();
-            placeholder_particulas.remove();
+            /*placeholder_particulas.remove();
             texto_derrota.remove();
         
             boton_intentar.remove();
@@ -144,13 +152,61 @@ function DefeatState(){
             button_salir_encendido.remove();
             button_salir_apagado.remove();
             button_otravez_encendido.remove();
-            button_otravez_apagado.remove();
+            button_otravez_apagado.remove();*/
 
             reset(false);
-            cancion_perder.stop();
+            cancion_perder.sound.stop();
             mgr.showScene(MainMenuState);
 
             //location.reload(); 
         }
+    }
+    
+    this.setSize = function(){
+        if (!mobileDevice) {
+            ancho = window.innerWidth - window.innerWidth*0.208*2;   
+            alto = window.innerHeight - window.innerHeight*0.163*2;
+            wPercentaje = ancho/1120;
+            hPercentaje = alto/630;
+            resizeCanvas(ancho, alto);
+            background(0);
+            
+            texto_derrota.size(694*wPercentaje, 323*hPercentaje); 
+            if(state === 0){
+                button_otravez_encendido.size(475*wPercentaje, 302*hPercentaje); 
+                boton_intentar.position(645*wPercentaje, 100*hPercentaje);
+                button_salir_apagado.size(340*wPercentaje, 209*hPercentaje); 
+                boton_salir.position(777*wPercentaje, 350*hPercentaje);
+            }else{
+                button_otravez_apagado.size(379*wPercentaje, 206*hPercentaje); 
+                boton_intentar.position(740*wPercentaje, 150*hPercentaje);
+                button_salir_encendido.size(451*wPercentaje, 282*hPercentaje); 
+                boton_salir.position(667*wPercentaje, 300*hPercentaje);
+            }
+        }else{            
+            ancho = window.innerWidth;
+            alto = window.innerHeight;
+            wPercentaje = ancho/1120;
+            hPercentaje = alto/630;
+            resizeCanvas(ancho, alto);
+            canvas.background(0);                
+            
+            texto_derrota.size(694*wPercentaje, 323*hPercentaje); 
+            if(state === 0){
+                button_otravez_encendido.size(475*wPercentaje, 302*hPercentaje); 
+                boton_intentar.position(645*wPercentaje, 100*hPercentaje);
+                button_salir_apagado.size(340*wPercentaje, 209*hPercentaje); 
+                boton_salir.position(777*wPercentaje, 350*hPercentaje);
+            }else{
+                button_otravez_apagado.size(379*wPercentaje, 206*hPercentaje); 
+                boton_intentar.position(740*wPercentaje, 150*hPercentaje);
+                button_salir_encendido.size(451*wPercentaje, 282*hPercentaje); 
+                boton_salir.position(667*wPercentaje, 300*hPercentaje);
+            }
+    }
+}   
+
+    this.windowResized = function(){
+         this.setSize();
     }
 }
