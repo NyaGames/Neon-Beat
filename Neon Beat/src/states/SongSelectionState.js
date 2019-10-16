@@ -1,12 +1,7 @@
 var chosenDifficulty;
 var songFile;
 
-function SongSelectionState(){    
-        
-    var container;
-    var canvas;
-
-    var selectionButton;
+var selectionButton;
 
     var easyButton;
     var normalButton;
@@ -23,6 +18,12 @@ function SongSelectionState(){
     var orange_apagado_img;
 
     var selectionImage;  
+
+
+function SongSelectionState(){    
+        
+    var container;
+    var canvas;
 
     var songSelectionBGIndex = 0;
 
@@ -349,7 +350,10 @@ function loadSongFromURL(url){
             songFile = file;
             canvas.remove();
             selectionButton.remove();
-            cancion_menu.stop();
+            twilight_button.remove();
+            lsd_button.remove();
+            orange_button.remove();
+            cancion_menu.sound.stop();
             mgr.showScene(PreloadState);
         };
     };

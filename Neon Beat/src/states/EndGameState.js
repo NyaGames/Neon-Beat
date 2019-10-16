@@ -116,7 +116,6 @@ function EndGameState(){
             boton_salir.position(767*wPercentaje, 290*hPercentaje);
         }else if(state === 0){            
             canvas.remove();
-            placeholder_particulas.remove();
             texto_victoria.remove();
         
             boton_intentar.remove();
@@ -147,7 +146,6 @@ function EndGameState(){
             boton_salir.position(767*wPercentaje, 290*hPercentaje);
             button_salir_encendido.size(364*wPercentaje, 236*hPercentaje);
         }else if(state === 1){          
-            placeholder_particulas.remove();
             texto_victoria.remove();
         
             boton_intentar.remove();

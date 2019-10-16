@@ -1,21 +1,19 @@
+    var fondoDerrota;
+    var texto_derrota;
+
+    var boton_intentar;
+    var boton_salir;
+    var button_salir_encendido;
+    var button_salir_apagado;
+    var button_otravez_encendido;
+    var button_otravez_apagado;
 function DefeatState(){    
         
    
     var boton_creditos;
     var boton_jugar;
 
-    var fondoDerrota;
-    var texto_derrota;
-
-    var boton_intentar;
-    var boton_salir;
-
     var backgroundIndex = 0;
-
-    var button_salir_encendido;
-    var button_salir_apagado;
-    var button_otravez_encendido;
-    var button_otravez_apagado;
 
     var state;
 
@@ -106,7 +104,6 @@ function DefeatState(){
             boton_salir.position(777*wPercentaje, 350*hPercentaje);
         }else if(state === 0){            
             canvas.remove();
-            /*placeholder_particulas.remove();
             texto_derrota.remove();
         
             boton_intentar.remove();
@@ -115,7 +112,7 @@ function DefeatState(){
             button_salir_encendido.remove();
             button_salir_apagado.remove();
             button_otravez_encendido.remove();
-            button_otravez_apagado.remove();*/
+            button_otravez_apagado.remove();
 
             //reset(true);
             playAgain();
@@ -143,7 +140,6 @@ function DefeatState(){
             boton_salir.position(667*wPercentaje, 300*hPercentaje);
         }else if(state === 1){         
             canvas.remove();
-            /*placeholder_particulas.remove();
             texto_derrota.remove();
         
             boton_intentar.remove();
@@ -152,7 +148,7 @@ function DefeatState(){
             button_salir_encendido.remove();
             button_salir_apagado.remove();
             button_otravez_encendido.remove();
-            button_otravez_apagado.remove();*/
+            button_otravez_apagado.remove();
 
             reset(false);
             cancion_perder.sound.stop();
