@@ -4,8 +4,11 @@ var songFile;
 var selectionButton;
 
     var easyButton;
+    var easyImage;
     var normalButton;
+    var normalImage;
     var hardButton;
+    var hardImage;
 
     var twilight_button;
     var twilight_encendido_img;
@@ -101,12 +104,29 @@ function SongSelectionState(){
         chosenDifficulty = difficulties.normal; 
 
         //crear botones de dificultad
-        /*easyButton = createDiv();
+        easyButton = createDiv();
         easyButton.parent(container);
-        easyButton.position(0, 0);
-        selectionImage = createImg('assets/images/seleccionCancion/tarjeta.png');
-        selectionImage.parent(selectionButton);*/
+        easyButton.mousePressed(this.setEasyMode);
+        easyButton.position(0 *wPercentaje, 300*hPercentaje);
+        easyImage = createImg('assets/images/seleccionCancion/estrella_encendida.png');
+        easyImage.size(61 * wPercentaje, 60*hPercentaje);
+        easyImage.parent(easyButton);
 
+        normalButton = createDiv();
+        normalButton.parent(container);
+        normalButton.mousePressed(this.setNormalMode);
+        normalButton.position(80*wPercentaje, 300*hPercentaje);
+        normalImage = createImg('assets/images/seleccionCancion/estrella_encendida.png');
+        normalImage.size(61 * wPercentaje, 60*hPercentaje);
+        normalImage.parent(normalButton);
+
+        hardButton = createDiv();
+        hardButton.parent(container);
+        hardButton.mousePressed(this.setHardMode);
+        hardButton.position(160*wPercentaje, 300*hPercentaje);
+        hardImage = createImg('assets/images/seleccionCancion/estrella apagada.png');
+        hardImage.size(61 * wPercentaje, 60*hPercentaje);
+        hardImage.parent(hardButton);
     }  
 
     this.draw = function()
@@ -138,6 +158,52 @@ function SongSelectionState(){
         } else {
             throw("No good file");
         }    
+    }
+
+    this.setEasyMode = function(){
+        easyImage.remove();
+        easyImage = createImg('assets/images/seleccionCancion/estrella_encendida.png');
+        easyImage.size(61 * wPercentaje, 60*hPercentaje);
+        easyImage.parent(easyButton);
+        normalImage.remove();
+        normalImage = createImg('assets/images/seleccionCancion/estrella apagada.png');
+        normalImage.size(61 * wPercentaje, 60*hPercentaje);
+        normalImage.parent(normalButton);
+        hardImage.remove();
+        hardImage = createImg('assets/images/seleccionCancion/estrella apagada.png');
+        hardImage.size(61 * wPercentaje, 60*hPercentaje);
+        hardImage.parent(hardButton);
+        chosenDifficulty = difficulties.easy; 
+    }
+    this.setNormalMode = function(){
+        easyImage.remove();
+        easyImage = createImg('assets/images/seleccionCancion/estrella_encendida.png');
+        easyImage.size(61 * wPercentaje, 60*hPercentaje);
+        easyImage.parent(easyButton);
+        normalImage.remove();
+        normalImage = createImg('assets/images/seleccionCancion/estrella_encendida.png');
+        normalImage.size(61 * wPercentaje, 60*hPercentaje);
+        normalImage.parent(normalButton);
+        hardImage.remove();
+        hardImage = createImg('assets/images/seleccionCancion/estrella apagada.png');
+        hardImage.size(61 * wPercentaje, 60*hPercentaje);
+        hardImage.parent(hardButton);
+        chosenDifficulty = difficulties.normal; 
+    }
+    this.setHardMode = function(){
+        easyImage.remove();
+        easyImage = createImg('assets/images/seleccionCancion/estrella_encendida.png');
+        easyImage.size(61 * wPercentaje, 60*hPercentaje);
+        easyImage.parent(easyButton);
+        normalImage.remove();
+        normalImage = createImg('assets/images/seleccionCancion/estrella_encendida.png');
+        normalImage.size(61 * wPercentaje, 60*hPercentaje);
+        normalImage.parent(normalButton);
+        hardImage.remove();
+        hardImage = createImg('assets/images/seleccionCancion/estrella_encendida.png');
+        hardImage.size(61 * wPercentaje, 60*hPercentaje);
+        hardImage.parent(hardButton);
+        chosenDifficulty = difficulties.difficult; 
     }
 
     this.setSize = function(){
@@ -283,21 +349,21 @@ function SongSelectionState(){
                 twilight_button.position((1120-824)*wPercentaje, 250*hPercentaje);
                 twilight_encendido_img.size(824*wPercentaje, 205*hPercentaje);
                 lsd_button.position((1120-661)*wPercentaje, 60*hPercentaje);
-                twilight_apagado_img.size(661*wPercentaje, 205*hPercentaje);
+                lsd_apagado_img.size(661*wPercentaje, 205*hPercentaje);
                 orange_button.position((1120-661)*wPercentaje, 440*hPercentaje);
                 orange_apagado_img.size(661*wPercentaje, 203*hPercentaje);
             }else if(state === 1){
                 twilight_button.position((1120-661)*wPercentaje, 250*hPercentaje);
                 twilight_apagado_img.size(661*wPercentaje, 205*hPercentaje);
                 lsd_button.position((1120-824)*wPercentaje, 60*hPercentaje);
-                twilight_encendido_img.size(824*wPercentaje, 205*hPercentaje);
+                lsd_encendido_img.size(824*wPercentaje, 205*hPercentaje);
                 orange_button.position((1120-661)*wPercentaje, 440*hPercentaje);
                 orange_apagado_img.size(661*wPercentaje, 203*hPercentaje);
-            }else{                
+            }else if(state === 2){                
                 twilight_button.position((1120-661)*wPercentaje, 250*hPercentaje);
                 twilight_encendido_img.size(661*wPercentaje, 205*hPercentaje);
                 lsd_button.position((1120-661)*wPercentaje, 60*hPercentaje);
-                twilight_apagado_img.size(661*wPercentaje, 205*hPercentaje);
+                lsd_apagado_img.size(661*wPercentaje, 205*hPercentaje);
                 orange_button.position((1120-824)*wPercentaje, 440*hPercentaje);
                 orange_encendido_img.size(824*wPercentaje, 203*hPercentaje);
             }

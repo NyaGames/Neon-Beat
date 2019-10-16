@@ -121,10 +121,8 @@ function EndGameState(){
             boton_intentar.remove();
             boton_salir.remove();
         
-            button_salir_encendido.remove();
             button_salir_apagado.remove();
             button_otravez_encendido.remove();
-            button_otravez_apagado.remove();
             
             playAgain();
             cancion_ganar.stop();
@@ -152,8 +150,6 @@ function EndGameState(){
             boton_salir.remove();
         
             button_salir_encendido.remove();
-            button_salir_apagado.remove();
-            button_otravez_encendido.remove();
             button_otravez_apagado.remove();
 
             canvas.remove();

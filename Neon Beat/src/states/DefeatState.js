@@ -110,8 +110,6 @@ function DefeatState(){
             boton_salir.remove();
         
             button_salir_encendido.remove();
-            button_salir_apagado.remove();
-            button_otravez_encendido.remove();
             button_otravez_apagado.remove();
 
             //reset(true);
@@ -145,10 +143,8 @@ function DefeatState(){
             boton_intentar.remove();
             boton_salir.remove();
         
-            button_salir_encendido.remove();
             button_salir_apagado.remove();
             button_otravez_encendido.remove();
-            button_otravez_apagado.remove();
 
             reset(false);
             cancion_perder.sound.stop();
