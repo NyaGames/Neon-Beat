@@ -15,7 +15,7 @@ class Pointer{
         this.actualHp = this.maxHp;
         this.startWidth = 600;
         this.maxColor = color(100,239,255,255);
-        this.minColor = color(0,30,30,255);
+        this.minColor = color(255,0,0,255);
         //Cola de la bola
         this.history = [];
         var v=createVector(this.x, this.y);
