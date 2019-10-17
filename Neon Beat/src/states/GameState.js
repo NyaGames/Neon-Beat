@@ -324,6 +324,7 @@ function GameState() {
         let animationY = height/11;
         let textY = height/9;
         let size =  height/3;
+        let textS = height/18;
         //Points
         incrementPoints += 4;
         let index1 = Math.floor(indexPoints) % pointsAnimation.length;
@@ -334,7 +335,7 @@ function GameState() {
         fill(255, 255, 255);
         textAlign(LEFT);
         textFont(myFont);
-        textSize(30);
+        textSize(textS);
         stroke('rgba(100%,0%,100%,0.0)');
         text(points,pointer.x + width * 0.42, textY);   
 
@@ -347,7 +348,7 @@ function GameState() {
 
         fill(255, 255, 255);
         textAlign(LEFT);
-        textSize(30);
+        textSize(textS);
         stroke('rgba(100%,0%,100%,0.0)');
         text('X' + combo, (pointer.x - width/10) + (width * 0.1), textY);
     }
