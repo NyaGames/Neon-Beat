@@ -68,6 +68,7 @@ function SongSelectionState(){
         
         //crear boton de seleccion        
         selectionButton = createFileInput(this.handleFileSelect);
+        selectionButton.id("inputfile");
         selectionButton.parent(container);
         selectionButton.position(0*wPercentaje, 250*hPercentaje);
         selectionImage = createImg('assets/images/PantallaVictoria/caja_cancion.png');
@@ -420,6 +421,9 @@ function loadSongFromURL(url){
             lsd_button.remove();
             orange_button.remove();
             cancion_menu.sound.stop();
+            easyButton.remove();
+            normalButton.remove();
+            hardButton.remove();
             mgr.showScene(PreloadState);
         };
     };
