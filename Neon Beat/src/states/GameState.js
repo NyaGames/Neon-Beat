@@ -53,20 +53,18 @@ function GameState() {
     this.enter = function () {            
         console.log("[DEBUG] ***ENTERING GAME STATE***");
         container = document.getElementById("container");
-
-        //crear imagenes
-        canvas = createCanvas(ancho, alto);
-        canvas.position(0,0);
-        canvas.parent(container);
-        canvas.background(0);
   
         if(mobileDevice) {
             console.log("[DEBUG] ***MOBILE DEVICE DETECTED***");
-            canvas = createCanvas(screen.availWidth, screen.availHeight - 50);
+            canvas = createCanvas(ancho, alto);
             canvas.position(0, 0);
+            canvas.parent(container);
+            canvas.background(0);
         } else {
-            canvas = createCanvas(window.outerWidth * 0.7875 - window.outerWidth * 0.2085, window.outerHeight * 0.772 - window.outerHeight * 0.168);
-            canvas.position(window.outerWidth * 0.2085, window.outerHeight * 0.168);
+            canvas = createCanvas(ancho, alto);
+            canvas.position(0,0);
+            canvas.parent(container);
+            canvas.background(0);
         }
 
         cameraOffset = width * 1 / 3;

@@ -415,14 +415,16 @@ function loadSongFromURL(url){
         reader.readAsArrayBuffer(request.response);
         reader.onload =  function(file){
             songFile = file;
-            canvas.remove();
-            selectionButton.remove();
-            twilight_button.remove();
-            lsd_button.remove();
-            orange_button.remove();
             cancion_menu.sound.stop();
-            easyButton.remove();
-            normalButton.remove();
+            if(canvas !== null){
+                canvas.remove();
+                selectionButton.remove();
+                twilight_button.remove();
+                lsd_button.remove();
+                orange_button.remove();
+                easyButton.remove();
+                normalButton.remove();
+            };
             hardButton.remove();
             mgr.showScene(PreloadState);
         };

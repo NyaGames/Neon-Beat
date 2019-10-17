@@ -70,10 +70,12 @@ function EndGameState(){
         background(0);         
 
         //Animación del fondo
-        let bgIndex = Math.floor(backgroundIndex % victoryAnim.length);
-        imageMode(CORNER);
-        image(victoryAnim[bgIndex], 0, 0, width, height);  
-        backgroundIndex++;
+        if(!mobileDevice){
+            let bgIndex = Math.floor(backgroundIndex % victoryAnim.length);
+            imageMode(CORNER);
+            image(victoryAnim[bgIndex], 0, 0, width, height);  
+            backgroundIndex++;
+        }
     }
     
     this.clickJugar = function(){
@@ -95,9 +97,6 @@ function EndGameState(){
         
             boton_intentar.remove();
             boton_salir.remove();
-        
-            button_salir_apagado.remove();
-            button_otravez_encendido.remove();
             
             playAgain();
             cancion_ganar.stop();
@@ -123,9 +122,6 @@ function EndGameState(){
         
             boton_intentar.remove();
             boton_salir.remove();
-        
-            button_salir_encendido.remove();
-            button_otravez_apagado.remove();
 
             canvas.remove();
             reset();

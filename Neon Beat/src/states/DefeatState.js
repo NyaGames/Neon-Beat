@@ -82,11 +82,13 @@ function DefeatState(){
         //Animación del fondo
         
         background(0);
-        let bgIndex = Math.floor(backgroundIndex % defeatAnim.length);
-        imageMode(CORNER);
-        image(defeatAnim[bgIndex], 0, 0, width, height);  
-
-        backgroundIndex++;
+        if(!mobileDevice){
+            let bgIndex = Math.floor(backgroundIndex % defeatAnim.length);
+            imageMode(CORNER);
+            image(defeatAnim[bgIndex], 0, 0, width, height);  
+    
+            backgroundIndex++;
+        }
     }
     
     this.clickJugar = function(){
@@ -108,10 +110,7 @@ function DefeatState(){
         
             boton_intentar.remove();
             boton_salir.remove();
-        
-            button_salir_encendido.remove();
-            button_otravez_apagado.remove();
-
+            
             //reset(true);
             playAgain();
             
@@ -142,9 +141,6 @@ function DefeatState(){
         
             boton_intentar.remove();
             boton_salir.remove();
-        
-            button_salir_apagado.remove();
-            button_otravez_encendido.remove();
 
             reset(false);
             cancion_perder.sound.stop();
