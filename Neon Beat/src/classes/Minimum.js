@@ -1,6 +1,6 @@
 class Minimum{
 
-    constructor(x,y,visited,animation,successAnimation,successAnimation2,successAnimation3,failAnimation,failAnimation2,failAnimation3,lowestScoreAnimation,midScoreAnimation,highestScoreAnimation,minimumAnimation){
+    constructor(x,y,visited,animation,successAnimation,successAnimation2,successAnimation3,failAnimation,failAnimation2,failAnimation3,lowestScoreAnimation,midScoreAnimation,highestScoreAnimation,sphereAnimation){
         this.x = x;
         this.y = y;
         this.visited = visited;
@@ -55,7 +55,7 @@ class Minimum{
 
         //Dibujar el mínimo
         this.sphereIncrement = 0;
-        this.sphereAnimation = minimumAnimation;
+        this.sphereAnimation = sphereAnimation;
         this.sphereAnimationIndex = 0;
         this.successColor = color(0,255,0);
         this.notVisitedColor = color(0,0,255);
@@ -192,24 +192,16 @@ class Minimum{
         
     }
 
-    display(graphAmplitude,r,mobileDevice){
+    display(graphAmplitude,r){
         let index = Math.floor(this.sphereAnimationIndex) % this.sphereAnimation.length;
-        if(!mobileDevice){
-            if(this.success){
-                tint(this.successColor);
-            }else if(this.fail){
-                tint(this.failColor);
-            }
-        }else{
-            /*if(this.success){
-                tint(this.successColor);
-            }else if(this.fail){
-                tint(this.failColor);
-            }*/
-        }
+        /*if(this.success){
+            tint(this.successColor);
+        }else if(this.fail){
+            tint(this.failColor);
+        }*/
         imageMode(CENTER);       
         image(this.sphereAnimation[index],this.x * graphAmplitude, this.y , r, r);    
-        noTint();
+        //noTint();
         this.sphereAnimationIndex += 0.6;   
        
     }

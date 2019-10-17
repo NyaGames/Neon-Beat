@@ -140,9 +140,5 @@ function BootState() {
     this.loadAssetsForMobiles = function () {
         this.loadSpritesheet(menuBackground, 2, 912, 513, "assets/AfterEffect/Menu/menu_animation.png");
         this.loadSpritesheet(loadingScreen, 2, 450, 250, "assets/AfterEffect/CargaBGpeque/image1.png");
-
-        this.loadSound(cancion_menu, "assets/ost/Kate_Orange_-_You__instrumental_.mp3");
-        this.loadSound(cancion_perder, "assets/ost/Julius_Nox_-_Giulio_s_Page_-_Tortoise.mp3");
-        this.loadSound(cancion_ganar, "assets/ost/Sergey_Tsygankov_-_Spring_Rays.mp3");
     }
 }
