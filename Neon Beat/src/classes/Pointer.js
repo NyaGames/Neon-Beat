@@ -36,13 +36,14 @@ class Pointer{
                 image(playerTrail[0], pos.x, pos.y, tamaño, tamaño);  
                 noTint();
             }
+            
         }
-        
-        //tint(col.levels);
+
+        tint(col.levels);
         imageMode(CENTER);       
         image(this.animation[index], this.x, this.y, this.r, this.r);      
-        //noTint();
-        this.index += this.speed;   
+        noTint();
+        this.index += this.speed; 
         
         //Vida del jugador
         this.actualHp -= damageOverTime;

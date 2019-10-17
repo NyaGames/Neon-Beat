@@ -208,13 +208,19 @@ function GameState() {
     //#region[rgba(155, 28, 99, 0.1)]Eventos
     this.keyPressed = function () {
         //Si pulsamos la tecla y todavía no hemos acertado ni fallado, se considera acierto
-        if (keyCode === 32) {
+        if (keyCode === 32 && gameStarted) {
             this.handleInput(); // 32 = Barra espaciadora
         }
     }
 
+    this.touchStarted = function () {
+        if (mobileDevice && gameStarted){
+            this.handleInput();
+        }
+    }
+
     this.handleInput = function () {
-        if (playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail && gameStarted) { 
+        if (playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail ) { 
             //flash
             if(localMinimas[nextMinimum].flash){
                 flashBool=true;
@@ -252,12 +258,6 @@ function GameState() {
             localMinimas[nextMinimum].fail = true;
             combo = 1;
             //nextMinimum++;      
-        }
-    }
-
-    this.touchStarted = function () {
-        if (mobileDevice){
-            this.handleInput();
         }
     }
 
