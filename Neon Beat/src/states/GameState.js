@@ -218,6 +218,7 @@ function GameState() {
     }
 
     this.handleInput = function () {
+        clickSound.play();
         if (playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail ) { 
             //flash
             if(localMinimas[nextMinimum].flash){
@@ -248,6 +249,11 @@ function GameState() {
             combo++;
             if (combo > maximumCombo) {
                 maximumCombo = combo;
+            }
+            if (combo%50 == 0){
+                combo1Sound.play();
+            }else if(combo%10 == 0){
+                combo2Sound.play();
             }
 
         } else if (keyCode === 32 && !playerAtMinimum && !localMinimas[nextMinimum].fail && nextMinimum + 1 < localMinimas.length) { //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos

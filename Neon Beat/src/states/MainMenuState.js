@@ -70,6 +70,7 @@ function MainMenuState(){
     }
 
     this.clickJugar = function(){
+        clickSound.play();
         if(state === 1){
             state = 0;
             jugar_apagado_img.remove();
@@ -93,6 +94,7 @@ function MainMenuState(){
     }
 
     this.clickCreditos = function(){
+        clickSound.play();
         if(state === 0){
             state = 1;
             jugar_encendido_img.remove();

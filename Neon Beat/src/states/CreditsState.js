@@ -23,6 +23,7 @@ function CreditsState(){
     }  
 
     this.escape = function(){
+        clickSound.play();
         canvas.remove();
         creditos.remove();
         mgr.showScene(MainMenuState);

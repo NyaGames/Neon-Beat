@@ -18,6 +18,9 @@ var atencion;
 var cancion_menu = {sound: null};
 var cancion_perder = {sound: null};;
 var cancion_ganar = {sound: null};;
+var clickSound;
+var combo1Sound;
+var combo2Sound;
 
 function BootState() {
     ///Estado encargado de cargar los assets que aparecen en el menú
@@ -40,7 +43,10 @@ function BootState() {
             this.loadAssetsForMobiles();
         }else{
             this.loadAssets();    
-        }     
+        }
+        clickSound= loadSound('assets/sounds/pop.mp3');
+        combo1Sound = loadSound('assets/sounds/combo1.mp3');
+        combo2Sound = loadSound('assets/sounds/combo2.mp3');
     }
 
     this.draw = function () {

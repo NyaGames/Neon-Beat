@@ -79,6 +79,7 @@ function EndGameState(){
     }
     
     this.clickJugar = function(){
+        clickSound.play();
         if(state === 1){
             state = 0;
             button_otravez_apagado.remove();
@@ -105,6 +106,7 @@ function EndGameState(){
     }
 
     this.clickCreditos = function(){
+        clickSound.play();
         if(state === 0){
             state = 1;
             button_otravez_encendido.remove();

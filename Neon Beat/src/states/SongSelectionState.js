@@ -162,6 +162,7 @@ function SongSelectionState(){
     }
 
     this.setEasyMode = function(){
+        clickSound.play();
         easyImage.remove();
         easyImage = createImg('assets/images/seleccionCancion/estrella_encendida.png');
         easyImage.size(61 * wPercentaje, 60*hPercentaje);
@@ -177,6 +178,7 @@ function SongSelectionState(){
         chosenDifficulty = difficulties.easy; 
     }
     this.setNormalMode = function(){
+        clickSound.play();
         easyImage.remove();
         easyImage = createImg('assets/images/seleccionCancion/estrella_encendida.png');
         easyImage.size(61 * wPercentaje, 60*hPercentaje);
@@ -192,6 +194,7 @@ function SongSelectionState(){
         chosenDifficulty = difficulties.normal; 
     }
     this.setHardMode = function(){
+        clickSound.play();
         easyImage.remove();
         easyImage = createImg('assets/images/seleccionCancion/estrella_encendida.png');
         easyImage.size(61 * wPercentaje, 60*hPercentaje);
@@ -233,6 +236,7 @@ function SongSelectionState(){
 
     //De Pablo para Jusi: Con todo el amor del mundo
     this.loadSong1 = function(){
+        clickSound.play();
         if(state === 0){
             loadSongFromURL("assets/ost/Kate_Orange_-_Twilight__instrumental_.mp3");
         }else{
@@ -268,6 +272,7 @@ function SongSelectionState(){
     }
 
     this.loadSong2 = function(){
+        clickSound.play();
         if(state === 1){
             loadSongFromURL("assets/ost/Kate_Orange_-_LSD__instrumental_.mp3");
         }else{
@@ -303,6 +308,7 @@ function SongSelectionState(){
     }
 
     this.loadSong3 = function(){
+        clickSound.play();
         if(state === 2){
             loadSongFromURL("assets/ost/Kate_Orange_-_Stereo_radio.mp3");
         }else{
