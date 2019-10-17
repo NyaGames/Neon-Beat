@@ -155,7 +155,7 @@ function GameState() {
             if (!localMinimas[nextMinimum].success) { //Si ese mínimo no se ha acertado
                 localMinimas[nextMinimum].fail = true;
                 this.playerLoseHp();
-                combo = 1;
+             
             }
             if (playerSecond > minimumSecondsRange.max + 0.08) {
                 playerAtMinimum = false;
@@ -208,13 +208,19 @@ function GameState() {
     //#region[rgba(155, 28, 99, 0.1)]Eventos
     this.keyPressed = function () {
         //Si pulsamos la tecla y todavía no hemos acertado ni fallado, se considera acierto
-        if (keyCode === 32) {
+        if (keyCode === 32  && gameStarted) {
             this.handleInput(); // 32 = Barra espaciadora
         }
     }
 
+    this.touchStarted = function () {
+        if (mobileDevice && gameStarted){
+            this.handleInput();
+        }
+    }
+
     this.handleInput = function () {
-        if (playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail && gameStarted) { 
+        if (playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail) { 
             //flash
             if(localMinimas[nextMinimum].flash){
                 flashBool=true;
@@ -246,18 +252,12 @@ function GameState() {
                 maximumCombo = combo;
             }
 
-        } else if (keyCode === 32 && !playerAtMinimum && !localMinimas[nextMinimum].fail && nextMinimum + 1 < localMinimas.length) { //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos
+        } else if (!playerAtMinimum && !localMinimas[nextMinimum].fail && nextMinimum < localMinimas.length) { //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos
             localMinimas[nextMinimum].success = false;
             this.playerLoseHp();
             localMinimas[nextMinimum].fail = true;
-            combo = 1;
+            
             //nextMinimum++;      
-        }
-    }
-
-    this.touchStarted = function () {
-        if (mobileDevice){
-            this.handleInput();
         }
     }
 
@@ -296,6 +296,7 @@ function GameState() {
 
     this.playerLoseHp = function () {
         pointer.actualHp += hpForFail;
+        combo = 1;
         if(pointer.actualHp <= 0){
             pointer.actualHp = 0;
             nbAudioContext.stop();

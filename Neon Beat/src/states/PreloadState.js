@@ -28,7 +28,7 @@ var secondsFromMinimun;
 var counter = 0;
 var counterForMobile = 0;
 var totalAssets = 18;
-var totalAssetsForMobile = 16;
+var totalAssetsForMobile = 18;
 var loadingAssets = false;
 var assetsLoaded = false;
 var generatingMap = false;
@@ -66,7 +66,6 @@ function PreloadState() {
 
             if(mobileDevice){
                 this.loadAssetsForMobiles();
-                //generateMap();
             }else{
                 this.loadAssets();    
             }     
@@ -271,28 +270,31 @@ function PreloadState() {
     }
 
     this.loadAssetsForMobiles = function(){
-        this.loadSpritesheet(sphereAnimation, 1, 150, 150, "assets/images/Player/player.png");
-        this.loadSpritesheet(backgroundAnimation, 1, 912, 513, "assets/AfterEffect/NuevasParticulillas/image1.png");
-        this.loadSpritesheet(circleAnimation, 1, 300, 300, "assets/AfterEffect/Circunferencia/circunferencia_animation.png");
+        this.loadImageForMobile(sphereAnimation,  150, 150, "assets/images/Player/player.png");
+        this.loadImageForMobile(backgroundAnimation,  912, 513, "assets/AfterEffect/NuevasParticulillas/image1.png");
+        this.loadImageForMobile(circleAnimation, 300, 300, "assets/AfterEffect/Circunferencia/circunferencia_animation.png");
 
-        this.loadSpritesheet(successAnimation,  1, 500, 500, "assets/AfterEffect/Aciertos/Acierto1_animation.png");
-        this.loadSpritesheet(successAnimation2, 1, 500, 500, "assets/AfterEffect/Aciertos/Acierto2_animation.png");
-        this.loadSpritesheet(successAnimation3, 1, 500, 500, "assets/AfterEffect/Aciertos/Acierto3_animation.png");
+        this.loadImageForMobile(successAnimation,  500, 500, "assets/AfterEffect/Aciertos/Acierto1_animation.png");
+        this.loadImageForMobile(successAnimation2,  500, 500, "assets/AfterEffect/Aciertos/Acierto2_animation.png");
+        this.loadImageForMobile(successAnimation3, 500, 500, "assets/AfterEffect/Aciertos/Acierto3_animation.png");
 
-        this.loadSpritesheet(failAnimation,  1, 500, 500, "assets/AfterEffect/Fallos/fallo1_animation.png");
-        this.loadSpritesheet(failAnimation2, 1, 500, 500, "assets/AfterEffect/Fallos/fallo2_animation.png");
-        this.loadSpritesheet(failAnimation3, 1, 500, 500, "assets/AfterEffect/Fallos/fallo3_animation.png");
+        this.loadImageForMobile(failAnimation,   500, 500, "assets/AfterEffect/Fallos/fallo1_animation.png");
+        this.loadImageForMobile(failAnimation2, 500, 500, "assets/AfterEffect/Fallos/fallo2_animation.png");
+        this.loadImageForMobile(failAnimation3, 500, 500, "assets/AfterEffect/Fallos/fallo3_animation.png");
 
-        this.loadSpritesheet(lowestScoreAnimation, 1, 500, 500, "assets/AfterEffect/Puntuaciones/100_animation.png");
-        this.loadSpritesheet(midScoreAnimation, 1, 500, 500, "assets/AfterEffect/Puntuaciones/200_animation.png");
-        this.loadSpritesheet(highestScoreAnimation, 1, 500, 500, "assets/AfterEffect/Puntuaciones/300_animation.png");
+        this.loadImageForMobile(lowestScoreAnimation,  500, 500, "assets/AfterEffect/Puntuaciones/100_animation.png");
+        this.loadImageForMobile(midScoreAnimation,  500, 500, "assets/AfterEffect/Puntuaciones/200_animation.png");
+        this.loadImageForMobile(highestScoreAnimation,  500, 500, "assets/AfterEffect/Puntuaciones/300_animation.png");
 
-        this.loadSpritesheet(comboAnimation, 1, 500, 500, 'assets/AfterEffect/Combo/combo_animation.png'); 
-        this.loadSpritesheet(pointsAnimation, 1, 500, 500, 'assets/AfterEffect/Puntos/points.png'); 
+        this.loadImageForMobile(comboAnimation, 500, 500, 'assets/AfterEffect/Combo/combo_animation.png'); 
+        this.loadImageForMobile(pointsAnimation, 500, 500, 'assets/AfterEffect/Puntos/points.png'); 
 
-        this.loadSpritesheet(minimumAnimation, 1, 152, 152, 'assets/images/EsferaPequeñisima/esferaPequeña.png'); 
+        this.loadImageForMobile(minimumAnimation,  152, 152, 'assets/images/EsferaPequenisima/esferaPequena.png'); 
 
-        this.loadSpritesheet(playerTrail, 1, 50, 50, 'assets/images/pelota.png');      
+        this.loadImageForMobile(playerTrail,  50, 50, 'assets/images/pelota.png');   
+        
+        this.loadImageForMobile(defeatAnim,  912, 513, "assets/AfterEffect/Derrota/derrota_spritesheet.png");
+        this.loadImageForMobile(victoryAnim,  912, 513, "assets/AfterEffect/Victoria/victory_spritesheet.png");
     }
 
     this.loadAssets = function () {
