@@ -69,6 +69,20 @@ function EndGameState(){
     this.draw = function(){          
         background(0);         
 
+        fill(255, 255, 255);
+        textAlign(CENTER);
+        textFont(myFont);
+        textSize(30);
+        stroke('rgba(100%,0%,100%,0.0)');
+        text("Points: " + points, 0.25 * width, 0.6 * height);   
+
+        fill(255, 255, 255);
+        textAlign(CENTER);
+        textFont(myFont);
+        textSize(30);
+        stroke('rgba(100%,0%,100%,0.0)');
+        text("Max Combo: " + combo, 0.25 * width, 0.8 * height); 
+
         //Animación del fondo
         if(!mobileDevice){
             let bgIndex = Math.floor(backgroundIndex % victoryAnim.length);
