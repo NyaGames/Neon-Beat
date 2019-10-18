@@ -217,6 +217,12 @@ function GameState() {
         }
     }
 
+    this.mouseClicked = function(){
+        if (gameStarted){
+            this.handleInput();
+        }
+    }
+
     this.handleInput = function () {
         clickSound.play();
         if (playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail ) { 

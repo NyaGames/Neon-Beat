@@ -93,14 +93,19 @@ function PreloadState() {
 
         fill(255, 200);
         textSize(32);
-        textFont(p5.Font);
+        textFont(myFont);
         textAlign(RIGHT);     
         if(loadingAssets){
-            text('Cargando assets...', width * 3.75 / 5, height *4.5/5);      
+            text('Loading assets...', width * 3.75 / 5, height *4.5/5);      
         }else if(generatingMap){
-            text('Generando mapa...', width * 3.75 / 5, height * 4.5/5);
-        }else{            
-            text('Pulsa cualquier tecla para continuar', width * 3.75 / 5, height * 4.5/5);
+            text('Generating map...', width * 3.75 / 5, height * 4.5/5);
+        }else{    
+            if(!mobileDevice){
+                text('Click to continue', width * 3.75 / 5, height * 4.5/5);
+            }else{
+                text('Touch the screen to continue', width * 3.75 / 5, height * 4.5/5);
+            }
+            
         }
 
 
@@ -216,8 +221,7 @@ function PreloadState() {
         }
     } 
    
-
-    this.touchStarted = function () {
+    this.mouseClicked = function () {
         if (!loadingAssets && !generatingMap){
             mgr.showScene(GameState);
         }
