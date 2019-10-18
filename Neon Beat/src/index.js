@@ -39,11 +39,11 @@ function draw(){
 }
 
 function touchStarted(){
-    mgr.handleEvent("touchStarted");
+    mgr.handleEvent("touchEnded");
 }
 
 function mousePressed(){
-    mgr.handleEvent("mousePressed");
+    mgr.handleEvent("mouseReleased");
 }
 
 function keyPressed(){

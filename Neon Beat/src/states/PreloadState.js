@@ -90,7 +90,7 @@ function PreloadState() {      this.angle = 0;
         if(loadingAssets){
             text('Loading assets...', width * 0.5, height *4.5/5);      
         }else if(generatingMap){
-            text('Generating mapa...', width * 0.5, height * 4.5/5);
+            text('Generating map...', width * 0.5, height * 4.5/5);
         }else{ 
             if(!mobileDevice){
                 text('Click to continue', width * 0.5, height * 4.5/5);
@@ -285,13 +285,13 @@ function PreloadState() {      this.angle = 0;
         this.loadSpritesheet(midScoreAnimation, 30, 500, 500, "assets/AfterEffect/Puntuaciones/200_animation.png");
         this.loadSpritesheet(highestScoreAnimation, 30, 500, 500, "assets/AfterEffect/Puntuaciones/300_animation.png");
 
-        //this.loadImageForMobile(comboAnimation, 500, 500, 'assets/AfterEffect/Combo/combo_animation.png'); 
+        this.loadImageForMobile(comboAnimation, 500, 500, 'assets/AfterEffect/Combo/combo_animation.png'); 
         this.loadImageForMobile(pointsAnimation,  500, 500, 'assets/AfterEffect/Puntos/points.png'); 
-        this.loadSpritesheet(comboAnimation, 60, 500, 500, 'assets/AfterEffect/Combo/combo_animation.png'); 
-        this.loadSpritesheet(pointsAnimation, 60, 500, 500, 'assets/AfterEffect/Puntos/points.png'); 
+        //this.loadSpritesheet(comboAnimation, 60, 500, 500, 'assets/AfterEffect/Combo/combo_animation.png'); 
+        //this.loadSpritesheet(pointsAnimation, 60, 500, 500, 'assets/AfterEffect/Puntos/points.png'); 
 
-        //this.loadImageForMobile(minimumAnimation, 152, 152, 'assets/images/EsferaPequenisima/esferaPequena.png'); 
-        this.loadSpritesheet(minimumAnimation, 50, 152, 152, 'assets/images/EsferaPequenisima/esferaPequena.png'); 
+        this.loadImageForMobile(minimumAnimation, 152, 152, 'assets/images/EsferaPequenisima/esferaPequena.png'); 
+        //this.loadSpritesheet(minimumAnimation, 50, 152, 152, 'assets/images/EsferaPequenisima/esferaPequena.png'); 
 
         this.loadImageForMobile(playerTrail,  50, 50, 'assets/images/pelota.png');      
     }
