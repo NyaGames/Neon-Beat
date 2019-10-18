@@ -108,12 +108,12 @@ function GameState() {
         ]
 
         //Límites del canvas en los que se va a dibujar la onda. Se dibuja solo la parte que se está ensenando
-        let limite1 = Math.floor(playerIndex - cameraOffset);
-        let tmp = 103.333 * graphAmplitude * width / 1120;
-        let limite2 = Math.floor(limite1 + width) - tmp;     
+        let limite1 = Math.floor(playerIndex - cameraOffset);      
+        let limite2 = Math.floor(playerIndex - cameraOffset + width);      
+        
         
         //Se dibujan varias lineas de distinto color para crear el efecto neón
-        for (let offset = (-colors.length - 1) * 0.5, j = 0; j < colors.length; offset++ , j++) {
+        for (let offset = (-colors.length - 1) * 0.5, j = 0; j < colors.length; offset++ , j++) {          
 
             stroke(colors[j]);
             strokeWeight(1)
@@ -121,8 +121,8 @@ function GameState() {
             beginShape();
 
             //Solo se dibuja la linea dentro de la parte visible del canvas
-            for (var i = limite1; i < limite2; i++) {
-                if (i < 0) {
+            for (var i = limite1; i < limite2 ; i++) {
+                if (i  < 0) {
                     //Línea recta para la parte del canvas en la que la canción no ha empezado todavía
                     vertex(i, height * 4 / 5 + offset);
                 }
@@ -131,7 +131,7 @@ function GameState() {
                     vertex(i * graphAmplitude, pathY[i] + offset);
                 }
             }
-
+            
             endShape();
         }        
 
@@ -166,7 +166,7 @@ function GameState() {
       
         //Update de los mínimos(pintarlos,sus círculos y sus textos)
         for (let i = 0; i < localMinimas.length; i++) {
-            if(playerSecond >= localMinimas[i].second - 2 && playerSecond <= localMinimas[i].second + 1){
+            if(playerSecond >= localMinimas[i].second - 4 && playerSecond <= localMinimas[i].second + 2){
                 localMinimas[i].drawCircle(pointer.x, startDiameter, graphAmplitude);
                 if(gameStarted){
                     localMinimas[i].successOrFail(graphAmplitude);
@@ -297,9 +297,9 @@ function GameState() {
     this.playerLoseHp = function () {
         pointer.actualHp += hpForFail;
         if(pointer.actualHp <= 0){
-            pointer.actualHp = 0;
+            /*pointer.actualHp = 0;
             nbAudioContext.stop();
-            this.defeat();
+            this.defeat();*/
         }
     }
 
