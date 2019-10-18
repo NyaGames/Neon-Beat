@@ -88,11 +88,16 @@ function PreloadState() {      this.angle = 0;
         textSize(width * 0.03);    
         textAlign(CENTER);     
         if(loadingAssets){
-            text('Cargando assets...', width * 0.5, height *4.5/5);      
+            text('Loading assets...', width * 0.5, height *4.5/5);      
         }else if(generatingMap){
-            text('Generando mapa...', width * 0.5, height * 4.5/5);
-        }else{            
-            text('Pulsa para continuar', width * 0.5, height * 4.5/5);
+            text('Generating mapa...', width * 0.5, height * 4.5/5);
+        }else{ 
+            if(!mobileDevice){
+                text('Click to continue', width * 0.5, height * 4.5/5);
+            }else{
+                text('Touch the screen to continue', width * 0.5, height * 4.5/5);
+            }       
+           
         }
 
         if(loadingAssets || generatingMap){
