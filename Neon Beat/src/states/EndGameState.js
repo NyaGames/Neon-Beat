@@ -41,10 +41,10 @@ function EndGameState(){
         texto_victoria.size(673 * wPercentaje, 333 * hPercentaje);
         texto_victoria.parent(container); 
 
-        caja_puntuacion = createImg('assets/images/PantallaVictoria/caja_puntuacion.png');
+        /*caja_puntuacion = createImg('assets/images/PantallaVictoria/caja_puntuacion.png');
         caja_puntuacion.position(0, 270*hPercentaje); 
         caja_puntuacion.size(467 * wPercentaje, 380 * hPercentaje);
-        caja_puntuacion.parent(container);  
+        caja_puntuacion.parent(container);  */
 
         //crear botones
         boton_intentar = createDiv();
@@ -114,7 +114,7 @@ function EndGameState(){
             boton_salir.remove();
             
             playAgain();
-            cancion_ganar.stop();
+            cancion_ganar.sound.stop();
             mgr.showScene(PreloadState);            
         }
     }
