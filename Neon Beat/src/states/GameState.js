@@ -346,7 +346,7 @@ function GameState() {
 
         fill(255, 255, 255);
         textAlign(LEFT);
-        textFont(myFont);
+        textFont(myFont[0]);
         textSize(textS);
         stroke('rgba(100%,0%,100%,0.0)');
         text(points,pointer.x + width * 0.42, textY);   
