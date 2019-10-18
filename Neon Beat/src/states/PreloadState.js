@@ -34,17 +34,15 @@ var assetsLoaded = false;
 var generatingMap = false;
 var mapGenerated = false;
 var playerSecond;
-var myFont;
 
 
-function PreloadState() {  
-    this.angle = 0;  
+function PreloadState() {      this.angle = 0;  
     this.animationIndex = 0; 
    
     var container;
     var canvas;
 
-    var tutorial;
+ 
 
     this.enter = function () {
         console.log("[DEBUG] ***ENTERING LOADING STATE***");
@@ -54,8 +52,6 @@ function PreloadState() {
         canvas = createCanvas(ancho, alto);
         canvas.position(0,0);
         canvas.parent(container);
-
-        tutorial = loadImage("assets/images/tutorial.png");
 
         if(!mapGenerated){
             nbAudioContext = new NeonBeatAudioContext(1024, 48000, this.songLoaded, chosenDifficulty.waveSmoothing);
@@ -70,8 +66,7 @@ function PreloadState() {
             }else{
                 this.loadAssets();    
             }     
-
-            myFont = loadFont('assets/fonts/gill-sans-ultra-bold-2.ttf');   
+          
         }else{
             if(!mapGenerated){
                 generatingMap = true;
@@ -86,37 +81,31 @@ function PreloadState() {
         background(51);        
         
         imageMode(CORNER);
-        image(tutorial, 0, 0, ancho, alto);
-
-        let index = this.animationIndex % loadingScreen.length;      
-        image(loadingScreen[index], ancho * 3.75 / 5, alto * 3.75/5, 350, 150);       
-
+        image(tutorial[0], 0, 0, ancho, alto);
+       
         fill(255, 200);
-        textSize(32);
-        textFont(p5.Font);
-        textAlign(RIGHT);     
+        textFont(myFont[0]);
+        textSize(width * 0.03);    
+        textAlign(CENTER);     
         if(loadingAssets){
-            text('Cargando assets...', width * 3.75 / 5, height *4.5/5);      
+            text('Cargando assets...', width * 0.5, height *4.5/5);      
         }else if(generatingMap){
-            text('Generando mapa...', width * 3.75 / 5, height * 4.5/5);
+            text('Generando mapa...', width * 0.5, height * 4.5/5);
         }else{            
-            text('Pulsa cualquier tecla para continuar', width * 3.75 / 5, height * 4.5/5);
+            text('Pulsa para continuar', width * 0.5, height * 4.5/5);
         }
 
+        if(loadingAssets || generatingMap){
+            let index = this.animationIndex % loadingScreen.length;      
+            image(loadingScreen[index], ancho * 3.75 / 5, alto * 3.75/5, width * 0.3, height * 0.2);           
+        }
 
-        /*translate(width * 0.5, height * 0.5);
-        rotate(this.angle);
-        strokeWeight(4);
-        stroke(255);
-        line(0, 0, 100, 0);*/
+      
         this.angle += 1;      
         this.animationIndex++; 
              
-    }
-   
-    this.progress = function (percentage) {
-        console.log(floor(percentage * 100));
-    }
+    }   
+ 
 
     this.onloadingAssetsError = function (err) {
         console.log(err);
@@ -212,7 +201,7 @@ function PreloadState() {
 
     this.keyPressed = function(){
         if(!loadingAssets && !generatingMap){
-            mgr.showScene(GameState);
+            if(keyCode == 32) mgr.showScene(GameState);
         }
     } 
    
