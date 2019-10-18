@@ -39,11 +39,15 @@ function draw(){
 }
 
 function touchStarted(){
-    mgr.handleEvent("touchEnded");
+    mgr.handleEvent("touchStarted");
+}
+
+function mouseClicked(){
+    mgr.handleEvent("mouseClicked");
 }
 
 function mousePressed(){
-    mgr.handleEvent("mouseReleased");
+    mgr.handleEvent("mousePressed");
 }
 
 function keyPressed(){
@@ -54,6 +58,4 @@ function windowResized(){
     mgr.handleEvent("windowResized");
 }
 
-function mouseClicked(){
-    mgr.handleEvent("mouseClicked");
-}
+
