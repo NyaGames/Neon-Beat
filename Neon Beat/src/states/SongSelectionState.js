@@ -68,6 +68,7 @@ function SongSelectionState(){
         
         //crear boton de seleccion        
         selectionButton = createFileInput(this.handleFileSelect);
+        selectionButton.id("inputfile");
         selectionButton.parent(container);
         selectionButton.position(0*wPercentaje, 250*hPercentaje);
         selectionImage = createImg('assets/images/PantallaVictoria/caja_cancion.png');
@@ -161,6 +162,7 @@ function SongSelectionState(){
     }
 
     this.setEasyMode = function(){
+        clickSound.play();
         easyImage.remove();
         easyImage = createImg('assets/images/seleccionCancion/estrella_encendida.png');
         easyImage.size(61 * wPercentaje, 60*hPercentaje);
@@ -176,6 +178,7 @@ function SongSelectionState(){
         chosenDifficulty = difficulties.easy; 
     }
     this.setNormalMode = function(){
+        clickSound.play();
         easyImage.remove();
         easyImage = createImg('assets/images/seleccionCancion/estrella_encendida.png');
         easyImage.size(61 * wPercentaje, 60*hPercentaje);
@@ -191,6 +194,7 @@ function SongSelectionState(){
         chosenDifficulty = difficulties.normal; 
     }
     this.setHardMode = function(){
+        clickSound.play();
         easyImage.remove();
         easyImage = createImg('assets/images/seleccionCancion/estrella_encendida.png');
         easyImage.size(61 * wPercentaje, 60*hPercentaje);
@@ -232,6 +236,7 @@ function SongSelectionState(){
 
     //De Pablo para Jusi: Con todo el amor del mundo
     this.loadSong1 = function(){
+        clickSound.play();
         if(state === 0){
             loadSongFromURL("assets/ost/Kate_Orange_-_Twilight__instrumental_.mp3");
         }else{
@@ -267,6 +272,7 @@ function SongSelectionState(){
     }
 
     this.loadSong2 = function(){
+        clickSound.play();
         if(state === 1){
             loadSongFromURL("assets/ost/Kate_Orange_-_LSD__instrumental_.mp3");
         }else{
@@ -302,6 +308,7 @@ function SongSelectionState(){
     }
 
     this.loadSong3 = function(){
+        clickSound.play();
         if(state === 2){
             loadSongFromURL("assets/ost/Kate_Orange_-_Stereo_radio.mp3");
         }else{
@@ -414,12 +421,17 @@ function loadSongFromURL(url){
         reader.readAsArrayBuffer(request.response);
         reader.onload =  function(file){
             songFile = file;
-            canvas.remove();
-            selectionButton.remove();
-            twilight_button.remove();
-            lsd_button.remove();
-            orange_button.remove();
             cancion_menu.sound.stop();
+            if(canvas !== null){
+                canvas.remove();
+                selectionButton.remove();
+                twilight_button.remove();
+                lsd_button.remove();
+                orange_button.remove();
+                easyButton.remove();
+                normalButton.remove();
+            };
+            hardButton.remove();
             mgr.showScene(PreloadState);
         };
     };

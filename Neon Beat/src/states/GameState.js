@@ -53,20 +53,18 @@ function GameState() {
     this.enter = function () {            
         console.log("[DEBUG] ***ENTERING GAME STATE***");
         container = document.getElementById("container");
-
-        //crear imagenes
-        canvas = createCanvas(ancho, alto);
-        canvas.position(0,0);
-        canvas.parent(container);
-        canvas.background(0);
   
         if(mobileDevice) {
             console.log("[DEBUG] ***MOBILE DEVICE DETECTED***");
-            canvas = createCanvas(screen.availWidth, screen.availHeight - 50);
+            canvas = createCanvas(ancho, alto);
             canvas.position(0, 0);
+            canvas.parent(container);
+            canvas.background(0);
         } else {
-            canvas = createCanvas(window.outerWidth * 0.7875 - window.outerWidth * 0.2085, window.outerHeight * 0.772 - window.outerHeight * 0.168);
-            canvas.position(window.outerWidth * 0.2085, window.outerHeight * 0.168);
+            canvas = createCanvas(ancho, alto);
+            canvas.position(0,0);
+            canvas.parent(container);
+            canvas.background(0);
         }
 
         cameraOffset = width * 1 / 3;
@@ -172,7 +170,7 @@ function GameState() {
                     localMinimas[i].successOrFail(graphAmplitude);
                 }
                 localMinimas[i].drawText(graphAmplitude);
-                localMinimas[i].display(graphAmplitude,pointer.r - 25);
+                localMinimas[i].display(graphAmplitude,pointer.r);
             }
         }
 
@@ -208,13 +206,20 @@ function GameState() {
     //#region[rgba(155, 28, 99, 0.1)]Eventos
     this.keyPressed = function () {
         //Si pulsamos la tecla y todavía no hemos acertado ni fallado, se considera acierto
-        if (keyCode === 32) {
+        if (keyCode === 32 && gameStarted) {
             this.handleInput(); // 32 = Barra espaciadora
         }
     }
 
+    this.touchStarted = function () {
+        if (mobileDevice && gameStarted){
+            this.handleInput();
+        }
+    }
+
     this.handleInput = function () {
-        if (playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail && gameStarted) { 
+        clickSound.play();
+        if (playerAtMinimum && !localMinimas[nextMinimum].success && !localMinimas[nextMinimum].fail ) { 
             //flash
             if(localMinimas[nextMinimum].flash){
                 flashBool=true;
@@ -245,19 +250,18 @@ function GameState() {
             if (combo > maximumCombo) {
                 maximumCombo = combo;
             }
+            if (combo%50 == 0){
+                combo1Sound.play();
+            }else if(combo%10 == 0){
+                combo2Sound.play();
+            }
 
-        } else if (keyCode === 32 && !playerAtMinimum && !localMinimas[nextMinimum].fail && nextMinimum + 1 < localMinimas.length) { //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos
+        } else if (!playerAtMinimum && !localMinimas[nextMinimum].fail && nextMinimum + 1 < localMinimas.length) { //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos
             localMinimas[nextMinimum].success = false;
             this.playerLoseHp();
             localMinimas[nextMinimum].fail = true;
             combo = 1;
             //nextMinimum++;      
-        }
-    }
-
-    this.touchStarted = function () {
-        if (mobileDevice){
-            this.handleInput();
         }
     }
 
@@ -326,6 +330,7 @@ function GameState() {
         let animationY = height/11;
         let textY = height/9;
         let size =  height/3;
+        let textS = height/18;
         //Points
         incrementPoints += 4;
         let index1 = Math.floor(indexPoints) % pointsAnimation.length;
@@ -336,7 +341,7 @@ function GameState() {
         fill(255, 255, 255);
         textAlign(LEFT);
         textFont(myFont);
-        textSize(30);
+        textSize(textS);
         stroke('rgba(100%,0%,100%,0.0)');
         text(points,pointer.x + width * 0.42, textY);   
 
@@ -349,7 +354,7 @@ function GameState() {
 
         fill(255, 255, 255);
         textAlign(LEFT);
-        textSize(30);
+        textSize(textS);
         stroke('rgba(100%,0%,100%,0.0)');
         text('X' + combo, (pointer.x - width/10) + (width * 0.1), textY);
     }

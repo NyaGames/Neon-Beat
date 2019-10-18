@@ -9,7 +9,7 @@ class Minimum{
         this.animation = animation;
         this.animationIndex = 0;
         this.animationLength = this.animation.length;
-        this.sizeForPerfectSuccsess = 24;
+        this.sizeForPerfectSuccsess = 28;
         this.size;
        
 
@@ -194,14 +194,14 @@ class Minimum{
 
     display(graphAmplitude,r){
         let index = Math.floor(this.sphereAnimationIndex) % this.sphereAnimation.length;
-        /*if(this.success){
+        if(this.success){
             tint(this.successColor);
         }else if(this.fail){
             tint(this.failColor);
-        }*/
+        }
         imageMode(CENTER);       
         image(this.sphereAnimation[index],this.x * graphAmplitude, this.y , r, r);    
-        //noTint();
+        noTint();
         this.sphereAnimationIndex += 0.6;   
        
     }

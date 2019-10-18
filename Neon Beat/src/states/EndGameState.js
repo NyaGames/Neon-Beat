@@ -1,13 +1,7 @@
 function EndGameState(){
-    var textX;
-    var textY;
 
-    var boton_creditos;
-    var boton_jugar;
-
-    var fondoVictoria;
-    var placeholder_particulas;
     var texto_victoria;
+    var caja_puntuacion;
 
     var boton_intentar;
     var boton_salir;
@@ -20,9 +14,7 @@ function EndGameState(){
     var button_otravez_apagado;
 
     var state;
-
-    var texto;
-    
+        
     // enter() will be executed each time the SceneManager switches
     // to this animation
     // Note: Animation1() doesn't have setup() or draw()
@@ -36,8 +28,7 @@ function EndGameState(){
         //cancion
         if(!cancion_ganar.sound.isPlaying()){
             cancion_ganar.sound.play();
-        }
-        
+        }        
 
         //crear imagenes
         canvas = createCanvas(ancho, alto);
@@ -45,17 +36,15 @@ function EndGameState(){
         canvas.parent(container);
         canvas.background(0);
 
-        placeholder_particulas = createImg('assets/images/PantallaVictoria/placeholder_particulas.png'); 
-        placeholder_particulas.position(0, 0);
-        placeholder_particulas.size(1120 * wPercentaje, 630 * hPercentaje);
-        placeholder_particulas.parent(container);
-        placeholder_particulas.size(1120*wPercentaje, 603*hPercentaje);
-
         texto_victoria = createImg('assets/images/PantallaVictoria/cartelVictoria.png');
         texto_victoria.position(0, 0); 
         texto_victoria.size(673 * wPercentaje, 333 * hPercentaje);
         texto_victoria.parent(container); 
-        texto_victoria.size(673*wPercentaje, 333*hPercentaje);
+
+        caja_puntuacion = createImg('assets/images/PantallaVictoria/caja_puntuacion.png');
+        caja_puntuacion.position(0, 270*hPercentaje); 
+        caja_puntuacion.size(467 * wPercentaje, 380 * hPercentaje);
+        caja_puntuacion.parent(container);  
 
         //crear botones
         boton_intentar = createDiv();
@@ -75,33 +64,36 @@ function EndGameState(){
         button_salir_apagado.size(364*wPercentaje, 236*hPercentaje);
 
         state = 0;
-        /*background("teal");
-        textX = 10;
-        textY = 0;
-        textAlign(CENTER);
-        fill("black");
-        text("[STATE] ***END GAME STATE*** \n" + 
-            "... or mouse to advance animation.\n\n" +
-            "Press any other key to display it.", width / 2, height / 2);
-        fill(255, 255, 255);
-        textSize(30);
-        stroke('rgba(100%,0%,100%,0.0)');
-        text('Final Score: ' + finalScore + "\n" + 
-            "Max combo: " + maxCombo, 100, 100);*/
     }
 
-    this.draw = function(){    
+    this.draw = function(){          
+        background(0);         
 
-        
-        background(0);
+        fill(255, 255, 255);
+        textAlign(CENTER);
+        textFont(myFont);
+        textSize(30);
+        stroke('rgba(100%,0%,100%,0.0)');
+        text("Points: " + points, 0.25 * width, 0.6 * height);   
+
+        fill(255, 255, 255);
+        textAlign(CENTER);
+        textFont(myFont);
+        textSize(30);
+        stroke('rgba(100%,0%,100%,0.0)');
+        text("Max Combo: " + combo, 0.25 * width, 0.8 * height); 
+
         //Animación del fondo
-        let bgIndex = Math.floor(backgroundIndex % victoryAnim.length);
-        imageMode(CORNER);
-        image(victoryAnim[bgIndex], 0, 0, width, height);  
-        backgroundIndex++;
+        if(!mobileDevice){
+            let bgIndex = Math.floor(backgroundIndex % victoryAnim.length);
+            imageMode(CORNER);
+            image(victoryAnim[bgIndex], 0, 0, width, height);  
+            backgroundIndex++;
+        }
     }
     
     this.clickJugar = function(){
+        clickSound.play();
         if(state === 1){
             state = 0;
             button_otravez_apagado.remove();
@@ -120,9 +112,6 @@ function EndGameState(){
         
             boton_intentar.remove();
             boton_salir.remove();
-        
-            button_salir_apagado.remove();
-            button_otravez_encendido.remove();
             
             playAgain();
             cancion_ganar.stop();
@@ -131,6 +120,7 @@ function EndGameState(){
     }
 
     this.clickCreditos = function(){
+        clickSound.play();
         if(state === 0){
             state = 1;
             button_otravez_encendido.remove();
@@ -148,9 +138,6 @@ function EndGameState(){
         
             boton_intentar.remove();
             boton_salir.remove();
-        
-            button_salir_encendido.remove();
-            button_otravez_apagado.remove();
 
             canvas.remove();
             reset();
@@ -172,7 +159,6 @@ function EndGameState(){
             resizeCanvas(ancho, alto);
             background(0);
             
-            placeholder_fondotitulo_img.size(1120*wPercentaje, 630*hPercentaje); 
             texto_victoria.size(694*wPercentaje, 323*hPercentaje); 
             if(state === 0){
                 button_otravez_encendido.size(348*wPercentaje, 220*hPercentaje);
@@ -193,7 +179,6 @@ function EndGameState(){
             resizeCanvas(ancho, alto);
             canvas.background(0); 
             
-            placeholder_fondotitulo_img.size(1120*wPercentaje, 630*hPercentaje); 
             texto_victoria.size(694*wPercentaje, 323*hPercentaje); 
             if(state === 0){
                 button_otravez_encendido.size(348*wPercentaje, 220*hPercentaje);

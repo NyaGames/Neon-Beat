@@ -18,6 +18,9 @@ var atencion;
 var cancion_menu = {sound: null};
 var cancion_perder = {sound: null};;
 var cancion_ganar = {sound: null};;
+var clickSound;
+var combo1Sound;
+var combo2Sound;
 
 function BootState() {
     ///Estado encargado de cargar los assets que aparecen en el menú
@@ -40,7 +43,10 @@ function BootState() {
             this.loadAssetsForMobiles();
         }else{
             this.loadAssets();    
-        }     
+        }
+        clickSound= loadSound('assets/sounds/pop.mp3');
+        combo1Sound = loadSound('assets/sounds/combo1.mp3');
+        combo2Sound = loadSound('assets/sounds/combo2.mp3');
     }
 
     this.draw = function () {
@@ -140,5 +146,8 @@ function BootState() {
     this.loadAssetsForMobiles = function () {
         this.loadSpritesheet(menuBackground, 2, 912, 513, "assets/AfterEffect/Menu/menu_animation.png");
         this.loadSpritesheet(loadingScreen, 2, 450, 250, "assets/AfterEffect/CargaBGpeque/image1.png");
+        this.loadSound(cancion_menu, "assets/ost/Kate_Orange_-_You__instrumental_.mp3");
+        this.loadSound(cancion_perder, "assets/ost/Julius_Nox_-_Giulio_s_Page_-_Tortoise.mp3");
+        this.loadSound(cancion_ganar, "assets/ost/Sergey_Tsygankov_-_Spring_Rays.mp3");
     }
 }

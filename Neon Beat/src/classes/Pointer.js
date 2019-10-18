@@ -15,7 +15,7 @@ class Pointer{
         this.actualHp = this.maxHp;
         this.startWidth = 600;
         this.maxColor = color(100,239,255,255);
-        this.minColor = color(0,30,30,255);
+        this.minColor = color(255,0,0,255);
         //Cola de la bola
         this.history = [];
         var v=createVector(this.x, this.y);
@@ -36,13 +36,14 @@ class Pointer{
                 image(playerTrail[0], pos.x, pos.y, tamaño, tamaño);  
                 noTint();
             }
+            
         }
-        
-        //tint(col.levels);
+
+        tint(col.levels);
         imageMode(CENTER);       
         image(this.animation[index], this.x, this.y, this.r, this.r);      
-        //noTint();
-        this.index += this.speed;   
+        noTint();
+        this.index += this.speed; 
         
         //Vida del jugador
         this.actualHp -= damageOverTime;
