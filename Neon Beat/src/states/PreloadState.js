@@ -88,11 +88,16 @@ function PreloadState() {      this.angle = 0;
         textSize(width * 0.03);    
         textAlign(CENTER);     
         if(loadingAssets){
-            text('Cargando assets...', width * 0.5, height *4.5/5);      
+            text('Loading assets...', width * 0.5, height *4.5/5);      
         }else if(generatingMap){
-            text('Generando mapa...', width * 0.5, height * 4.5/5);
-        }else{            
-            text('Pulsa para continuar', width * 0.5, height * 4.5/5);
+            text('Generating mapa...', width * 0.5, height * 4.5/5);
+        }else{ 
+            if(!mobileDevice){
+                text('Click to continue', width * 0.5, height * 4.5/5);
+            }else{
+                text('Touch the screen to continue', width * 0.5, height * 4.5/5);
+            }       
+           
         }
 
         if(loadingAssets || generatingMap){
@@ -205,8 +210,7 @@ function PreloadState() {      this.angle = 0;
         }
     } 
    
-
-    this.touchStarted = function () {
+    this.mouseClicked = function () {
         if (!loadingAssets && !generatingMap){
             mgr.showScene(GameState);
         }
@@ -317,8 +321,8 @@ function PreloadState() {      this.angle = 0;
 
         this.loadSpritesheet(playerTrail, 1, 50, 50, 'assets/images/pelota.png');      
         
-        this.loadSpritesheet(defeatAnim, 30, 912, 513, "assets/AfterEffect/Derrota/derrota_spritesheet.png");
-        this.loadSpritesheet(victoryAnim, 30, 912, 513, "assets/AfterEffect/Victoria/victory_spritesheet.png");
+        this.loadSpritesheet(defeatAnim, 89, 912, 513, "assets/AfterEffect/Derrota/derrota.png");
+        this.loadSpritesheet(victoryAnim, 89, 912, 513, "assets/AfterEffect/Victoria/victory_spritesheet.png");
     }
 
     this.setSize = function(){

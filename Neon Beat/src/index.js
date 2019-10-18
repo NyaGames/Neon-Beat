@@ -53,3 +53,7 @@ function keyPressed(){
 function windowResized(){
     mgr.handleEvent("windowResized");
 }
+
+function mouseClicked(){
+    mgr.handleEvent("mouseClicked");
+}

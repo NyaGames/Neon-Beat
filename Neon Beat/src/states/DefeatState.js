@@ -83,7 +83,7 @@ function DefeatState(){
         
         background(0);
         if(!mobileDevice){
-            let bgIndex = Math.floor(backgroundIndex % defeatAnim.length);
+            let bgIndex = Math.floor(backgroundIndex * 0.5 % defeatAnim.length);
             imageMode(CORNER);
             image(defeatAnim[bgIndex], 0, 0, width, height);  
     
