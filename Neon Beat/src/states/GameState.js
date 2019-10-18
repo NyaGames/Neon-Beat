@@ -301,9 +301,9 @@ function GameState() {
     this.playerLoseHp = function () {
         pointer.actualHp += hpForFail;
         if(pointer.actualHp <= 0){
-            /*pointer.actualHp = 0;
+            pointer.actualHp = 0;
             nbAudioContext.stop();
-            this.defeat();*/
+            this.defeat();
         }
     }
 
