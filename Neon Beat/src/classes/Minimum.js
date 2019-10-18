@@ -9,7 +9,7 @@ class Minimum{
         this.animation = animation;
         this.animationIndex = 0;
         this.animationLength = this.animation.length;
-        this.sizeForPerfectSuccsess = 24;
+        this.sizeForPerfectSuccsess = 28;
         this.size;
        
 

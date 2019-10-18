@@ -170,7 +170,7 @@ function GameState() {
                     localMinimas[i].successOrFail(graphAmplitude);
                 }
                 localMinimas[i].drawText(graphAmplitude);
-                localMinimas[i].display(graphAmplitude,pointer.r - 25);
+                localMinimas[i].display(graphAmplitude,pointer.r);
             }
         }
 
@@ -256,7 +256,7 @@ function GameState() {
                 combo2Sound.play();
             }
 
-        } else if (keyCode === 32 && !playerAtMinimum && !localMinimas[nextMinimum].fail && nextMinimum + 1 < localMinimas.length) { //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos
+        } else if (!playerAtMinimum && !localMinimas[nextMinimum].fail && nextMinimum + 1 < localMinimas.length) { //Si pulsamos la telca cuando no hemos llegado al mínimo, fallamos
             localMinimas[nextMinimum].success = false;
             this.playerLoseHp();
             localMinimas[nextMinimum].fail = true;

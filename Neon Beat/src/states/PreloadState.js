@@ -241,8 +241,9 @@ function PreloadState() {
             }
 
             counter++;
+            counterForMobile++;
 
-            if (counter == totalAssets) {
+            if (counter == totalAssets || counterForMobile == totalAssetsForMobile) {
                 loadingAssets = false;
                 generatingMap = true;
                 assetsLoaded = true;
@@ -271,7 +272,8 @@ function PreloadState() {
     }
 
     this.loadAssetsForMobiles = function(){
-        this.loadImageForMobile(sphereAnimation,  150, 150, "assets/images/Player/player.png");
+        //this.loadImageForMobile(sphereAnimation,  150, 150, "assets/images/Player/player.png");
+        this.loadSpritesheet(sphereAnimation, 60, 150, 150, "assets/images/Player/player.png");
         this.loadImageForMobile(backgroundAnimation, 912, 513, "assets/AfterEffect/NuevasParticulillas/image1.png");
         this.loadImageForMobile(circleAnimation,  300, 300, "assets/AfterEffect/Circunferencia/circunferencia_animation.png");
 
@@ -283,14 +285,20 @@ function PreloadState() {
         this.loadImageForMobile(failAnimation2,  500, 500, "assets/AfterEffect/Fallos/fallo2_animation.png");
         this.loadImageForMobile(failAnimation3, 500, 500, "assets/AfterEffect/Fallos/fallo3_animation.png");
 
-        this.loadImageForMobile(lowestScoreAnimation, 500, 500, "assets/AfterEffect/Puntuaciones/100_animation.png");
-        this.loadImageForMobile(midScoreAnimation,  500, 500, "assets/AfterEffect/Puntuaciones/200_animation.png");
-        this.loadImageForMobile(highestScoreAnimation,  500, 500, "assets/AfterEffect/Puntuaciones/300_animation.png");
+        //this.loadImageForMobile(lowestScoreAnimation, 500, 500, "assets/AfterEffect/Puntuaciones/100_animation.png");
+        //this.loadImageForMobile(midScoreAnimation,  500, 500, "assets/AfterEffect/Puntuaciones/200_animation.png");
+        //this.loadImageForMobile(highestScoreAnimation,  500, 500, "assets/AfterEffect/Puntuaciones/300_animation.png");
+        this.loadSpritesheet(lowestScoreAnimation, 30, 500, 500, "assets/AfterEffect/Puntuaciones/100_animation.png");
+        this.loadSpritesheet(midScoreAnimation, 30, 500, 500, "assets/AfterEffect/Puntuaciones/200_animation.png");
+        this.loadSpritesheet(highestScoreAnimation, 30, 500, 500, "assets/AfterEffect/Puntuaciones/300_animation.png");
 
-        this.loadImageForMobile(comboAnimation, 500, 500, 'assets/AfterEffect/Combo/combo_animation.png'); 
+        //this.loadImageForMobile(comboAnimation, 500, 500, 'assets/AfterEffect/Combo/combo_animation.png'); 
         this.loadImageForMobile(pointsAnimation,  500, 500, 'assets/AfterEffect/Puntos/points.png'); 
+        this.loadSpritesheet(comboAnimation, 60, 500, 500, 'assets/AfterEffect/Combo/combo_animation.png'); 
+        this.loadSpritesheet(pointsAnimation, 60, 500, 500, 'assets/AfterEffect/Puntos/points.png'); 
 
-        this.loadImageForMobile(minimumAnimation, 152, 152, 'assets/images/EsferaPequenisima/esferaPequena.png'); 
+        //this.loadImageForMobile(minimumAnimation, 152, 152, 'assets/images/EsferaPequenisima/esferaPequena.png'); 
+        this.loadSpritesheet(minimumAnimation, 50, 152, 152, 'assets/images/EsferaPequenisima/esferaPequena.png'); 
 
         this.loadImageForMobile(playerTrail,  50, 50, 'assets/images/pelota.png');      
     }
