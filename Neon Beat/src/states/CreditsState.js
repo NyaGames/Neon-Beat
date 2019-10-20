@@ -2,6 +2,8 @@ function CreditsState(){
         
     var container;
     var creditos;
+    var backgroundCreditos;
+    var menuBackgroundIndex = 0;
 
     this.enter = function()
     {
@@ -15,17 +17,34 @@ function CreditsState(){
         canvas.mousePressed(this.escape); 
         canvas.background(0);
 
+
+        /*backgroundCreditos = createImg('assets/images/menuPrincipal/fondo_menu.png');
+        backgroundCreditos.position(0, 0); 
+        backgroundCreditos.parent(container);
+        backgroundCreditos.mousePressed(this.escape);*/
+
         creditos = createImg('assets/images/creditos.png');
         creditos.position(0, 0); 
         creditos.parent(container);
         creditos.mousePressed(this.escape); 
+ 
         this.setSize();
     }  
+
+    this.draw = function(){
+        //Animación del fondo
+        let bgIndex = Math.floor(menuBackgroundIndex % menuBackground.length);
+        imageMode(CORNER);
+        image(menuBackground[bgIndex], 0, 0, width, height);
+
+        menuBackgroundIndex++;  
+    }
 
     this.escape = function(){
         clickSound.play();
         canvas.remove();
         creditos.remove();
+        //backgroundCreditos.remove();
         mgr.showScene(MainMenuState);
     }
 
@@ -40,6 +59,7 @@ function CreditsState(){
             background(0);
             
             creditos.size(1120 * wPercentaje, 630 * hPercentaje);
+            //backgroundCreditos.size(1120 * wPercentaje, 630 * hPercentaje);
         }else{            
             ancho = window.innerWidth;
             alto = window.innerHeight;
@@ -49,6 +69,7 @@ function CreditsState(){
             canvas.background(0);
             
             creditos.size(1120 * wPercentaje, 630 * hPercentaje);
+            //backgroundCreditos.size(1120 * wPercentaje, 630 * hPercentaje);
         }
     }
 
