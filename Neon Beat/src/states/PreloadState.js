@@ -235,7 +235,7 @@ function PreloadState() {      this.angle = 0;
             counter++;
             counterForMobile++;
 
-            if (counter == totalAssets || counterForMobile == totalAssetsForMobile) {
+            if ((counter == totalAssets || counterForMobile == totalAssetsForMobile) && loadingAssets) {
                 loadingAssets = false;
                 generatingMap = true;
                 assetsLoaded = true;
@@ -254,7 +254,7 @@ function PreloadState() {      this.angle = 0;
 
             counterForMobile++;
 
-            if (counterForMobile == totalAssetsForMobile) {
+            if (counterForMobile == totalAssetsForMobile && loadingAssets) {
                 loadingAssets = false;
                 generatingMap = true;
                 assetsLoaded = true;
