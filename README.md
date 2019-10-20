@@ -66,7 +66,7 @@ El arte de *Neon Beat* es minimalista para que el jugador pueda centrarse en seg
 El estilo visual se basa principalente en luces de neón que permiten transmitir el alma de la música.
 
 ### 4.1 Audio
-Es una de los pilares de nuestro videojuego. Durante los menús sonará una banda sonora propia y durante la partida se escuchará la canción elegida. Además, se podrán importar nuevas canciones al juego.
+Es una de los pilares de nuestro videojuego. Durante los menús sonará una banda sonora afin a los gráficos y durante la partida se escuchará la canción elegida. Además, se podrán importar nuevas canciones al juego.
   
 Las canciones utilizadas para la interfaz y el menú son:  
   Julius_Nox_-_Giulio_s_Page_-_Tortoise  
