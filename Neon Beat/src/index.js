@@ -15,7 +15,12 @@ function setup(){
         mobileDevice = false;
     }
 
-    FBInstant.setLoadingProgress(100);
+    FBInstant.initializeAsync()
+    .then(function(){
+        FBInstant.setLoadingProgress(100);
+    }
+    );
+    
     FBInstant.startGameAsync().then(function() {
     game.start();
     });
