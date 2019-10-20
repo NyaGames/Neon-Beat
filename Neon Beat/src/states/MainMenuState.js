@@ -71,7 +71,6 @@ function MainMenuState(){
     }
 
     this.clickTitulo = function(){
-        //window.location.href = "https://twitter.com/GamesNya";
         window.open("https://twitter.com/GamesNya");
     }
 
