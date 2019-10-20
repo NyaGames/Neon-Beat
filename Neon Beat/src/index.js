@@ -15,6 +15,10 @@ function setup(){
         mobileDevice = false;
     }
 
+    FBInstant.setLoadingProgress(100);
+    FBInstant.startGameAsync().then(function() {
+    game.start();
+    });
     
     createCanvas(600, 500);
 
