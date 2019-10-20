@@ -62,7 +62,6 @@ function PreloadState() {      this.angle = 0;
 
             if(mobileDevice){
                 this.loadAssetsForMobiles();
-                //generateMap();
             }else{
                 this.loadAssets();    
             }     
@@ -321,8 +320,8 @@ function PreloadState() {      this.angle = 0;
 
         this.loadSpritesheet(playerTrail, 1, 50, 50, 'assets/images/pelota.png');      
         
-        this.loadSpritesheet(defeatAnim, 89, 912, 513, "assets/AfterEffect/Derrota/derrota.png");
-        this.loadSpritesheet(victoryAnim, 89, 912, 513, "assets/AfterEffect/Victoria/victory_spritesheet.png");
+        this.loadSpritesheet(defeatAnim, 84, 912, 513, "assets/AfterEffect/Derrota/derrota.png");
+        this.loadSpritesheet(victoryAnim, 84, 912, 513, "assets/AfterEffect/Victoria/victory_spritesheet.png");
     }
 
     this.setSize = function(){
