@@ -30,7 +30,7 @@ El alcance de *Neon Beat* es muy amplio ya que es un juego hecho para todas las 
 ## 2. Mecánicas de juego 
 
 ### 2.1 Jugabilidad
-La jugabilidad de *Neon Beat* consiste en seguir la melodía al ritmo de la música. Para ello se disponen de 2 botones con los que surfearás la canción, ya que el recorrido es la onda generada por la propia canción.  
+La jugabilidad de *Neon Beat* consiste en seguir la melodía al ritmo de la música. Para ello ya sea mediante la tecla espacio o clicks del ratón se podrá surfear la onda musical generada por un algoritmo. Dicha onda corresponderá a la melodía de la canción seleccionada por el usuario.
 Para avanzar correctamente deberás seguir la onda de la canción pulsando los botones en el momento adecuado. Si aciertas sigues avanzando y aumenta tus puntos de combo que te darán una mayor puntuación al final de la partida. En cambio, si pierdes el ritmo (si pulsas demasiado pronto o demasiado tarde), perderás el combo y si fallas varias veces tendrás que repetir la canción.
 
 ### 2.2 Objetivo del juego
@@ -38,7 +38,7 @@ El objetivo es superar las canciones con la mayor puntuación posible.
 
 ### 2.3 Controles y cámara 
 Dependiendo del dispositivo utilizado se usarán el ratón o la pantalla táctil para moverse entre los menús.     
-Durante la partida se pulsarán los botones para ascender o descender en la onda en todos los dispositivos.
+Durante la partida se pulsará el espacio, ratón y la pantalla tactil para surfear la onda.
 
 ## 3. Interfaz
 
@@ -66,7 +66,7 @@ El arte de *Neon Beat* es minimalista para que el jugador pueda centrarse en seg
 El estilo visual se basa principalente en luces de neón que permiten transmitir el alma de la música.
 
 ### 4.1 Audio
-Es una de los pilares de nuestro videojuego. Durante los menús sonará una banda sonora propia y durante la partida se escuchará la canción elegida. Además, se podrán importar nuevas canciones al juego.
+Es una de los pilares de nuestro videojuego. Durante los menús sonará una banda sonora afin a los gráficos y durante la partida se escuchará la canción elegida. Además, se podrán importar nuevas canciones al juego.
   
 Las canciones utilizadas para la interfaz y el menú son:  
   Julius_Nox_-_Giulio_s_Page_-_Tortoise  

@@ -36,6 +36,7 @@ function MainMenuState(){
         titulo_img.position(52 * wPercentaje, 0 * hPercentaje);         
         titulo_img.size(1011 * wPercentaje, 316 * hPercentaje); 
         titulo_img.parent(container); 
+        titulo_img.mousePressed(this.clickTitulo);
 
         //crear botones
         boton_jugar = createDiv();
@@ -67,6 +68,10 @@ function MainMenuState(){
         image(menuBackground[bgIndex], 0, 0, width, height);
 
         menuBackgroundIndex++;        
+    }
+
+    this.clickTitulo = function(){
+        window.open("https://twitter.com/GamesNya");
     }
 
     this.clickJugar = function(){
