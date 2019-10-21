@@ -81,7 +81,7 @@ function EndGameState(){
         textFont(myFont[0]);
         textSize(30);
         stroke('rgba(100%,0%,100%,0.0)');
-        text("Max Combo: " + combo, 0.25 * width, 0.8 * height); 
+        text("Max Combo: " + maxCombo, 0.25 * width, 0.8 * height); 
 
         //Animación del fondo
         if(!mobileDevice){
