@@ -66,6 +66,3 @@ function keyPressed(){
 function windowResized(){
     mgr.handleEvent("windowResized");
 }
-
-//Hello world
-//Commit 2
